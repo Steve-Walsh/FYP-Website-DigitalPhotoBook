@@ -1,0 +1,32 @@
+<h1>User list</h1>
+
+          
+<div class="col-md-4 col-md-pull-2" style="margin-top: 55px;">
+    Search: <input ng-model="query">
+
+  </div>
+  <div>   
+    <div ng-controller="UsersController" >
+      <table class="table table-bordered">
+        <thead>
+          <th class="name" >Name</th>
+          <th class="address">Address</th>
+          <th class="phone">Phone Number</th>
+          <th class="buttion"> Delete</th>
+        </thead>
+
+       <tbody ng-repeat="user in users | filter:query | orderBy:orderProp "> 
+
+            <td>{{user.name}}  // {{user._id}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone_num}}</td>
+            <td><buttion class="btn btn-danger" ng-click="remove(user._id)"> Delete </buttion> </td>
+
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+
+

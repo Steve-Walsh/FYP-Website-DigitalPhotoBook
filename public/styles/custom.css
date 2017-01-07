@@ -1,0 +1,15 @@
+.view {
+  padding-top: 25px;
+  padding-bottom: 20px;
+
+}
+body {
+    padding: 5px;
+}
+.normal {
+  font-size: 18px;
+}
+
+button {
+    margin: 5px 5px 5px 5px;
+}

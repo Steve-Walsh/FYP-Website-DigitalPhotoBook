@@ -1,0 +1,474 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"re",
+				"require"
+			],
+			[
+				"dele",
+				"deletPost"
+			],
+			[
+				"text",
+				"textarea	Tag"
+			],
+			[
+				"loggedin",
+				"loggedInUser"
+			],
+			[
+				"logged",
+				"loggedInUser"
+			],
+			[
+				"user",
+				"userDetails"
+			],
+			[
+				"pa",
+				"path"
+			],
+			[
+				"new",
+				"newComment"
+			],
+			[
+				"post",
+				"postId"
+			],
+			[
+				"$route",
+				"$routeParams	AngularJS"
+			],
+			[
+				"$loc",
+				"$location	AngularJS"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"try",
+				"try	Try/Except"
+			],
+			[
+				"rou",
+				"roundNum"
+			],
+			[
+				"de",
+				"decreaseCap"
+			],
+			[
+				"in",
+				"increaseCap"
+			],
+			[
+				"av",
+				"avgCPU"
+			],
+			[
+				"wg",
+				"wGet404"
+			],
+			[
+				"ins",
+				"instances"
+			],
+			[
+				"num",
+				"numInstances"
+			],
+			[
+				"CPU",
+				"CPUUtilization"
+			],
+			[
+				"me",
+				"metric"
+			],
+			[
+				"cmd",
+				"cmdSSH"
+			],
+			[
+				"ans",
+				"ansName"
+			],
+			[
+				"info",
+				"info"
+			],
+			[
+				"output",
+				"output"
+			],
+			[
+				"s",
+				"system"
+			],
+			[
+				"d",
+				"public_dns_name"
+			],
+			[
+				"check",
+				"check"
+			],
+			[
+				"instn",
+				"instance"
+			],
+			[
+				"insta",
+				"instance"
+			],
+			[
+				"sec",
+				"secInMin"
+			],
+			[
+				"tu",
+				"tuple"
+			],
+			[
+				"n",
+				"num"
+			],
+			[
+				"temp",
+				"tempNum"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"rb",
+				"rb2"
+			],
+			[
+				"le",
+				"len"
+			],
+			[
+				"ver",
+				"verbAns"
+			],
+			[
+				"fix",
+				"fixAns"
+			],
+			[
+				"res",
+				"returns"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 390.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ints",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 583.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/steve/Desktop/Website/api/picture/pictures.controller.js",
+		"/home/steve/Desktop/Website/public/partials/pictures.html",
+		"/home/steve/Desktop/Website/public/partials/main.html",
+		"/home/steve/Desktop/Website/api/picture/picture.model.js",
+		"/home/steve/Desktop/shitty thingy",
+		"/home/steve/mongo shit",
+		"/home/steve/Desktop/Website/api/pictures/pictures.controller.js",
+		"/home/steve/Desktop/picture.json",
+		"/home/steve/Desktop/Website/public/app.js",
+		"/home/steve/Desktop/Website/routes.js",
+		"/home/steve/Desktop/Website/api/picture/index.js",
+		"/home/steve/Desktop/Website/api/pictures/picture.model.js",
+		"/home/steve/Desktop/Website/api/pictures/index.js",
+		"/home/steve/Desktop/Website/public/partials/posts.html",
+		"/home/steve/Desktop/Website/public/partials/signup.html",
+		"/home/steve/Desktop/Website/public/partials/login.html",
+		"/home/steve/Desktop/Website/api/post/posts.controller.js",
+		"/home/steve/Desktop/Website/api/post/index.js",
+		"/home/steve/Desktop/Website/public/partials/users.html",
+		"/home/steve/Desktop/Website/public/partials/postComments.html",
+		"/home/steve/Desktop/Website/public/index.html",
+		"/home/steve/Desktop/contacts/public/partials/contacts.html",
+		"/home/steve/Desktop/contacts/public/app.js",
+		"/home/steve/Desktop/hackerNews/public/partials/posts.html",
+		"/home/steve/Desktop/Website/api/user/index.js",
+		"/home/steve/Desktop/Website/api/post/post.model.js",
+		"/home/steve/Desktop/hackerNews/api/post/posts.controller.js",
+		"/home/steve/Desktop/contacts/api/contact/contacts.controller.js",
+		"/home/steve/Desktop/contacts/api/contact/contact.model.js",
+		"/home/steve/Desktop/hackerNews/public/partials/comments.html",
+		"/home/steve/Desktop/hackerNews/public/app.js",
+		"/home/steve/Desktop/contacts/app.js",
+		"/home/steve/Desktop/Website/api/user/users.controller.js",
+		"/home/steve/Desktop/Website/api/user/user.model.js",
+		"/home/steve/Desktop/Website/public/partials/posts2.html",
+		"/home/steve/Desktop/contacts/api/contact/index.js",
+		"/home/steve/Desktop/Website/config/seed.js",
+		"/home/steve/Desktop/postsData",
+		"/home/steve/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/steve/Desktop/data.json",
+		"/home/steve/Desktop/textFile.py",
+		"/home/steve/Desktop/hackerNews/api/post/index.js",
+		"/home/steve/Desktop/Website/api/post",
+		"/home/steve/Desktop/Website/package.json",
+		"/home/steve/Desktop/Website/data.json",
+		"/home/steve/.config/sublime-text-3/Packages/Alignment/Base File.sublime-settings",
+		"/home/steve/Desktop/Website/app.js",
+		"/home/steve/Desktop/sample_webAPI/package.json",
+		"/home/steve/Desktop/Website/api/datastore.js",
+		"/home/steve/Desktop/sample_webAPI/app.js",
+		"/home/steve/Desktop/sample_webAPI/routes.js",
+		"/home/steve/Desktop/contacts/routes.js",
+		"/home/steve/Desktop/Website/api/contact/index.js",
+		"/home/steve/Desktop/Website/api/contact/contacts.controller.js",
+		"/home/steve/Desktop/Website/api/contact/contact.model.js",
+		"/home/steve/Desktop/contacts/package.json",
+		"/home/steve/Desktop/sample_webAPI/public/index.html",
+		"/home/steve/Desktop/sample_webAPI/api/customer/customers.controller.js",
+		"/home/steve/Desktop/contacts/api/customer/index.js",
+		"/home/steve/Desktop/Website/node_modules/mongoose/website.js",
+		"/home/steve/Desktop/contacts/api/customer/customers.controller.js",
+		"/home/steve/Desktop/contacts/api/datastore.js",
+		"/home/steve/Desktop/Website/node_modules/mongoose/index.js",
+		"/home/steve/Desktop/website/Website/app.js",
+		"/home/steve/Desktop/Dev Ops 1/run_webserver.py",
+		"/home/steve/Desktop/autoscale/autoscale.py",
+		"/home/steve/Desktop/autoscale/cloudWatch.py",
+		"/home/steve/Desktop/wget file/getpage.sh",
+		"/home/steve/Desktop/autoscale/getpage2.sh",
+		"/home/steve/Desktop/cloudWatch.py",
+		"/home/steve/Desktop/Dev Ops 1/check_webserver.py",
+		"/home/steve/Desktop/pr10/practical10_cert_desc.html",
+		"/home/steve/Desktop/pr10/textFile.py",
+		"/home/steve/Desktop/crypto/pract 9/evilize-0.2/hello-erase.c",
+		"/home/steve/Desktop/run_webserver.py",
+		"/home/steve/Desktop/check_webserver.py",
+		"/home/steve/Desktop/SteveWalsh.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/string2.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/list1.py",
+		"/home/steve/Desktop/google-python3-exercises/newfile.py",
+		"/home/steve/Desktop/Connect.py",
+		"/home/steve/Desktop/newfile.py",
+		"/home/steve/Desktop/Assignemnt.py",
+		"/home/steve/Desktop/student.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/list2.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/MilesToFeetQ1.py",
+		"/home/steve/Desktop/google-python3-exercises/logpuzzle/logpuzzle.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/miles.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/MilesToFeet Q1.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/wordcount.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/mimic.py",
+		"/home/steve/Desktop/google-python3-exercises/basic/string1.py",
+		"/home/steve/Desktop/google-python3-exercises/hello.py",
+		"/home/steve/Desktop/google-python3-exercises/repeat.py"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"upvotes",
+			"imcrement",
+			"getPosts()",
+			"getPosts",
+			"pict",
+			"picut",
+			"\"id\"",
+			"Post",
+			"login",
+			"postsservices.get",
+			"postservices.get",
+			"400",
+			"login",
+			"$scope.post",
+			"newAccount",
+			"$http.post",
+			"postsControl",
+			"index\" : ",
+			"},",
+			"moongoose",
+			"ng-",
+			"contacts",
+			"contact",
+			"instance",
+			"%n",
+			"loggin.",
+			"loggin",
+			"print",
+			"b"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"}",
+			"users",
+			"user"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "routes.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"else",
+				"~/Desktop/google-python3-exercises/basic/string1.py"
+			],
+			[
+				"",
+				"~/Desktop/google-python3-exercises/hello.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,29 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4" style="text-align: center">
+     <div class="panel panel-success">
+      <div class="panel-heading">
+        <div class="panel-title"> <h2>Please Sign Up</h2>
+        </div>
+      </div>
+      <div class="panel-body">
+      <form  style="margin-top:30px;">
+         <br> <div class="form-group">
+         <input type="text" class="form-control" placeholder="Full Name" ng-model="newAccount.name" required="true"></input>
+       </div>
+      <br> 
+      <div class="form-group">
+       <input type="text" class="form-control" placeholder="Email@email.com" ng-model="newAccount.email" required="true"></input>
+     </div>
+     <br>
+     <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" ng-model="newAccount.password" required="true"></input>
+    </div>
+  </div>
+  <br> <button class="btn btn-lg btn-success btn-block" ng-click="register()">Sign in</button>
+
+</form>
+
+
+
+

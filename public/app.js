@@ -1,0 +1,396 @@
+
+var myApp = angular.module('myApp',['ngRoute']);
+
+myApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider
+    .when('/', {
+    	templateUrl: 'partials/main.html',
+      controller: 'MainController'
+    	})
+    .when('/events', {
+      templateUrl: 'partials/events.html',
+      controller: 'EventsController'
+    })
+    .when('/myEvents', {
+      templateUrl: 'partials/myEvents.html',
+      controller: 'EventsController'
+    })
+    .when('/post/:id',
+    {
+      controller: 'PostsCommentsController',
+      templateUrl: './partials/postComments.html'
+    })
+    .when('/pictures',{
+      templateUrl : 'partials/pictures.html',
+      controller : 'PicturesController' 
+    })
+
+    .when('/picture/:id', {
+        templateUrl: 'partials/picture-details.html',
+        controller: 'PicutresDetailCtrl'
+      })
+    .when('/login',{
+      templateUrl : 'partials/login.html',
+      controller :'UsersController'
+    })
+    .when('/signup',{
+      templateUrl : 'partials/signup.html',
+      controller :'UsersController'
+    })
+    .when('/users',{
+      templateUrl : 'partials/users.html',
+      controller : 'UsersController'
+    })
+    .otherwise({
+      redirectTo: '/'
+    })
+  }])
+
+myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', function($scope, EventsService, UsersService, PicturesService){
+   $scope.loggedInUser = UsersService.loggedIn();
+
+    EventsService.getEvents()
+        .success(function(posts) {
+             $scope.events = events;
+        });
+        EventsService.getMyEvents()
+        .success(function(posts) {
+             $scope.events = events;
+        });
+
+    PicturesService.getPictures()
+        .success(function(pictures) {
+             $scope.pictures = pictures;
+        });
+  
+}])
+
+
+
+myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService' , 
+    function($scope, $http, $location , UsersService){
+  UsersService.getUsers()
+        .success(function(users) {
+             $scope.users = users;
+        });
+
+    $scope.orderProp = '+name';
+
+    $scope.quantity = 5;
+
+
+  $scope.register = function(newAccount){
+    register($scope.newAccount);
+    $scope.newAccount = '';
+  }
+  var loggedInUser =null;
+
+  $scope.login = function(userDetails){
+    login($scope.userDetails, $scope.users)
+    $location.path('/')
+    $scope.userDetails = '';
+  }
+  
+
+  $scope.remove = function(id) {
+    console.log(id);
+    $http.delete('/api/users/' + id);
+    $location.path('/users')
+    console.log($location.path())
+        
+    };
+
+  $scope.editUser = function(user) {
+       $http.put('/api/user/' + user._id, user)
+      }
+  
+  
+}])
+
+
+myApp.factory('UsersService', ['$http', function($http){
+
+  register = function(newAccount){
+    $http.post('api/users/registerNewUser', newAccount);
+    console.log(newAccount)
+  }
+
+  remove = function(id){
+    $http.delete('api/users/' + id);
+  }
+  var loggedInUser=null
+
+  login = function(userDetails, users){
+    console.log(userDetails.email)
+    users.forEach(function(user){
+    if(user.email == userDetails.email){
+        console.log("email is right " + user.email + "  -  " + userDetails.email)
+        if(user.password == userDetails.password){
+          loggedInUser = user;
+          console.log("user has logged in " + user.email)
+              }
+      }
+    })
+
+  }
+
+  loggedIn = function(){
+    return loggedInUser;
+  }
+
+  
+  var api = {
+    getUsers : function() {
+           return $http.get('/api/users')
+     },
+
+    loggedIn : function(){
+    return loggedInUser;
+  }
+  }
+  return api
+}])
+
+
+
+
+myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', function ($scope, $http, $location , EventsService, UsersService) {
+  
+  $scope.loggedInUser = UsersService.loggedIn();
+  //console.log($scope.loggedInUser.email)
+
+  EventsService.getMyEvents()
+        .success(function(events) {
+             $scope.events = events;
+        });
+          EventsService.getEvents()
+        .success(function(events) {
+             $scope.events = events;
+        });
+
+  $scope.quantity = 5;
+  // $scope.addPost = function(){
+  //   if($scope.loggedInUser != null){
+  //     $scope.newPost.author = $scope.loggedInUser.name
+  //   }
+  //   console.log("adding post " + $scope.newPost.title)
+  //   addNewPost($scope.newPost);
+  //   $scope.newPost = '';
+  // }
+
+  // $scope.deletPost = function(id) {
+  //   console.log(id);
+  //   $http.delete('/api/posts/' + id);
+
+  //   EventsService.getPosts()
+  //       .success(function(posts) {
+  //            $scope.posts = posts;
+  //       });
+        
+  //   };
+
+
+
+    // $scope.orderProp = '-upvotes';
+
+ //  //router.post('/:id/upvotes'
+ //  $scope.incrementUpvotes = function(post) {
+ // //post.upvotes += 1;
+ //    console.log('post id : ' + post._id)
+ //    $http.post('api/posts/' +post._id+'/upvotes', post)
+ //    // .success(function()
+ //    // {
+ //    //   console.log('upvotes added')
+ //    // })
+ //    // .error(function(err, post){
+ //    //   console.log('error : ' + err + ' post : ' + id)
+ //    // })
+ //    EventsService.getPosts()
+ //        .success(function(posts) {
+ //             $scope.posts = posts;
+ //        });
+ //  }
+ //  $scope.decrementUpvotes = function(post) {
+ //    post.upvotes -= 1;
+ //  }
+}]) 
+
+
+myApp.controller('PostsCommentsController', ['$scope', '$routeParams', '$location','$http', 'EventsService', 'UsersService', function($scope, $routeParams, $location, $http , EventsService, UsersService){
+
+  $scope.loggedInUser = UsersService.loggedIn();
+
+  $http.get('/api/posts/post/' + $routeParams.id)
+        .success(function(post) {
+             $scope.post = post[0]
+             console.log(post.title)
+        });
+
+ $scope.addComment = function(){
+    if($scope.loggedInUser != null){
+      $scope.newComment.author = $scope.loggedInUser.name
+    }
+
+  addPostComment($scope.post._id, $scope.newComment)
+    $scope.newComment=''
+  $http.get('/api/posts/post/' + $routeParams.id)
+        .success(function(post) {
+             $scope.post = post[0]
+             console.log(post.title)
+        });
+  }
+
+    
+  }])
+
+
+myApp.factory('EventsService', ['$http', function($http){
+ 
+  //    addNewPost = function(newPost) {
+  //       console.log('in new posts')
+  //          $http.post('/api/posts', newPost).success(function(res)
+  //         {
+  //        console.log ('worked' )
+  //     })
+  //     .error(function(err){
+  //      console.log('error : ' + err)
+  //        })
+  //    }
+     
+  //    addPostComment = function(post_id, comment) {
+  //         return $http.post('/api/posts/' + post_id + '/comments' ,
+  //                           comment)
+  //    }
+
+  //   deletPost= function(id){
+  //   $http.delete('api/posts/' + id);
+  // }
+
+
+   var api = {
+     getMyEvents : function() {
+           return $http.get('/api/events/myEvents')
+     },
+     
+     getAllEvents : function() {
+          return $http.post('/api/events/', 
+                     {upvotes: new_upvote_count })
+     },
+     // upvotePostComment : function(post_id, comment_id, new_upvote_count ) {
+     //      return $http.post( '/api/posts/' +
+     //                  post_id + '/comments/' +  comment._id + '/upvotes', 
+     //                 {upvotes: new_upvote_count })
+     // },
+  }
+  return api
+}])
+
+
+
+
+myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 'UsersService', function($scope, $http , PicturesService, UsersService) {
+
+  $scope.loggedInUser = UsersService.loggedIn();
+
+  PicturesService.getPictures()
+        .success(function(pictures) {
+             $scope.pictures = pictures;
+        });
+     $scope.orderProp = 'name';
+     $scope.quantity = 5;
+
+  $scope.incrementUpvotes = function(picture) {
+ //post.upvotes += 1;
+    console.log('picture id : ' + picture._id)
+    $http.post('api/pictures/' +picture._id+'/upvotes', picture)
+
+    PicturesService.getPictures()
+        .success(function(pictures) {
+             $scope.pictures = pictures;
+        });
+  }
+
+
+
+
+  $scope.addPicture = function(){
+    if($scope.loggedInUser != null){
+      $scope.newPicture.author = $scope.loggedInUser.name
+    }
+    console.log("adding picture " + $scope.newPicture)
+    addNewPicture($scope.newPicture);
+    $scope.newPicture = '';
+  }
+}])
+
+myApp.factory('PicturesService', ['$http', function($http){
+ 
+     addNewPicture = function(newPicture) {
+           $http.post('/api/pictures', newPicture).success(function(res)
+          {
+         console.log ('worked' )
+      })
+      .error(function(err){
+       console.log('error : ' + err)
+         })
+     }
+     
+     addPictureComment = function(post_id, comment) {
+          return $http.post('/api/posts/' + post_id + '/comments' ,
+                            comment)
+     }
+
+  //   deletPost= function(id){
+  //     $http.delete('api/posts/' + id);
+  // }
+
+
+   var api = {
+     getPictures : function() {
+           return $http.get('/api/pictures')
+     }
+     
+     // upvotePost : function(post_id, new_upvote_count ) {
+     //      return $http.post('/api/posts/' + post._id + '/upvotes', 
+     //                 {upvotes: new_upvote_count })
+     // },
+     // upvotePostComment : function(post_id, comment_id, new_upvote_count ) {
+     //      return $http.post( '/api/posts/' +
+     //                  post_id + '/comments/' +  comment._id + '/upvotes', 
+     //                 {upvotes: new_upvote_count })
+     // }
+  }
+  return api
+}])
+
+
+
+
+
+myApp.controller('PicutresDetailCtrl', 
+   ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 
+   function($scope, $routeParams, $http , UsersService ,PicturesService) {
+
+    $scope.loggedInUser = UsersService.loggedIn();
+
+    $http.get('/api/pictures/picture/' + $routeParams.id)
+        .success(function(picture) {
+             $scope.picture = picture[0]
+             console.log(picture.title)
+        });
+
+ $scope.addComment = function(){
+    if($scope.loggedInUser != null){
+      $scope.newComment.author = $scope.loggedInUser.name
+    }
+
+  addPictureComment($scope.picture._id, $scope.newComment)
+    $scope.newComment=''
+  $http.get('/api/pictures/picture/' + $routeParams.id)
+        .success(function(picture) {
+             $scope.picture = picture[0]
+             console.log(picture.title)
+        });
+  }
+  }])

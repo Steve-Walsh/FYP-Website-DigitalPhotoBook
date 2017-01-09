@@ -53,15 +53,12 @@
       <tbody>
         <tr ng-repeat="picture in pictures | filter:{title: query} | orderBy:orderProp | limitTo:quantity" >
 
-          <td class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(picture)"> 
-             {{picture.upvotes}}</td>
+          <td > 
+             {{picture.event}}</td>
  
            
-          <td>
-              <a ng-show="picture.link != null" href="/{{picture.link}}"> {{picture.title}}</a>
-            <span ng-hide="picture.link != null"> {{picture.title}} </span></td>
-          <td><a href="/{{picture.link}}"><img class="thumb" ng-src="{{picture.link}}"></a></td>
-              <td><a href="#/picture/{{picture._id}}">Comments</a></td>
+          <td> {{picture.timeStamp}}</td>
+          <td><img class="thumb" ng-src="{{picture.location}}"></td>
 
         </tr>
       </tbody>

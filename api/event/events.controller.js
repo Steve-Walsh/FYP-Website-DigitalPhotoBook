@@ -34,7 +34,6 @@
     exports.show = function(req, res) {
           Event.find({_id : req.params.id}, function(err, Event){
              if(err) { return handleError(res, err); }
-             console.log(Event)
              return res.json(Event);
           })
     
@@ -47,18 +46,9 @@
         Events.forEach(function(event){
 
           event.attenders.forEach(function(person){
-
-          console.log('person : ', person);
-
           if(person.id == req.params._id){
-
-            console.log("event is " , event)
-
-            myEventsList.push(event)
           }})
-
           if(event.adminId == req.params._id){
-            console.log("admin id" , event.adminID)
             myEventsList.push(event)
           }
         })

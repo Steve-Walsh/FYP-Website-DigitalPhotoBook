@@ -11,7 +11,7 @@
       name : {type: String, required: true},
       location : {type: String, requried: true},
       uploadedBy : {type: String, required: true},
-      time: {type: Date, required: true}
+      timeStamp: {type: Date, required: true}
 
     })
 

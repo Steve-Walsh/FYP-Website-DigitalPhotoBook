@@ -29,8 +29,8 @@
           <td > {{event.title}} </td>
              <td> {{event.location}}</span></td>
               
-          <td>{{event.picture.time}}</td>
-          <td> picture will be here</td>
+          <td>{{event.picture.timeStamp}}</td>
+          <td><div ng-if="event.pictures.length == 0"> No Pictures</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div></td>
 
         </tr>
       </tbody>

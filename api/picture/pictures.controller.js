@@ -48,39 +48,3 @@
            return handleError(res, err);
         }
       })};
-
-
-    exports.update_upvotes = function(req, res) {
-      console.log(req.params.id)
-      var num = req.body.upvotes 
-      num = num + 1
-      Picture.findOneAndUpdate(
-        {_id: req.params.id }, 
-        { upvotes: num },
-        { safe: true, upsert: true },
-        function (err) {
-          if(err) { return handleError(res, err); 
-            console.log('this is an error in upvotes')}
-        return res.send(200, 'Update successful');
-
-        });
-    };
-
-    exports.add_comment = function(req, res) {
-
-    var comment = {
-        author: req.body.author , 
-        body: req.body.body
-    };
-
-    Picture.findOneAndUpdate(
-      { _id: req.params.id },
-      { $push: { comments: comment }},
-      { safe: true, upsert: true },
-      function(err) {
-        if(err) { return handleError(res, err); }
-        return res.send(200, 'Update successful');
-        });
-
-    };
-

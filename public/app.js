@@ -166,7 +166,6 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
   $scope.loggedInUser = UsersService.loggedIn();
   
    if($scope.loggedInUser == null){
-    console.log("redirect :",$scope.loggedInUser);
     $location.path('/login');
    }
 
@@ -174,10 +173,12 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
         .success(function(events) {
              $scope.events = events;
         });
+   if($scope.loggedInUser != null){
   EventsService.getMyEvents($scope.loggedInUser)
         .success(function(myEvents) {
              $scope.myEvents = myEvents;
         });
+   }
 
   $scope.quantity = 5;
 
@@ -197,6 +198,7 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 
     console.log("adding event " + newAttender, "     ", event._id)
   }
+}])
 
 
 myApp.factory('EventsService', ['$http', function($http){
@@ -253,45 +255,45 @@ myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 
      $scope.orderProp = 'name';
      $scope.quantity = 5;
 
-  $scope.incrementUpvotes = function(picture) {
- //post.upvotes += 1;
-    console.log('picture id : ' + picture._id)
-    $http.post('api/pictures/' +picture._id+'/upvotes', picture)
+ //  $scope.incrementUpvotes = function(picture) {
+ // //post.upvotes += 1;
+ //    console.log('picture id : ' + picture._id)
+ //    $http.post('api/pictures/' +picture._id+'/upvotes', picture)
 
-    PicturesService.getPictures()
-        .success(function(pictures) {
-             $scope.pictures = pictures;
-        });
-  }
+ //    PicturesService.getPictures()
+ //        .success(function(pictures) {
+ //             $scope.pictures = pictures;
+ //        });
+ //  }
 
-  $scope.addPicture = function(){
-    if($scope.loggedInUser != null){
-      $scope.newPicture.author = $scope.loggedInUser.name
-    }
-    console.log("adding picture " + $scope.newPicture)
-    addNewPicture($scope.newPicture);
-    $scope.newPicture = '';
-  }
+  // $scope.addPicture = function(){
+  //   if($scope.loggedInUser != null){
+  //     $scope.newPicture.author = $scope.loggedInUser.name
+  //   }
+  //   console.log("adding picture " + $scope.newPicture)
+  //   addNewPicture($scope.newPicture);
+  //   $scope.newPicture = '';
+  // }
 }])
 
 
 
 myApp.factory('PicturesService', ['$http', function($http){
  
-     addNewPicture = function(newPicture) {
-           $http.post('/api/pictures', newPicture).success(function(res)
-          {
-         console.log ('worked' )
-      })
-      .error(function(err){
-       console.log('error : ' + err)
-         })
-     }
+     // addNewPicture = function(newPicture) {
+     //       $http.post('/api/pictures', newPicture).success(function(res)
+     //      {
+     //     console.log ('worked' )
+     //  })
+     //  .error(function(err){
+     //   console.log('error : ' + err)
+     //     })
+     // }
      
-     addPictureComment = function(post_id, comment) {
-          return $http.post('/api/posts/' + post_id + '/comments' ,
-                            comment)
-     }
+     // addPictureComment = function(post_id, comment) {
+     //      return $http.post('/api/posts/' + post_id + '/comments' ,
+     //                        comment)
+     // }
 
   //   deletPost= function(id){
   //     $http.delete('api/posts/' + id);

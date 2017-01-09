@@ -1,32 +1,4 @@
-<!--           
-<div class="col-md-4 col-md-pull-2" style="margin-top: 55px;">
-    Search: <input ng-model="query">
-   <br><br> Sort by:
-      <select ng-model="orderProp">
-          <option value="name">Alphabetical</option>
-          <option value="-upvotes">Top posts</option>
-          <option value="+upvotes">Bottom posts</option>
-      </select>
-  </div>
 
-<div class="col-md-4 col-md-push-7" style="margin-top: 30px;">
-<form ng-submit="addPost()"style="margin-top:30px;">
-  <h3>Add a new post</h3>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Title" ng-model="newPost.title" required="true" ></input>
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Username"  ng-model="newPost.author" ng-show='loggedInUser == null'></input>
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Web link" ng-model="newPost.link"></input>
-  </div>
-    <div class="form-group">
-    <textarea type="text" class="form-control" placeholder="Content" ng-model="newPost.content"></textarea>
-  </div>
-  <button type="submit" class="btn btn-success">Post</button>
-</form>
-</div> -->
 
 <div class="" style=" margin-top: 55px;">
   <div class="page-header">
@@ -51,18 +23,20 @@
           <th>Dates</th>
           <th>People Attending</th>
           <th>Total Pictures</th>
+          <th ng-show='loggedInUser.name != null'>Join Event</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="event in events | filter:{title: query} | orderBy:orderProp | limitTo:quantity">
 
-             <td> <a ng-show="event.link != null" href="{{event.link}}"> {{event.title}}</a>
-             <td>{{event.location}}</td>
+          <td> {{event.title}}</td>
+          <td>{{event.location}}</td>
           <td > {{event.startTime}}   - {{event.endTime}}  </td>
-              
-          <td>{{event.attenders.lenght}}</td>
-          <td>{{event.pictures.lenght}}</td>
-          <!-- <td> <buttion class="btn btn-danger" ng-click="deletEvent(event._id)" ng-show='loggedInUser.name == event.admin'> Delete </buttion> {{event.author}}</td> -->
+
+
+          <td><div ng-if="event.attenders.length == 0"> No users</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div></td>
+          <td><div ng-if="event.pictures.length == 0"> No Pictures</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div></td>
+          <td><button class="btn btn-success" ng-click=joinEvent(event)> Join Event </button></td>
         </tr>
       </tbody>
     </table>

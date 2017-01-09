@@ -4,24 +4,27 @@
     var attendersSchema = new Schema({
         name: { type: String, required: true },
         email: { type: String, required: true },
-        id: Number
+        id: { type: String, required: true }
       });
 
     var pictureSchema = new Schema({
       name : {type: String, required: true},
       location : {type: String, requried: true},
-      uploadedBy : {type: String, required: true}
+      uploadedBy : {type: String, required: true},
+      time: {type: Date, required: true}
 
     })
 
     var EventSchema = new Schema({
       title: { type: String, required: true },
-      eventLocation: { type: String, optional: true },
+      location: { type: String, optional: true },
       startTime:{type: Date, required: true},
       endTime:{type: Date, required: true},
       admin: { type: String, required: true },
+      adminId:{type:String, required:true},
+      info: { type: String, optional: true },
       attenders: [attendersSchema],
-      pictures: [CommentSchema],
+      pictures: [pictureSchema],
     });
 
-    module.exports = mongoose.model('posts', PostSchema);
+    module.exports = mongoose.model('events', EventSchema);

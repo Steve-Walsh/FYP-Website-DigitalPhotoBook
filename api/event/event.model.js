@@ -18,8 +18,8 @@
     var EventSchema = new Schema({
       title: { type: String, required: true },
       location: { type: String, optional: true },
-      startTime:{type: Date, required: true},
-      endTime:{type: Date, required: true},
+      startTime:{type: String, optional: true},
+      endTime:{type: String, optional: true},
       admin: { type: String, required: true },
       adminId:{type:String, required:true},
       info: { type: String, optional: true },

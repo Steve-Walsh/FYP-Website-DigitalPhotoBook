@@ -1,3 +1,5 @@
+  var Picture = require('./../picture/picture.model');  
+  var Event = require('./../event/event.model');
 
     function handleError(res, err) {
       return res.send(500, err);
@@ -5,9 +7,10 @@
 
     // Get list of pictures
     exports.index = function(req, res) {
-        Picture.find(function (err, pictures) {
+        Event.find(function (err, events) {
         if(err) { return handleError(res, err); }
-        return res.json(200, pictures);
+        console.log(events)
+        return res.json(200, events);
       });
     } ;
 

@@ -1,5 +1,7 @@
   var Picture = require('./../picture/picture.model');  
   var Event = require('./../event/event.model');
+  var User = require('./../user.model');
+
 
     function handleError(res, err) {
       return res.send(500, err);
@@ -9,10 +11,26 @@
     exports.index = function(req, res) {
         Event.find(function (err, events) {
         if(err) { return handleError(res, err); }
-        console.log(events)
+        console.log("hello shane" + events)
         return res.json(200, events);
       });
     } ;
+
+exports.login = function.(req, res){
+  User.find(function (err, users){
+    users.forEach(function(user){
+      if(user.email == userDetails.email){
+        console.log("email is right " + user.email + "  -  " + userDetails.email)
+        if(user.password == userDetails.password){
+          console.log("user has logged in " + user.email)
+          return.res.json(200, user);
+              }
+      }
+    })
+
+  })
+
+};
 
     
 //     exports.create = function(req, res) {

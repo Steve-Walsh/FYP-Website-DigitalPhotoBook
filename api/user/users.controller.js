@@ -29,6 +29,22 @@ var User = require('./user.model');
     return res.json(201, user);
   })
 };
+
+// exports.login = function.(req, res){
+//   User.find(function (err, users){
+//     users.forEach(function(user){
+//       if(user.email == userDetails.email){
+//         console.log("email is right " + user.email + "  -  " + userDetails.email)
+//         if(user.password == userDetails.password){
+//           console.log("user has logged in " + user.email)
+//           return.res.json(200, user);
+//               }
+//       }
+//     })
+
+//   })
+
+// };
  // Update an existing user in datastore.
   exports.update = function(req, res) {
        User.findById(req.params.id, function (err, user) {

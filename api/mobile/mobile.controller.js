@@ -22,7 +22,7 @@ exports.login = function(req, res){
   User.find(function (err, users){
     users.forEach(function(user){
       if(user.email == req.body.email){
-        console.log("email is right " + user.email + "  -  " + req.body..email)
+        console.log("email is right " + user.email + "  -  " + req.body.email)
         if(user.password == req.body.password){
           console.log("user has logged in " + user.email)
           return res.json(200, user);

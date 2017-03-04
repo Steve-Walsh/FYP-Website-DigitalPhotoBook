@@ -1,6 +1,6 @@
   var Picture = require('./../picture/picture.model');  
   var Event = require('./../event/event.model');
-  var User = require('./../user.model');
+  var User = require('./../user/user.model');
 
 
     function handleError(res, err) {
@@ -16,14 +16,16 @@
       });
     } ;
 
-exports.login = function.(req, res){
+exports.login = function(req, res){
+  console.log("inside")
+  
   User.find(function (err, users){
     users.forEach(function(user){
-      if(user.email == userDetails.email){
-        console.log("email is right " + user.email + "  -  " + userDetails.email)
-        if(user.password == userDetails.password){
+      if(user.email == req.body.email){
+        console.log("email is right " + user.email + "  -  " + req.body..email)
+        if(user.password == req.body.password){
           console.log("user has logged in " + user.email)
-          return.res.json(200, user);
+          return res.json(200, user);
               }
       }
     })
@@ -32,6 +34,13 @@ exports.login = function.(req, res){
 
 };
 
+exports.events = function(req, res) {
+        Event.find(function (err, events) {
+        if(err) { return handleError(res, err); }
+        console.log("hello shane" + events)
+        return res.json(200, events);
+      });
+    } ;
     
 //     exports.create = function(req, res) {
 //       console.log("On home page")

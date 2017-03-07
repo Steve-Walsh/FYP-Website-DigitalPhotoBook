@@ -20,12 +20,12 @@ var User = require('./user.model');
     res.json({success: false, msg: 'Please pass name and password.'});
   } else {
     var newUser = new User({
-      name = req.body.name,
-      password = req.body.password
-      email = req.body.email
+      name: req.body.name,
+      password: req.body.password,
+      email: req.body.email
     });
     // save the user
-    User.save(newUser, function(err) {
+    User.create(newUser, function(err) {
       if (err) {
         return res.json({success: false, msg: 'Username already exists.'});
       }

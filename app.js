@@ -10,8 +10,8 @@ var port        = process.env.PORT || 8080;
 var jwt         = require('jwt-simple');
 var mongoose 	= require('mongoose'); 
 
-//mongoose.connect('mongodb://localhost/photoAppDB'); 
-
+mongoose.connect(config.database); 
+require('./routes')(app)
 
 // get our request parameters
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +24,9 @@ app.use(morgan('dev'));
 app.use(passport.initialize())
 
 require('./config/express').addMiddleware(app)
-require('./routes')(app)
+require('./config/passport')(passport);
+
+//var apitRout
 
 
 app.listen(port, function() {

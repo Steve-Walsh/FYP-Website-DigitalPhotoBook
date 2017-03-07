@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', controller.index);
 router.post('/login', controller.login);
 router.get('/events', controller.events);
-router.get('/pictures', contorll.pictures);
+router.get('/pictures', controller.pictures);
 
 
 // router.get('/picture/:id', controller.show);

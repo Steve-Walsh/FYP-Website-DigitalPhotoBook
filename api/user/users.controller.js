@@ -16,13 +16,13 @@ var User = require('./user.model');
   // Creates a new user in datastore.
   exports.create = function(req, res) {
 
-  if (!req.body.name || !req.body.password) {
+  if (!req.params.name || !req.params.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
   } else {
     var newUser = new User({
-      name: req.body.name,
-      password: req.body.password,
-      email: req.body.email
+      name: req.params.name,
+      password: req.params.password,
+      email: req.params.email
     });
     // save the user
     User.create(newUser, function(err) {
@@ -41,21 +41,7 @@ var User = require('./user.model');
   // })
 };
 
-// exports.login = function.(req, res){
-//   User.find(function (err, users){
-//     users.forEach(function(user){
-//       if(user.email == userDetails.email){
-//         console.log("email is right " + user.email + "  -  " + userDetails.email)
-//         if(user.password == userDetails.password){
-//           console.log("user has logged in " + user.email)
-//           return.res.json(200, user);
-//               }
-//       }
-//     })
 
-//   })
-
-// };
  // Update an existing user in datastore.
   exports.update = function(req, res) {
        User.findById(req.params.id, function (err, user) {

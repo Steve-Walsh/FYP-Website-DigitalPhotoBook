@@ -37,10 +37,18 @@ exports.login = function(req, res){
 exports.events = function(req, res) {
         Event.find(function (err, events) {
         if(err) { return handleError(res, err); }
-        console.log("hello shane" + events)
         return res.json(200, events);
       });
     } ;
+
+
+    exports.pictures = function(req, res) {
+        Picture.find(function (err, pictures) {
+        if(err) { return handleError(res, err); }
+        return res.json(200, pictures);
+      });
+    } ;
+    
     
 //     exports.create = function(req, res) {
 //       console.log("On home page")

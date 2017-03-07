@@ -1,8 +1,7 @@
-    var mongoose = require('mongoose')
-    var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema;
 
-
-    var PictureSchema = new Schema({
+var PictureSchema = new Schema({
       name: { type: String, required: true },
       location: { type: String, optional: true },
       owner: { type: String, required: true },

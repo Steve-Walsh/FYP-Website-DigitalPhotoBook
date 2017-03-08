@@ -128,16 +128,25 @@ myApp.factory('UsersService', ['$http', function($http){
   var loggedInUser=null
 
   login = function(userDetails, users){
-    console.log(userDetails.email)
-    users.forEach(function(user){
-    if(user.email == userDetails.email){
-        console.log("email is right " + user.email + "  -  " + userDetails.email)
-        if(user.password == userDetails.password){
-          loggedInUser = user;
-          console.log("user has logged in " + user.email)
-              }
-      }
-    })
+
+  //loggedInUser = 
+  $http.post('api/mobiles/login', userDetails).then(function(res)
+  {
+    console.log(res);
+    
+  })
+  //return user;
+
+    // console.log(userDetails.email)
+    // users.forEach(function(user){
+    // if(user.email == userDetails.email){
+    //     console.log("email is right " + user.email + "  -  " + userDetails.email)
+    //     if(user.password == userDetails.password){
+    //       loggedInUser = user;
+    //       console.log("user has logged in " + user.email)
+    //           }
+    //   }
+    // })
 
   }
 

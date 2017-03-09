@@ -2,7 +2,7 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
  
 // load up the user model
-var User = require('../api/user/user.model.js');
+var User = require('../api/user/user.model');
 var config = require('../config/database'); // get db config file
  
 module.exports = function(passport) {

@@ -15,7 +15,8 @@ mongoose.connect(config.database);
 // get our request parameters
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
- 
+
+
 // log to console
 app.use(morgan('dev'));
  
@@ -25,8 +26,32 @@ app.use(passport.initialize())
 require('./config/express').addMiddleware(app)
 require('./config/passport')(passport);
 
-//var apitRout
-
+app.post('/authenticate', function (req, res) {
+    console.log("inside")
+  console.log(req.body);
+  
+  User.findOne({
+    email: req.body.email
+  }, function(err, user) {
+    if (err) throw err;
+ 
+    if (!user) {
+      res.send({success: false, msg: 'Authentication failed. User not found.'});
+    } else {
+      // check if password matches
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (isMatch && !err) {
+          // if user is found and password is right create a token
+          var token = jwt.encode(user, config.secret);
+          // return the information including token as JSON
+          res.json({success: true, token: 'JWT ' + token});
+        } else {
+          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+        }
+      });
+    }
+})
+});
 require('./routes')(app)
 
 app.listen(port, function() {

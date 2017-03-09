@@ -118,8 +118,10 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 myApp.factory('UsersService', ['$http', function($http){
 
   register = function(newAccount){
-    $http.post('api/users/registerNewUser', newAccount);
-    console.log(newAccount)
+    $http.post('api/users/registerNewUser', newAccount).then(function(res){
+      console.log(res)
+    })
+   // console.log(newAccount)
   }
 
   remove = function(id){
@@ -129,25 +131,19 @@ myApp.factory('UsersService', ['$http', function($http){
 
   login = function(userDetails){
 
-  //loggedInUser = 
-  $http.post('api/mobiles/login', userDetails).then(function(res)
+  $http.post('/authenticate', userDetails).then(function(res)
   {
-    console.log(res);
+    console.log("data back is ",res.data);
+    if(res.success = true){
+
     loggedInUser = res;
+    }else
+    {
+      loggedInUser = null;
+    }
     
   })
-  //return user;
 
-    // console.log(userDetails.email)
-    // users.forEach(function(user){
-    // if(user.email == userDetails.email){
-    //     console.log("email is right " + user.email + "  -  " + userDetails.email)
-    //     if(user.password == userDetails.password){
-    //       loggedInUser = user;
-    //       console.log("user has logged in " + user.email)
-    //           }
-    //   }
-    // })
 
   }
 

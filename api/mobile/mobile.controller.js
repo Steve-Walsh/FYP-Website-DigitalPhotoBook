@@ -18,19 +18,30 @@
 
 exports.login = function(req, res){
   console.log("inside")
+  console.log(req.body);
   
-  User.find(function (err, users){
-    users.forEach(function(user){
-      if(user.email == req.body.email){
-        console.log("email is right " + user.email + "  -  " + req.body.email)
-        if(user.password == req.body.password){
-          console.log("user has logged in " + user.email)
-          return res.json(200, user);
-              }
-      }
-    })
+  User.findOne({
+    email: req.body.email
+  }, function(err, user) {
+    if (err) throw err;
+ 
+    if (!user) {
+      res.send({success: false, msg: 'Authentication failed. User not found.'});
+    } else {
+      // check if password matches
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (isMatch && !err) {
+          // if user is found and password is right create a token
+          var token = jwt.encode(user, config.secret);
+          // return the information including token as JSON
+          res.json({success: true, token: 'JWT ' + token});
+        } else {
+          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+        }
+      });
+    }
+})
 
-  })
 
 };
 

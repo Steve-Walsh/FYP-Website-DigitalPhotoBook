@@ -11,7 +11,6 @@ var jwt         = require('jwt-simple');
 var mongoose 	= require('mongoose'); 
 
 mongoose.connect(config.database); 
-require('./routes')(app)
 
 // get our request parameters
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,6 +27,7 @@ require('./config/passport')(passport);
 
 //var apitRout
 
+require('./routes')(app)
 
 app.listen(port, function() {
   console.log('Express server listening on port : '+ port);

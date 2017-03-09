@@ -94,7 +94,7 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
   var loggedInUser =null;
 
   $scope.login = function(userDetails){
-    login($scope.userDetails, $scope.users)
+    login($scope.userDetails)
     $location.path('/')
     $scope.userDetails = '';
   }
@@ -127,12 +127,13 @@ myApp.factory('UsersService', ['$http', function($http){
   }
   var loggedInUser=null
 
-  login = function(userDetails, users){
+  login = function(userDetails){
 
   //loggedInUser = 
   $http.post('api/mobiles/login', userDetails).then(function(res)
   {
     console.log(res);
+    loggedInUser = res;
     
   })
   //return user;

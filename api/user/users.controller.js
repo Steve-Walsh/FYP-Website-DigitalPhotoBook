@@ -15,31 +15,24 @@ var User = require('./user.model');
 
   // Creates a new user in datastore.
   exports.create = function(req, res) {
-
-  if (!req.params.name || !req.params.password) {
-    res.json({success: false, msg: 'Please pass name and password.'});
-  } else {
-    var newUser = new User({
-      name: req.params.name,
-      password: req.params.password,
-      email: req.params.email
-    });
-    // save the user
-    User.create(newUser, function(err) {
-      if (err) {
-        return res.json({success: false, msg: 'Username already exists.'});
-      }
-      res.json({success: true, msg: 'Successful created new user.'});
-    });
-  }
-  //   User.create(user, function(err, user){
-  //     if(err) {
-  //       return handleError(res, err);
-  //     }
-
-  //   return res.json(201, user);
-  // })
-};
+    console.log(req.body);
+    if (!req.params.name || !req.params.password) {
+      res.json({success: false, msg: 'Please pass name and password.'});
+    } else {
+      var newUser = new User({
+        name: req.params.name,
+        password: req.params.password,
+        email: req.params.email
+      });
+      // save the user
+      User.create(newUser, function(err) {
+        if (err) {
+          return res.json({success: false, msg: 'Username already exists.'});
+        }
+        res.json({success: true, msg: 'Successful created new user.'});
+      });
+    }
+  };
 
 
  // Update an existing user in datastore.

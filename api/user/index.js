@@ -21,7 +21,7 @@
     exports.index = function(req, res) {
       User.find(function (err, users) {
         if(err) { return handleError(res, err); }
-        return res.json(200, users);
+        return res.json(200, users);  
       });
     } ;
 

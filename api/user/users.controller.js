@@ -16,7 +16,7 @@ var jwt = require('jwt-simple');
     } ;
 
   // Creates a new user in datastore.
-  exports.create = function(req, res) {
+  exports.create = function(req, res) { 
     console.log(req.body);
     if (!req.body.email || !req.body.password) {
       res.json({success: false, msg: 'Please pass name and password.'});

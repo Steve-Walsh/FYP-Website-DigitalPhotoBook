@@ -1,6 +1,11 @@
 
 var myApp = angular.module('myApp',['ngRoute']);
 
+
+
+
+
+
 myApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider
@@ -49,14 +54,19 @@ myApp.config(['$routeProvider',
     .otherwise({
       redirectTo: '/'
     })
-  }])
+  }]).
+
+run(function($rootScope, $location, UsersService)  {
+    $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+      UsersService.isLoggedInApi();
+      if ( !$rootScope.loggedInUser) {
+        $location.path('/login');
+      }
+    });
+})
 
 myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
-   $scope.loggedInUser = UsersService.loggedIn();
 
-   if($scope.loggedInUser == null){
-    $location.path('/login');
-   }
 
     // EventsService.getAllEvents()
     //     .success(function(events) {
@@ -115,7 +125,53 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 }])
 
 
-myApp.factory('UsersService', ['$http', function($http){
+myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http, $window, $rootScope){
+
+  var saveToken = function (token) {
+      $window.localStorage['mean-token'] = token;
+  };
+
+
+  var getToken = function () {
+      return $window.localStorage['mean-token'];
+  };
+
+  logout = function() {
+      $window.localStorage.removeItem('mean-token');
+  };
+
+  isLoggedIn = function() {
+    var token = getToken();
+    var payload;
+
+    if(token !=null){
+      payload = token.split('.')[1];
+      payload = $window.atob(payload);
+      payload = JSON.parse(payload);
+
+
+      return payload;
+    } else {
+      console.log("false")
+      return false;
+    }
+  };
+
+  var currentUser = function() {
+    if(isLoggedIn()){
+      var token = getToken();
+      var payload = token.split('.')[1];
+      payload = $window.atob(payload);
+      payload = JSON.parse(payload);
+      return {
+        email : payload.email,
+        name : payload.name
+      };
+    }
+  };
+
+
+
 
   register = function(newAccount){
     $http.post('api/users/registerNewUser', newAccount).then(function(res){
@@ -127,20 +183,20 @@ myApp.factory('UsersService', ['$http', function($http){
   remove = function(id){
     $http.delete('api/users/' + id);
   }
-  var loggedInUser=null
+  
 
   login = function(userDetails){
 
-  $http.post('/authenticate', userDetails).then(function(res)
-  {
-    console.log("data back is ",res.data);
-    if(res.success = true){
-
-    loggedInUser = res;
-    }else
+    $http.post('/authenticate', userDetails).then(function(res)
     {
-      loggedInUser = null;
-    }
+      if(res.success = true){
+
+        saveToken(res.data.token)
+
+      }else
+      {
+        logout();
+      }
     
   })
 
@@ -159,7 +215,14 @@ myApp.factory('UsersService', ['$http', function($http){
 
     loggedIn : function(){
     return loggedInUser;
-  }
+  },
+    getTokenApi : function(){
+      getToken();
+    },
+    isLoggedInApi : function (){
+      $rootScope.loggedInUser = isLoggedIn();
+      isLoggedIn();
+    }
   }
   return api
 }])
@@ -168,12 +231,8 @@ myApp.factory('UsersService', ['$http', function($http){
 
 
 myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', function ($scope, $http, $location , EventsService, UsersService) {
+
   
-  $scope.loggedInUser = UsersService.loggedIn();
-  
-   if($scope.loggedInUser == null){
-    $location.path('/login');
-   }
 
   EventsService.getAllEvents()
         .success(function(events) {
@@ -207,7 +266,7 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 }])
 
 
-myApp.factory('EventsService', ['$http', function($http){
+myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersService){
  
      addNewEvent = function(newEvent) {
         console.log('in new event')
@@ -232,7 +291,10 @@ myApp.factory('EventsService', ['$http', function($http){
 
    var api = {
      getAllEvents : function() {
-           return $http.get('/api/events/')
+           return $http.get('/api/events/' , {headers: {
+        Authorization: 'Bearer '+ UsersService.getTokenApi()
+      }
+    })
      },
      
     getMyEvents : function(loggedInUser) {
@@ -248,7 +310,6 @@ myApp.factory('EventsService', ['$http', function($http){
 
 myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 'UsersService','$location',function($scope, $http , PicturesService, UsersService, $location) {
 
-  $scope.loggedInUser = UsersService.loggedIn();
 
     if($scope.loggedInUser == null){
     $location.path('/login');
@@ -260,50 +321,12 @@ myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 
         });
      $scope.orderProp = 'name';
      $scope.quantity = 5;
-
- //  $scope.incrementUpvotes = function(picture) {
- // //post.upvotes += 1;
- //    console.log('picture id : ' + picture._id)
- //    $http.post('api/pictures/' +picture._id+'/upvotes', picture)
-
- //    PicturesService.getPictures()
- //        .success(function(pictures) {
- //             $scope.pictures = pictures;
- //        });
- //  }
-
-  // $scope.addPicture = function(){
-  //   if($scope.loggedInUser != null){
-  //     $scope.newPicture.author = $scope.loggedInUser.name
-  //   }
-  //   console.log("adding picture " + $scope.newPicture)
-  //   addNewPicture($scope.newPicture);
-  //   $scope.newPicture = '';
-  // }
 }])
 
 
 
 myApp.factory('PicturesService', ['$http', function($http){
  
-     // addNewPicture = function(newPicture) {
-     //       $http.post('/api/pictures', newPicture).success(function(res)
-     //      {
-     //     console.log ('worked' )
-     //  })
-     //  .error(function(err){
-     //   console.log('error : ' + err)
-     //     })
-     // }
-     
-     // addPictureComment = function(post_id, comment) {
-     //      return $http.post('/api/posts/' + post_id + '/comments' ,
-     //                        comment)
-     // }
-
-  //   deletPost= function(id){
-  //     $http.delete('api/posts/' + id);
-  // }
 
 
    var api = {

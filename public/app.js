@@ -59,8 +59,15 @@ myApp.config(['$routeProvider',
 run(function($rootScope, $location, UsersService)  {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
       UsersService.isLoggedInApi();
-      if ( !$rootScope.loggedInUser) {
-        $location.path('/login');
+      console.log("outside if")
+      console.log($location.path())
+      if ($location.path() != "/login")
+        if($location.path() != "/signup")
+        {
+          console.log("inside first if", $location.path())
+          if(!$rootScope.loggedInUser) {
+            $location.path('/login');
+        }
       }
     });
 })
@@ -152,7 +159,6 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http
 
       return payload;
     } else {
-      console.log("false")
       return false;
     }
   };

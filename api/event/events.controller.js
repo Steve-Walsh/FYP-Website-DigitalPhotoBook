@@ -33,13 +33,13 @@
       });
     };
 
-    exports.show = function(req, res) {
-          Event.find({_id : req.params.id}, function(err, Event){
-             if(err) { return handleError(res, err); }
-             return res.json(Event);
-          })
+    // exports.show = function(req, res) {
+    //       Event.find({_id : req.params.id}, function(err, Event){
+    //          if(err) { return handleError(res, err); }
+    //          return res.json(Event);
+    //       })
     
-        };
+    //     };
     exports.myEvents = function(req, res){
       var myEventsList = []
               Event.find(function (err, Events) {
@@ -91,6 +91,17 @@
 
     };
 
-    exports.update_comment_upvotes = function(req, res) {
-       // TODO
+    exports.show = function(req, res) {
+      Event.findOne({
+        _id : req.params.id
+      }, function (err, data) {
+          if (err) throw err;
+            if(!data){
+              res.send({success : false, msg : "no event by that id"})
+            }else{
+              res.json({success: true, event : data})
+            }
+      })
       } 
+
+      

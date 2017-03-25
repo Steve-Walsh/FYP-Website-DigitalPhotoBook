@@ -36,6 +36,7 @@ app.post('/authenticate', function (req, res) {
     if (err) throw err;
  
     if (!user) {
+      console.log("not user")
       res.send({success: false, msg: 'Authentication failed. User not found.'});
     } else {
       // check if password matches
@@ -44,8 +45,10 @@ app.post('/authenticate', function (req, res) {
           // if user is found and password is right create a token
           var token = jwt.encode(user, config.secret);
           // return the information including token as JSON
+          console.log(token);
           res.json({success: true, token: 'JWT ' + token});
         } else {
+          console.log("false")
           res.send({success: false, msg: 'Authentication failed. Wrong password.'});
         }
       });

@@ -7,23 +7,17 @@
     <input type="text" class="form-control" placeholder="Title" ng-model="newEvent.title" required="true" ></input>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Location"  ng-model="newEvent.eventLocation" ng-show='loggedInUser == null'></input>
+    <input type="text" class="form-control" placeholder="Location"  ng-model="newEvent.eventLocation"  required="true"</input>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Start Date and Time" ng-model="newEvent.startTime"></input>
+    <input type="text" class="form-control" placeholder="Start Date and Time" ng-model="newEvent.startTime" required="true"></input>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Finish" ng-model="newEvent.endTime"></input>
+    <input type="text" class="form-control" placeholder="Finish" ng-model="newEvent.endTime" required="true"></input>
   </div>
     <div class="form-group">
-    <textarea type="text" class="form-control" placeholder="Information" ng-model="newEvent.info"></textarea>
-  </div>
-    <div class="form-group">
-    <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.admin"></input>
+    <textarea type="text" class="form-control" placeholder="Information" ng-model="newEvent.info" required="true"></textarea>
     </div>
-    <div class="form-group">
-    <input type="hidden" class="form-control" placeholder="adminId" ng-model="newEvent.adminId"></input>
-  </div>
   <button type="submit" class="btn btn-success">Create Event</button>
 </form>
 </div>

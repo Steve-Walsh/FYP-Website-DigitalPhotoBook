@@ -59,12 +59,9 @@ myApp.config(['$routeProvider',
 run(function($rootScope, $location, UsersService)  {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
       UsersService.isLoggedInApi();
-      console.log("outside if")
-      console.log($location.path())
       if ($location.path() != "/login")
         if($location.path() != "/signup")
         {
-          console.log("inside first if", $location.path())
           if(!$rootScope.loggedInUser) {
             $location.path('/login');
         }
@@ -75,20 +72,8 @@ run(function($rootScope, $location, UsersService)  {
 myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
 
 
-    // EventsService.getAllEvents()
-    //     .success(function(events) {
-    //          $scope.events = events;
-    //     });
-    // EventsService.getMyEvents()
-    //     .success(function(myEvents) {
-    //          $scope.myEvents = myEvents;
-    //     });
-
-    // PicturesService.getPictures()
-    //     .success(function(pictures) {
-    //          $scope.pictures = pictures;
-    //     });
-  
+  var loggedInUser = UsersService.getLoggedInUser();
+  console.log("logged in user is ", loggedInUser);
 }])
 
 
@@ -196,6 +181,7 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http
     $http.post('/authenticate', userDetails).then(function(res)
     {
       if(res.success = true){
+        console.log(res.success)
 
         saveToken(res.data.token)
 
@@ -228,8 +214,13 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http
     isLoggedInApi : function (){
       $rootScope.loggedInUser = isLoggedIn();
       isLoggedIn();
-    }
+    },
+  
+    getLoggedInUser : function (){
+    return currentUser();
   }
+}
+
   return api
 }])
 
@@ -244,6 +235,8 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
         .success(function(events) {
              $scope.events = events;
         });
+
+
    if($scope.loggedInUser != null){
   EventsService.getMyEvents($scope.loggedInUser)
         .success(function(myEvents) {
@@ -254,9 +247,7 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
   $scope.quantity = 5;
 
   $scope.addEvent = function(){
-    $scope.newEvent.admin = $scope.loggedInUser.name
-    $scope.newEvent.adminId = $scope.loggedInUser._id
-    console.log("adding event " + $scope.newEvent.title)
+
     addNewEvent($scope.newEvent);
     $scope.newEvent = '';
   }
@@ -317,9 +308,6 @@ myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersS
 myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 'UsersService','$location',function($scope, $http , PicturesService, UsersService, $location) {
 
 
-    if($scope.loggedInUser == null){
-    $location.path('/login');
-   }
 
   PicturesService.getPictures()
         .success(function(pictures) {

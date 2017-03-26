@@ -3,7 +3,7 @@ var controller = require('./pictures.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.post('/', controller.index);
 router.get('/picture/:id', controller.show);
 // router.post('/', controller.create);
 // router.post('/:id/upvotes', controller.update_upvotes);

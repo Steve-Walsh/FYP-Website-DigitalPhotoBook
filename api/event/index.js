@@ -7,9 +7,10 @@ router.get('/', controller.index);
 router.get('/myEvents/:_id', controller.myEvents);
 router.get('/event/:id', controller.show);
 router.post('/', controller.create);
-router.post('/joinEvent/:eventId', controller.joinEvent)
+router.post('/joinEvent/:eventId', controller.joinEvent);
 router.delete('/:id', controller.destroy);
-router.get('/event:')
+router.get('/event:');
+router.get('/eventDetails/:_id', controller.show);
 
 
 module.exports = router;

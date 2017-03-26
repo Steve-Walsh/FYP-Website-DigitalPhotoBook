@@ -255,6 +255,8 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
   $scope.quantity = 5;
 
   $scope.addEvent = function(){
+    $scope.newEvent.admin = $scope.loggedInUser.name
+    $scope.newEvent.adminId = $scope.loggedInUser._id
 
     addNewEvent($scope.newEvent);
     $scope.newEvent = '';

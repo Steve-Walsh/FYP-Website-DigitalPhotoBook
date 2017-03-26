@@ -21,6 +21,7 @@
         adminId : req.body.adminId,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
+        location: req.body.location,
         attenders : [],
         pictures : []
     };

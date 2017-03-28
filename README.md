@@ -1,4 +1,4 @@
-# Final Year Project Website and Backend - Digital Photo Book
+# Final Year Project Website and Backend - Digital Photo Book 
 
 
  Digital Photo Book is a cloud-enabled, mobile-ready, events service.
@@ -7,10 +7,8 @@
   - Allows users to see events
   - Allows users to create events
   - Allows users to join events
-  - 
-  
 
-# For the Mobile application please see [Ionic App Repo] [IA]
+# For the Mobile application please see [Ionic App Repo](https://github.com/Steve-Walsh/ionic-App)
 
 
 ### Installation
@@ -26,5 +24,3 @@ $ cd website
 $ npm install -d
 $ node app.js
 ```
-   [IA]: <https://github.com/Steve-Walsh/ionic-App>
-

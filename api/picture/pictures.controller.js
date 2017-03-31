@@ -22,7 +22,6 @@
 
     
     exports.create = function(req, res) {
-      console.log(req)
 
      // console.log("user Id is : ",req.body.userId)
      // console.log("Image name is : ",req.body.imageName)
@@ -55,12 +54,6 @@
    };
 
 
-   Picture.create(picture, function(err, picture) {
-    if(err) { 
-      return handleError(res, err); }
-      return res.json(201, picture);
-    });
- };
 
  exports.show = function(req, res) {
   Picture.find({_id : req.params.id}, function(err, picture){

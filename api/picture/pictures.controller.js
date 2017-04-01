@@ -10,13 +10,11 @@
       Picture.find(function (err, pics) {
         if(err) { return handleError(res, err); }
         pics.forEach(function(pics){
-          if(pics.ownerId == req.body.id){
             pictures.push(pics)
-          }
 
         })
 
-        return res.json(200, pictures);
+        return res.json(200, pics);
       });
     } ;
 
@@ -36,6 +34,7 @@
 
      // fs.writeFile(fileLoc, new Buffer(req.body.encoded_string, "base64"), function(err) {});
 
+     console.log("req body is ", req)
      res.send('hello')
 
     //  MongoClient.connect('mongodb://localhost/photoAppDB', function(err, db) {

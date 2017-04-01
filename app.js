@@ -31,17 +31,18 @@ require('./config/passport')(passport);
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
+    console.log(file)
     callback(null, './public/data/images');
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
+    callback(null, file.fieldname + '-' + Date.now() + ".jpg");
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
 
 
 app.post('/api/photo',function(req,res){
-  console.log(req.file)
+  console.log(req.options)
   upload(req,res,function(err) {
     if(err) {
       console.log(err)

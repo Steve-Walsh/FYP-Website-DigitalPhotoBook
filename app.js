@@ -9,6 +9,7 @@ var User        = require('./api/user/user.model.js'); // get the mongoose model
 var port        = process.env.PORT || 8080;
 var jwt         = require('jwt-simple');
 var mongoose 	= require('mongoose'); 
+var multer      = require('multer');
 
 mongoose.connect(config.database); 
 
@@ -25,6 +26,40 @@ app.use(passport.initialize())
 
 require('./config/express').addMiddleware(app)
 require('./config/passport')(passport);
+
+
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/data/images');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
+
+app.post('/api/photo',function(req,res){
+  console.log(req.file)
+  upload(req,res,function(err) {
+    if(err) {
+      console.log(err)
+      return res.end("Error uploading file.");
+    }
+
+    res.end("File is uploaded");
+  });
+});
+
+
+
+
+
+
+
+
+
 
 app.post('/authenticate', function (req, res) {
     console.log("inside")

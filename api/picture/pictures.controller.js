@@ -35,7 +35,7 @@
      // var fs = require("fs");
 
      // fs.writeFile(fileLoc, new Buffer(req.body.encoded_string, "base64"), function(err) {});
-
+     console.log(req)
      res.send('hello')
 
     //  MongoClient.connect('mongodb://localhost/photoAppDB', function(err, db) {

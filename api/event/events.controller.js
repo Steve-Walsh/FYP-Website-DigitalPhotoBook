@@ -111,7 +111,3 @@
 } 
 
 
-exports.eventDetails = function(req, res){
-    Event
-}
-

@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 // log to console
 app.use(morgan('dev'));
- 
+
 // Use the passport package in our application
 app.use(passport.initialize())
 
@@ -30,7 +30,9 @@ require('./config/passport')(passport);
 
 
 
-var fileName
+var imageFileName
+var eventId
+var timeStamp
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
@@ -38,9 +40,10 @@ var storage =   multer.diskStorage({
     callback(null, './public/data/images');
   },
   filename: function (req, file, callback) {
-    var dateNow = Date.now()
-    fileName = file.fieldname + '-' + Date.now() + ".jpg"
-    callback(null, fileName);
+    timeStamp = Date.now()
+    eventId = file.fileName
+    imageFileName = file.fieldname + '-' + timeStamp + ".jpg"
+    callback(null, imageFileName);
 
   }
 });
@@ -49,7 +52,6 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 app.post('/api/photo',function(req,res){
   console.log(req.options)
-  var fileLoc = "./public/data/" +name;
 
 
   upload(req,res,function(err) {
@@ -59,12 +61,57 @@ app.post('/api/photo',function(req,res){
     }
     var Picture = require('./api/picture/picture.model');
     var Event = require('./api/event/event.model');
-    var User = require('./api/user/user.model');
-    console.log(fileName);
+    console.log(imageFileName);
+    var o_id = new ObjectID(eventId);
 
+
+    var token = req.headers.token.substring(4)
+
+    var decoded = jwt.decode(token, config.secret);
+    console.log(decoded)
+
+
+    var picture = {
+      name: imageFileName,
+      owner: decoded._id,
+      location: "/data/images"+imageFileName,
+      event:  eventId,
+      timeStamp: timeStamp
+    }
+
+    Event.findOneAndUpdate( 
+      { _id: req.params.eventId },
+      { $push: { pictures: picture }},
+      { safe: true, upsert: true },
+      function(err) {
+        if(err) { return handleError(res, err); }
+        return res.send(200, 'Update successful');
+      });
+
+    Picture.create(picture, function(err, Picture) {
+      if(err) { 
+        console.log(err)
+        return handleError(res, err); }
+        return res.json(201, Picture);
+      });
+
+
+
+    
     res.end("File is uploaded");
   });
 });
+
+// var getToken = function(req){
+//     var token = req.headers.token
+
+//     var payload = token.split('.')[1];
+//     payload = window.atob(payload);
+//     payload = JSON.parse(payload);
+//     return{
+//       e
+//     }
+// }
 
 
 
@@ -74,14 +121,14 @@ app.post('/api/photo',function(req,res){
 
 
 app.post('/authenticate', function (req, res) {
-    console.log("inside")
+  console.log("inside")
   console.log(req.body);
   
   User.findOne({
     email: req.body.email
   }, function(err, user) {
     if (err) throw err;
- 
+
     if (!user) {
       console.log("not user")
       res.send({success: false, msg: 'Authentication failed. User not found.'});
@@ -100,7 +147,7 @@ app.post('/authenticate', function (req, res) {
         }
       });
     }
-})
+  })
 });
 require('./routes')(app)
 

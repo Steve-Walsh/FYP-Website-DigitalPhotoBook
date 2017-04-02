@@ -29,13 +29,19 @@ require('./config/passport')(passport);
 
 
 
+
+var fileName
+
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     console.log(file)
     callback(null, './public/data/images');
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now() + ".jpg");
+    var dateNow = Date.now()
+    fileName = file.fieldname + '-' + Date.now() + ".jpg"
+    callback(null, fileName);
+
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
@@ -43,17 +49,22 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 app.post('/api/photo',function(req,res){
   console.log(req.options)
+  var fileLoc = "./public/data/" +name;
+
+
   upload(req,res,function(err) {
     if(err) {
       console.log(err)
       return res.end("Error uploading file.");
     }
+    var Picture = require('./api/picture/picture.model');
+    var Event = require('./api/event/event.model');
+    var User = require('./api/user/user.model');
+    console.log(fileName);
 
     res.end("File is uploaded");
   });
 });
-
-
 
 
 

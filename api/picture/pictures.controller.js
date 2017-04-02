@@ -1,4 +1,5 @@
-  var Picture = require('./picture.model');  
+  var Picture = require('./picture.model');
+  var multer      = require('multer'); 
 
   function handleError(res, err) {
     return res.send(500, err);
@@ -19,38 +20,6 @@
     } ;
 
     
-    exports.create = function(req, res) {
-
-     // console.log("user Id is : ",req.body.userId)
-     // console.log("Image name is : ",req.body.imageName)
-     // console.log("timeStamp is : ",req.body.timeStamp)
-     // console.log("Email is : ", req.body.userEmail)
-     // console.log("event  is : ", req.body.eventId)
-     // // var date = Date.now();
-     // var name = req.body.imageName
-     // var fileLoc = "./../frontEndWebsite/website/public/data/" +name;
-     // var imageLoc = "/data/" + name;
-     // var fs = require("fs");
-
-     // fs.writeFile(fileLoc, new Buffer(req.body.encoded_string, "base64"), function(err) {});
-
-     console.log("req body is ", req)
-     res.send('hello')
-
-    //  MongoClient.connect('mongodb://localhost/photoAppDB', function(err, db) {
-    //   if(err) throw err;
-    //   var collectionEvent = db.collection('events');
-    //   var collectionPicutre = db.collection('pictures');
-    //   var o_id = new ObjectID(req.body.eventId);
-
-    //   collectionEvent.update({"_id": o_id}, 
-    //    {$push: { 
-    //     "pictures":{ "name":req.body.imageName,"location":imageLoc, "timeStamp":  req.body.timeStamp, "uploadedBy": req.body.userId}}
-    //   })
-
-    //   collectionPicutre.insert({"name": req.body.imageName, "location": imageLoc, "owner": req.body.user, "ownerId" : req.body.userId, "timeStamp": req.body.timeStamp})
-    // })
-   };
 
 
 
@@ -72,4 +41,38 @@ exports.destroy = function(req, res) {
    }
  })};
 
+var fileName
 
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    console.log(file)
+    callback(null, './public/data/images');
+  },
+  filename: function (req, file, callback) {
+    var time = Date.now()
+    callback(null, file.fieldname + '-' + time + ".jpg");
+    fileName = file.fieldname + '-' + time + ".jpg"
+  }
+});
+
+var upload = multer({ storage : storage}).single('userPhoto');
+
+
+exports.create = function(req, res){
+  console.log(req.options)
+  var fileLoc = "./public/data/" +name;
+
+
+  upload(req,res,function(err) {
+    if(err) {
+      console.log(err)
+      return res.end("Error uploading file.");
+    }
+    var Picture = require('./api/picture/picture.model');
+    var Event = require('./api/event/event.model');
+    var User = require('./api/user/user.model');
+    console.log(fileName);
+
+    res.end("File is uploaded");
+  });
+};

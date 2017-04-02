@@ -74,6 +74,7 @@ app.post('/api/photo',function(req,res){
     var picture = {
       name: imageFileName,
       owner: decoded._id,
+      pictureOnwer: decoded._id,
       location: "/data/images/"+imageFileName,
       event:  eventId,
       timeStamp: timeStamp

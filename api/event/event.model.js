@@ -10,7 +10,7 @@
     var pictureSchema = new Schema({
       name : {type: String, required: true},
       location : {type: String, requried: true},
-      onwer : {type: String, required: true},
+      pictureOnwer : {type: String, required: true},
       timeStamp: {type: Date, required: true}
 
     })

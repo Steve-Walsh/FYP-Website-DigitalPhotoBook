@@ -12,53 +12,53 @@ myApp.config(['$routeProvider',
     .when('/', {
     	templateUrl: 'partials/main.html',
       controller: 'MainController'
-  })
+    })
     .when('/events', {
       templateUrl: 'partials/events.html',
       controller: 'EventsController'
-  })
+    })
     .when('/createEvent', {
       templateUrl: 'partials/createEvent.html',
       controller: 'EventsController'
-  })
+    })
     .when('/myEvents', {
       templateUrl: 'partials/myEvents.html',
       controller: 'MyEventsController'
-  })
+    })
     .when('/post/:id',
     {
       controller: 'PostsCommentsController',
       templateUrl: './partials/postComments.html'
-  })
+    })
     .when('/pictures',{
       templateUrl : 'partials/pictures.html',
       controller : 'PicturesController' 
-  })
+    })
 
     .when('/picture/:id', {
       templateUrl: 'partials/picture-details.html',
       controller: 'PicutresDetailCtrl'
-  })
+    })
     .when('/login',{
       templateUrl : 'partials/login.html',
       controller :'UsersController'
-  })
+    })
     .when('/signup',{
       templateUrl : 'partials/signup.html',
       controller :'UsersController'
-  })
+    })
     .when('/users',{
       templateUrl : 'partials/users.html',
       controller : 'UsersController'
-  })
+    })
     .when('/eventDetails/:id', {
       templateUrl: 'partials/eventDetails.html',
       controller: 'EventDetailsController'
-  })
+    })
     .otherwise({
       redirectTo: '/'
-  })
-}]).
+    })
+  }]).
 
 run(function($rootScope, $location, UsersService)  {
   $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
@@ -68,9 +68,9 @@ run(function($rootScope, $location, UsersService)  {
       {
         if(!$rootScope.loggedInUser) {
           $location.path('/login');
+        }
       }
-  }
-});
+    });
 })
 
 myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
@@ -94,7 +94,7 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 
     UsersService.getUsers()
     .success(function(users) {
-       $scope.users = users;
+     $scope.users = users;
    });
 
     $scope.orderProp = '+name';
@@ -104,47 +104,47 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
     $scope.register = function(newAccount){
       register($scope.newAccount);
       $scope.newAccount = '';
-  }
-  var loggedInUser =null;
+    }
+    var loggedInUser =null;
 
-  $scope.login = function(userDetails){
+    $scope.login = function(userDetails){
       login($scope.userDetails)
       $location.path('/')
       $scope.userDetails = '';
-  }
+    }
 
-  $scope.remove = function(id) {
+    $scope.remove = function(id) {
       console.log(id);
       $http.delete('/api/users/' + id);
       $location.path('/users')
       console.log($location.path())
 
-  };
+    };
 
-  $scope.editUser = function(user) {
-   $http.put('/api/user/' + user._id, user)
-}
+    $scope.editUser = function(user) {
+     $http.put('/api/user/' + user._id, user)
+   }
 
 
-}])
+ }])
 
 
 myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http, $window, $rootScope){
 
   var saveToken = function (token) {
     $window.localStorage['mean-token'] = token;
-};
+  };
 
 
-var getToken = function () {
+  var getToken = function () {
     return $window.localStorage['mean-token'];
-};
+  };
 
-logout = function() {
+  logout = function() {
     $window.localStorage.removeItem('mean-token');
-};
+  };
 
-isLoggedIn = function() {
+  isLoggedIn = function() {
     var token = getToken();
     var payload;
 
@@ -155,12 +155,12 @@ isLoggedIn = function() {
 
 
       return payload;
-  } else {
+    } else {
       return false;
-  }
-};
+    }
+  };
 
-var currentUser = function() {
+  var currentUser = function() {
     if(isLoggedIn()){
       var token = getToken();
       var payload = token.split('.')[1];
@@ -170,21 +170,21 @@ var currentUser = function() {
         email : payload.email,
         name : payload.name,
         id: payload._id
-    };
-}
-};
+      };
+    }
+  };
 
 
 
 
-register = function(newAccount){
+  register = function(newAccount){
     $http.post('api/users/registerNewUser', newAccount).then(function(res){
       console.log(res)
-  })
+    })
    // console.log(newAccount)
-}
+ }
 
-remove = function(id){
+ remove = function(id){
   $http.delete('api/users/' + id);
 }
 
@@ -198,12 +198,12 @@ login = function(userDetails){
 
       saveToken(res.data.token)
 
-  }else
-  {
+    }else
+    {
       logout();
-  }
+    }
 
-})
+  })
 
 
 }
@@ -215,14 +215,14 @@ loggedIn = function(){
 
 var api = {
   getUsers : function() {
-     return $http.get('/api/users')
+   return $http.get('/api/users')
  },
 
  loggedIn : function(){
   return loggedInUser;
 },
 getTokenApi : function(){
-  getToken();
+  return getToken();
 },
 isLoggedInApi : function (){
   $rootScope.loggedInUser = isLoggedIn();
@@ -247,7 +247,7 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 
   EventsService.getAllEvents()
   .success(function(events) {
-     $scope.events = events;
+   $scope.events = events;
  });
 
 
@@ -260,16 +260,16 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 
     addNewEvent($scope.newEvent);
     $scope.newEvent = '';
-}
+  }
 
-$scope.quantity = 5;
+  $scope.quantity = 5;
 
-$scope.joinEvent = function(event){
+  $scope.joinEvent = function(event){
     var newAttender = $scope.loggedInUser
     addPersonToEvent(newAttender, event._id)
 
     console.log("adding event " + newAttender, "     ", event._id)
-}
+  }
 }])
 
 myApp.controller('MyEventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', function ($scope, $http, $location , EventsService, UsersService) {
@@ -278,7 +278,7 @@ myApp.controller('MyEventsController', ['$scope', '$http', '$location' ,'EventsS
 
   EventsService.getMyEvents($scope.loggedInUser)
   .success(function(myEvents) {
-     $scope.myEvents = myEvents;
+   $scope.myEvents = myEvents;
  });
 
   $scope.quantity = 5;
@@ -293,39 +293,39 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'
   .success(function(event) {
     console.log(event)
     $scope.event = event.event
-});
+  });
 
 }])
 
 
 myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersService){
 
-   addNewEvent = function(newEvent) {
-      console.log('in new event')
-      $http.post('/api/events/', newEvent).success(function(res)
-      {
-         console.log ('worked' )
-     })
-      .error(function(err){
-         console.log('error : ' + err)
-     })
-  }
-  addPersonToEvent = function(newAttender, eventId){
-      $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-      {
-         console.log ('added to event app.js' )
-     })
-      .error(function(err){
-         console.log('error : ' + err)
-     })
-  }
+ addNewEvent = function(newEvent) {
+  console.log('in new event')
+  $http.post('/api/events/', newEvent).success(function(res)
+  {
+   console.log ('worked' )
+ })
+  .error(function(err){
+   console.log('error : ' + err)
+ })
+}
+addPersonToEvent = function(newAttender, eventId){
+  $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
+  {
+   console.log ('added to event app.js' )
+ })
+  .error(function(err){
+   console.log('error : ' + err)
+ })
+}
 
 
-  var api = {
-   getAllEvents : function() {
-     return $http.get('/api/events/' , {headers: {
-        Authorization: 'Bearer '+ UsersService.getTokenApi()
-    }
+var api = {
+ getAllEvents : function() {
+   return $http.get('/api/events/' , {headers: {
+    Authorization: 'Bearer '+ UsersService.getTokenApi()
+  }
 })
  },
 
@@ -346,53 +346,53 @@ myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 
 
  var loggedInUser = UsersService.getLoggedInUser();
 
-  PicturesService.getPictures(loggedInUser)
-  .success(function(pictures) {
-     $scope.pictures = pictures;
+ PicturesService.getPictures(loggedInUser)
+ .success(function(pictures) {
+   $scope.pictures = pictures;
  });
-  $scope.orderProp = 'name';
-  $scope.quantity = 5;
+ $scope.orderProp = 'name';
+ $scope.quantity = 5;
 }])
 
 
 
-myApp.factory('PicturesService', ['$http', function($http){
+myApp.factory('PicturesService', ['$http', 'UsersService', function($http, UsersService){
 
+ var api = {
+   getPictures : function(loggedInUser) {
 
-
-   var api = {
-     getPictures : function(loggedInUser) {
-
-       return $http.post('/api/pictures', loggedInUser)
+     return $http.get('/api/pictures', {headers: {
+      Authorization: 'Bearer '+ UsersService.getTokenApi()
+    }})
    }
-}
-return api
+ }
+ return api
 }])
 
 
 myApp.controller('PicutresDetailCtrl', 
-   ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 
-   function($scope, $routeParams, $http , UsersService ,PicturesService) {
+ ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 
+ function($scope, $routeParams, $http , UsersService ,PicturesService) {
 
-      $scope.loggedInUser = UsersService.loggedIn();
+  $scope.loggedInUser = UsersService.loggedIn();
 
-      $http.get('/api/pictures/picture/' + $routeParams.id)
-      .success(function(picture) {
-         $scope.picture = picture[0]
-         console.log(picture.title)
-     });
+  $http.get('/api/pictures/picture/' + $routeParams.id)
+  .success(function(picture) {
+   $scope.picture = picture[0]
+   console.log(picture.title)
+ });
 
-      $scope.addComment = function(){
-        if($scope.loggedInUser != null){
-          $scope.newComment.author = $scope.loggedInUser.name
-      }
+  $scope.addComment = function(){
+    if($scope.loggedInUser != null){
+      $scope.newComment.author = $scope.loggedInUser.name
+    }
 
-      addPictureComment($scope.picture._id, $scope.newComment)
-      $scope.newComment=''
-      $http.get('/api/pictures/picture/' + $routeParams.id)
-      .success(function(picture) {
-       $scope.picture = picture[0]
-       console.log(picture.title)
+    addPictureComment($scope.picture._id, $scope.newComment)
+    $scope.newComment=''
+    $http.get('/api/pictures/picture/' + $routeParams.id)
+    .success(function(picture) {
+     $scope.picture = picture[0]
+     console.log(picture.title)
    });
   }
 }])

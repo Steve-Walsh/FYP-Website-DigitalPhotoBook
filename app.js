@@ -1,14 +1,14 @@
-var express 	= require('express');
-var app			= express(); 
+var express     = require('express');
+var app         = express(); 
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
-var passport	= require('passport');
+var passport    = require('passport');
 var config      = require('./config/database'); // get db config file
 var User        = require('./api/user/user.model.js'); // get the mongoose model
 var port        = process.env.PORT || 8080;
 var jwt         = require('jwt-simple');
-var mongoose 	= require('mongoose'); 
+var mongoose    = require('mongoose'); 
 var multer      = require('multer');
 
 mongoose.connect(config.database); 

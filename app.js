@@ -51,7 +51,6 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 
 app.post('/api/photo',function(req,res){
-  console.log(req.options)
 
 
   upload(req,res,function(err) {
@@ -68,6 +67,7 @@ app.post('/api/photo',function(req,res){
 
     var decoded = jwt.decode(token, config.secret);
     console.log(decoded)
+    console.log(eventId)
 
 
     var picture = {

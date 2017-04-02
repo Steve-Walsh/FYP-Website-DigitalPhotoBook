@@ -41,7 +41,7 @@ var storage =   multer.diskStorage({
   },
   filename: function (req, file, callback) {
     timeStamp = Date.now()
-    eventId = file.fileName
+    eventId = file.originalname
     imageFileName = file.fieldname + '-' + timeStamp + ".jpeg"
     callback(null, imageFileName);
 
@@ -51,7 +51,7 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 
 app.post('/api/photo',function(req,res){
-  console.log(req.options)
+  console.log(req.file)
 
 
   upload(req,res,function(err) {
@@ -73,26 +73,26 @@ app.post('/api/photo',function(req,res){
     var picture = {
       name: imageFileName,
       owner: decoded._id,
-      location: "/data/images"+imageFileName,
+      location: "/data/images/"+imageFileName,
       event:  eventId,
       timeStamp: timeStamp
     }
     console.log(picture)
 
     Event.findOneAndUpdate( 
-      { _id: req.params.eventId },
+      { _id: eventId },
       { $push: { pictures: picture }},
       { safe: true, upsert: true },
       function(err) {
         if(err) { return handleError(res, err); }
-        return res.send(200, 'Update successful');
+        return;
       });
 
     Picture.create(picture, function(err, Picture) {
       if(err) { 
         console.log(err)
         return handleError(res, err); }
-        return res.json(201, Picture);
+        return;
       });
 
 

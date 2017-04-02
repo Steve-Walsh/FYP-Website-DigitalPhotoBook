@@ -42,7 +42,7 @@ var storage =   multer.diskStorage({
   filename: function (req, file, callback) {
     timeStamp = Date.now()
     eventId = file.fileName
-    imageFileName = file.fieldname + '-' + timeStamp + ".jpg"
+    imageFileName = file.fieldname + '-' + timeStamp + ".jpeg"
     callback(null, imageFileName);
 
   }
@@ -62,7 +62,6 @@ app.post('/api/photo',function(req,res){
     var Picture = require('./api/picture/picture.model');
     var Event = require('./api/event/event.model');
     console.log(imageFileName);
-    var o_id = new ObjectID(eventId);
 
 
     var token = req.headers.token.substring(4)
@@ -78,6 +77,7 @@ app.post('/api/photo',function(req,res){
       event:  eventId,
       timeStamp: timeStamp
     }
+    console.log(picture)
 
     Event.findOneAndUpdate( 
       { _id: req.params.eventId },

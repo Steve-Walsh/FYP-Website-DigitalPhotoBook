@@ -14,6 +14,7 @@
 
     // Creates a new Event in datastore.
     exports.create = function(req, res) {
+      console.log(req.body)
       var event = {
         title : req.body.title,
         admin : req.body.admin,
@@ -22,9 +23,11 @@
         startTime: req.body.startTime,
         endTime: req.body.endTime,
         location: req.body.location,
+        iconPicked: req.body.iconPicked,
         attenders : [],
         pictures : []
     };
+
 
     Event.create(event, function(err, Event) {
         if(err) { 

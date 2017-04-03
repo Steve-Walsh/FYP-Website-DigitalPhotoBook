@@ -25,6 +25,7 @@
       info: { type: String, optional: true },
       attenders: [attendersSchema],
       pictures: [pictureSchema],
+      iconPicked: {type: String, require: true}
     });
 
     module.exports = mongoose.model('events', EventSchema);

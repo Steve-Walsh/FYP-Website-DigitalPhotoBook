@@ -22,13 +22,58 @@
     <div class="form-group">
       <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.admin"></input>
     </div>
+
+    <hr>
+
     <div class="form-group">
-      <input type="hidden" class="form-control" placeholder="adminId" ng-model="newEvent.adminId"></input>
-    </div>
+     <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="photo-camera.png">
+      <img src="/data/icons/photo-camera.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="fireworks.png">
+      <img src="/data/icons/fireworks.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="beer.png">
+      <img src="/data/icons/beer.png">
+    </label>
 
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="floating-balloons.png">
+      <img src="/data/icons/floating-balloons.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="gift.png">
+      <img src="/data/icons/gift.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="karaoke.png">
+      <img src="/data/icons/karaoke.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="rings.png">
+      <img src="/data/icons/rings.png">
+    </label>
 
-    <button type="submit" class="btn btn-success">Create Event</button>
-  </form>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="dj.png">
+      <img src="/data/icons/dj.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="stage.png">
+      <img src="/data/icons/stage.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="toast.png">
+      <img src="/data/icons/toast.png">
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="newEvent.iconPicked" value="wedding-rings.png">
+      <img src="/data/icons/wedding-rings.png">
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-success">Create Event</button>
+</form>
 </div>
-
-

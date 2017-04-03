@@ -250,6 +250,11 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
    $scope.events = events;
  });
 
+  $scope.newEvent = {
+    iconPicked: 'photo-camera.png',
+  };
+
+
 
 
   $scope.quantity = 5;

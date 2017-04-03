@@ -36,7 +36,7 @@
           <td> {{event.info}}</td>
 
 
-          <td><div ng-if="event.attenders.length == 0"> No users</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div></td>
+          <td><div ng-if="event.attenders.length == 0"> 1</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div></td>
           <td><div ng-if="event.pictures.length == 0"> No Pictures</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div></td>
           <td><button class="btn btn-success" ng-click=joinEvent(event)> Join Event </button></td>
         </tr>
@@ -44,7 +44,6 @@
     </table>
 </div>
 <br> 
-$('tbody.rowlink').rowlink()
 
 
 

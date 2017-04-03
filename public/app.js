@@ -271,9 +271,10 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 
   $scope.joinEvent = function(event){
     var newAttender = $scope.loggedInUser
+
     addPersonToEvent(newAttender, event._id)
 
-    console.log("adding event " + newAttender, "     ", event._id)
+    console.log("adding event " + newAttender._id, "     ", event._id)
   }
 }])
 
@@ -315,14 +316,34 @@ myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersS
    console.log('error : ' + err)
  })
 }
+
+
+
 addPersonToEvent = function(newAttender, eventId){
-  $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-  {
-   console.log ('added to event app.js' )
- })
-  .error(function(err){
-   console.log('error : ' + err)
- })
+
+  $http.get('/api/events/eventDetails/' + eventId)
+  .success(function(res) {
+    if(res.event.adminId == newAttender._id){
+      console.log("admin")
+      return
+    }
+    if(res.event.attenders >0){
+      res.event.attenders.forEach(function(p){
+        if(p._id == newAttender._id){
+          console.log("found user")
+        return
+        }
+      })
+
+    $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
+    {
+     console.log ('added to event app.js' )
+   })
+    .error(function(err){
+     console.log('error : ' + err)
+   })
+ }
+})
 }
 
 

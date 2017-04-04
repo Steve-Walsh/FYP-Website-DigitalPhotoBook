@@ -90,6 +90,19 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 
     var loggedInUser = UsersService.getLoggedInUser();
 
+    if($location.path() == '/login'){
+      if(isLoggedIn != null){
+        $location.path('/')
+      }
+    }
+
+        if($location.path() == '/signup'){
+      if(isLoggedIn != null){
+        $location.path('/')
+      }
+    }
+
+
 
 
     UsersService.getUsers()
@@ -172,6 +185,9 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http
         id: payload._id
       };
     }
+    else{
+      return null;
+    }
   };
 
 
@@ -197,6 +213,7 @@ login = function(userDetails){
       console.log(res.success)
 
       saveToken(res.data.token)
+      location.path('/')
 
     }else
     {

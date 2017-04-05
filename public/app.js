@@ -15,11 +15,13 @@ myApp.config(['$routeProvider',
     })
     .when('/events', {
       templateUrl: 'partials/events.html',
-      controller: 'EventsController'
+      controller: 'EventsController',
+      activetab: 'events'
     })
     .when('/createEvent', {
       templateUrl: 'partials/createEvent.html',
       controller: 'EventsController'
+
     })
     .when('/myEvents', {
       templateUrl: 'partials/myEvents.html',
@@ -76,7 +78,7 @@ run(function($rootScope, $location, UsersService)  {
 myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
 
 
-  var loggedInUser = UsersService.getLoggedInUser();
+  $scope.loggedInUser = UsersService.getLoggedInUser();
 
 
 
@@ -257,9 +259,11 @@ return api
 
 // All event contollers and services
 
-myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', function ($scope, $http, $location , EventsService, UsersService) {
+myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', '$route', function ($scope, $http, $location , EventsService, UsersService, $route) {
 
   var loggedInUser = UsersService.getLoggedInUser();
+
+  $scope.$route = $route;
 
 
   EventsService.getAllEvents()

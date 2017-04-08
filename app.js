@@ -149,9 +149,11 @@ var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
   var addedUser = false;
+  console.log("new user")
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
+    console.log("new mess")
     // we tell the client to execute 'new message'
     socket.broadcast.emit('new message', {
       username: socket.username,

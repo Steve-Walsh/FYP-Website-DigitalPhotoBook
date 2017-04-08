@@ -62,17 +62,19 @@ myApp.config(['$routeProvider',
     })
   }]).
 
-run(function($rootScope, $location, UsersService)  {
-  $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
-    UsersService.isLoggedInApi();
-    if ($location.path() != "/login")
-      if($location.path() != "/signup")
-      {
-        if(!$rootScope.loggedInUser) {
-          $location.path('/login');
-        }
+run(function($rootScope, $location, UsersService, $route)  {
+ $rootScope.$on("$locationChangeStart", function(event, next, current) {
+
+  UsersService.isLoggedInApi();
+
+  if(!$rootScope.loggedInUser){
+    if($location.path() != '/signup'){
+      if($location.path() != '/login'){
+        $location.path('/login');
       }
-    });
+    }
+  }
+});
 })
 
 myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
@@ -92,17 +94,15 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 
     var loggedInUser = UsersService.getLoggedInUser();
 
-    if($location.path() == '/login'){
-      if(isLoggedIn != null){
-        $location.path('/')
-      }
-    }
-
-        if($location.path() == '/signup'){
-      if(isLoggedIn != null){
-        $location.path('/')
-      }
-    }
+    // if($location.path() == '/login'){
+    //   if(isLoggedIn != null){
+    //     $location.path('/')
+    //   }
+    // }else if($location.path() == '/signup'){
+    //   if(isLoggedIn != null){
+    //     $location.path('/')
+    //   }
+    // }
 
 
 
@@ -144,7 +144,7 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
  }])
 
 
-myApp.factory('UsersService', ['$http', '$window' , '$rootScope', function($http, $window, $rootScope){
+myApp.factory('UsersService', ['$http', '$window' , '$rootScope', '$location', function($http, $window, $rootScope, $location){
 
   var saveToken = function (token) {
     $window.localStorage['mean-token'] = token;
@@ -215,7 +215,7 @@ login = function(userDetails){
       console.log(res.success)
 
       saveToken(res.data.token)
-      location.path('/')
+      $location.path('/')
 
     }else
     {
@@ -245,7 +245,6 @@ getTokenApi : function(){
 },
 isLoggedInApi : function (){
   $rootScope.loggedInUser = isLoggedIn();
-  isLoggedIn();
 },
 
 getLoggedInUser : function (){
@@ -352,19 +351,19 @@ addPersonToEvent = function(newAttender, eventId){
       res.event.attenders.forEach(function(p){
         if(p._id == newAttender._id){
           console.log("found user")
-        return
+          return
         }
       })
 
-    $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-    {
-     console.log ('added to event app.js' )
-   })
-    .error(function(err){
-     console.log('error : ' + err)
-   })
- }
-})
+      $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
+      {
+       console.log ('added to event app.js' )
+     })
+      .error(function(err){
+       console.log('error : ' + err)
+     })
+    }
+  })
 }
 
 

@@ -139,6 +139,9 @@ app.post('/authenticate', function (req, res) {
 });
 require('./routes')(app)
 var server = require('http').createServer(app);
+server.listen(port, function() {
+    console.log('Express server listening on port : '+ port);
+  });
 var io = require('socket.io')(server);
 
 
@@ -147,9 +150,6 @@ var io = require('socket.io')(server);
 // });
 // server.listen(3000);
 
-server.listen(port, function() {
-    console.log('Express server listening on port : '+ port);
-  });
 
 
 

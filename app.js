@@ -10,6 +10,7 @@ var port        = process.env.PORT || 8080;
 var jwt         = require('jwt-simple');
 var mongoose    = require('mongoose'); 
 var multer      = require('multer');
+var http        = require('http');
 
 mongoose.connect(config.database); 
 
@@ -146,6 +147,11 @@ var io = require('socket.io')(server);
 // });
 // server.listen(3000);
 
+server.listen(port, function() {
+    console.log('Express server listening on port : '+ port);
+  });
+
+
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -206,6 +212,4 @@ io.on('connection', function (socket) {
 });
 
 
-  server.listen(port, function() {
-    console.log('Express server listening on port : '+ port);
-  });
+  

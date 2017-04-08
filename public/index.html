@@ -25,6 +25,10 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    var socket = io();
+  </script>
 </head>
 
 <body>
@@ -35,7 +39,7 @@
       <a class="navbar-brand" href="#/">Digital Photo Book</a>
     </div>
     <ul class="nav navbar-nav navbar-right collapse navbar-collapse" action="#" role="search">
-    <li><a href="#/events" ng-class="{active: $route.current.activetab == 'events'}">All Events</a></li>
+      <li><a href="#/events" ng-class="{active: $route.current.activetab == 'events'}">All Events</a></li>
       <li><a href="#/myEvents">My Events</a></li>
       <li><a href="#/pictures">My Pictures</a></li>
       <li><a href="#/createEvent">Create Event</a></li>

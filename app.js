@@ -160,6 +160,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('new message', function (data) {
+    console.log("new message")
     // we tell the client to execute 'new message'
     socket.broadcast.emit('new message', {
       username: socket.username,

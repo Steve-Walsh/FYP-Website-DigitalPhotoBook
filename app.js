@@ -159,11 +159,19 @@ io.on('connection', function(socket){
     console.log('A user disconnected');
   });
 
+  socket.on('new message', function (data) {
+    // we tell the client to execute 'new message'
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
+  });
+
 });
 
 server.listen(port, function() {
-    console.log('Express server listening on port : '+ port);
-  });
+  console.log('Express server listening on port : '+ port);
+});
 
 // io.on('connection', function (socket) {
 //   var addedUser = false;
@@ -224,4 +232,3 @@ server.listen(port, function() {
 // });
 
 
-  

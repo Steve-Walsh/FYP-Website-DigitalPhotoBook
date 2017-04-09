@@ -154,6 +154,11 @@ var io = require('socket.io')(server);
 io.on('connection', function(socket){
   console.log('A user connected');
 
+  socket.on('room', function(room) {
+    console.log("joined room ", room)
+        socket.join(room);
+    });
+
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
     console.log('A user disconnected');
@@ -162,10 +167,7 @@ io.on('connection', function(socket){
   socket.on('new message', function (data) {
     console.log("new message", data)
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
+    socket.broadcast.emit('new message', data);
   });
 
 });

@@ -37,7 +37,7 @@ var timeStamp
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
-    console.log(file)
+    console.log("the file is ", file)
     callback(null, './public/data/images');
   },
   filename: function (req, file, callback) {

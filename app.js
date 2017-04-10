@@ -37,7 +37,6 @@ var timeStamp
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
-    console.log("the file is ", file)
     callback(null, './public/data/images');
   },
   filename: function (req, file, callback) {
@@ -62,22 +61,18 @@ app.post('/api/photo',function(req,res){
     }
     var Picture = require('./api/picture/picture.model');
     var Event = require('./api/event/event.model');
-    console.log(imageFileName);
 
 
     var token = req.headers.token.substring(4)
 
     var decoded = jwt.decode(token, config.secret);
-    console.log(decoded)
-    console.log(eventId)
-
 
     var picture = {
       name: imageFileName,
       owner: decoded._id,
       pictureOnwer: decoded._id,
       location: "/data/images/"+imageFileName,
-      event:  eventId,
+      event:  req.headers.event,
       timeStamp: timeStamp
     }
     console.log(picture)

@@ -21,6 +21,6 @@ Digital Photo Book requires
 Install the dependencies and devDependencies and start the server.
 ```sh
 $ cd website
-$ npm install -d
+$ npm install
 $ node app.js
 ```

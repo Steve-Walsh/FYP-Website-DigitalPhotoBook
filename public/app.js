@@ -343,31 +343,34 @@ myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersS
 
 
 addPersonToEvent = function(newAttender, eventId){
+  var check = false
+  console.log("in add person to event")
 
   $http.get('/api/events/eventDetails/' + eventId)
   .success(function(res) {
+    console.log("event details res")
     if(res.event.adminId == newAttender._id){
       console.log("admin")
-      return
+      check = true
     }
     if(res.event.attenders >0){
       res.event.attenders.forEach(function(p){
         if(p._id == newAttender._id){
           console.log("found user")
-          return
+          check = true
         }
       })
-
-      $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-      {
-       console.log ('added to event app.js' )
-     })
-      .error(function(err){
-       console.log('error : ' + err)
-     })
-    }
-  })
+    }})
+  if(check){
+    $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
+    {
+     console.log ('added to event app.js' )
+   })
+  .error(function(err){
+   console.log('error : ' + err)
+ })}
 }
+
 
 
 var api = {
@@ -479,4 +482,4 @@ myApp.controller('faceDetController',
    //    };
    //  };
 
-  }])
+ }])

@@ -29,7 +29,7 @@ require('./config/express').addMiddleware(app)
 require('./config/passport')(passport);
 
 
-
+// Upload image section
 
 var imageFileName
 var eventId
@@ -107,7 +107,7 @@ app.post('/api/photo',function(req,res){
 
 
 
-
+// login method
 app.post('/authenticate', function (req, res) {
   console.log("inside")
   console.log(req.body);
@@ -150,7 +150,7 @@ var io = require('socket.io')(server);
 
 
 
-
+// socket io chat
 io.on('connection', function(socket){
   console.log('A user connected');
 

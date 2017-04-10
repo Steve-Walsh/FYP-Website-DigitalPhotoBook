@@ -78,7 +78,7 @@ app.post('/api/photo',function(req,res){
     console.log(picture)
 
     Event.findOneAndUpdate( 
-      { _id: eventId },
+      { _id: req.headers.event },
       { $push: { pictures: picture }},
       { safe: true, upsert: true },
       function(err) {

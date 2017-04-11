@@ -11,6 +11,8 @@ router.post('/joinEvent/:eventId', controller.joinEvent);
 router.delete('/:id', controller.destroy);
 router.get('/event:');
 router.get('/eventDetails/:_id', controller.show);
+router.post('/releaseImgs', controller.releaseImgs);
+router.post('/changePublicType', controller.changePublicType);
 
 
 module.exports = router;

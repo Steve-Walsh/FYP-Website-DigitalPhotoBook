@@ -2,7 +2,7 @@
 
 <div class="" style=" margin-top: 55px;">
   <div class="page-header">
-   <h1>All Events</h1>
+   <h1>Finished Events</h1>
  </div>
  <div class="row">
   <div class="col-xs-2 pull-right">
@@ -10,7 +10,7 @@
     <label>Show 
       <select ng-model="numLimit">
         <div class="form-control input-sm">
-          <option value="5">5</option>
+          <option selected="selected" value="5">5</option>
           <option value="10">10</option>
           <option value="25">25</option>
           <option value="50">50</option>
@@ -29,12 +29,10 @@
       <tr>
         <th>Name</th>
         <th>Location</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+        <th>Started</th>
+        <th>Ended</th>
         <th>Information</th>
-        <th>People Attending</th>
         <th>Total Pictures</th>
-        <th ng-show='loggedInUser.name != null'>Join Event</th>
       </tr>
     </thead>
     <tbody >
@@ -46,9 +44,7 @@
         <td>  {{event.endTime | date:"dd/MM/yyyy 'at' h:mma"}}  </td>
         <td> {{event.info}}</td>
 
-        <td><div ng-if="event.attenders.length == 0"> 1</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div></td>
         <td><div ng-if="event.pictures.length == 0"> No Pictures</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div></td>
-        <td><button class="btn btn-success" ng-click=joinEvent(event)> Join Event </button></td>
       </tr>
     </tbody>
   </table>

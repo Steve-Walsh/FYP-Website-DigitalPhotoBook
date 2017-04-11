@@ -625,14 +625,14 @@ code {
   font-size: 85%;
   color: #c7254e;
   background-color: #f9f2f4;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 kbd {
   padding: 2px 6px;
   font-size: 85%;
   color: #ffffff;
   background-color: #34495e;
-  border-radius: 4px;
+  border-radius: 0px;
   box-shadow: none;
 }
 pre {
@@ -643,7 +643,7 @@ pre {
   color: inherit;
   background-color: #ffffff;
   border: 2px solid #e7e9ec;
-  border-radius: 6px;
+  border-radius: 0px;
   white-space: pre;
 }
 .pre-scrollable {
@@ -656,7 +656,7 @@ pre {
   line-height: 1.72222;
   background-color: #ffffff;
   border: 2px solid #bdc3c7;
-  border-radius: 6px;
+  border-radius: 0px;
   -webkit-transition: border 0.25s ease-in-out;
           transition: border 0.25s ease-in-out;
 }
@@ -682,7 +682,7 @@ a.thumbnail.active {
   font-size: 15px;
   font-weight: normal;
   line-height: 1.4;
-  border-radius: 4px;
+  border-radius: 0px;
   padding: 10px 15px;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
@@ -1071,28 +1071,24 @@ fieldset[disabled] .btn-link:focus {
   padding: 13px 20px;
   font-size: 22px;
   line-height: 1.227;
-  border-radius: 6px;
 }
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 10px 19px;
   font-size: 17px;
   line-height: 1.471;
-  border-radius: 6px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 9px 13px;
   font-size: 13px;
   line-height: 1.385;
-  border-radius: 4px;
 }
 .btn-xs,
 .btn-group-xs > .btn {
   padding: 6px 9px;
   font-size: 12px;
   line-height: 1.083;
-  border-radius: 3px;
 }
 .btn-tip {
   font-weight: 300;
@@ -1106,7 +1102,6 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 15px;
   font-size: 13px;
   line-height: 1.077;
-  border-radius: 4px;
 }
 .btn-social-pinterest {
   color: #ffffff;
@@ -1294,7 +1289,6 @@ label {
   line-height: 1.467;
   padding: 8px 12px;
   height: 42px;
-  border-radius: 6px;
   box-shadow: none;
   -webkit-transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
           transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
@@ -1340,7 +1334,6 @@ fieldset[disabled] .select2-search input[type="text"] {
   padding: 6px 10px;
   font-size: 13px;
   line-height: 1.462;
-  border-radius: 6px;
 }
 select.input-sm,
 select.form-group-sm .form-control,
@@ -1366,7 +1359,6 @@ select[multiple].select2-search input[type="text"] {
   padding: 10px 15px;
   font-size: 17px;
   line-height: 1.235;
-  border-radius: 6px;
 }
 select.input-lg,
 select.form-group-lg .form-control,
@@ -1391,7 +1383,6 @@ select[multiple].form-group-lg .select2-search input[type="text"] {
   padding: 10px 16px;
   font-size: 22px;
   line-height: 1.318;
-  border-radius: 6px;
 }
 select.input-hg,
 select.form-group-hg .form-control,
@@ -1417,7 +1408,6 @@ select[multiple].form-group-hg .select2-search input[type="text"] {
   color: #b2bcc5;
   background-color: transparent;
   padding: 0 12px 0 0;
-  border-radius: 6px;
   pointer-events: none;
 }
 .input-hg + .form-control-feedback,
@@ -1642,7 +1632,6 @@ fieldset[disabled] .select2-search input[type="text"] + .form-control-feedback,
   padding: 10px 16px;
   font-size: 22px;
   line-height: 1.318;
-  border-radius: 6px;
 }
 select.input-group-hg > .form-control,
 select.input-group-hg > .input-group-addon,
@@ -1669,7 +1658,6 @@ select[multiple].input-group-hg > .select2-search input[type="text"] {
   padding: 10px 15px;
   font-size: 17px;
   line-height: 1.235;
-  border-radius: 6px;
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
@@ -1696,7 +1684,6 @@ select[multiple].input-group-lg > .select2-search input[type="text"] {
   padding: 6px 10px;
   font-size: 13px;
   line-height: 1.462;
-  border-radius: 6px;
 }
 select.input-group-sm > .form-control,
 select.input-group-sm > .input-group-addon,
@@ -1722,7 +1709,6 @@ select[multiple].input-group-sm > .select2-search input[type="text"] {
   text-align: center;
   background-color: #bdc3c7;
   border: 2px solid #bdc3c7;
-  border-radius: 6px;
   -webkit-transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
           transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
 }
@@ -1916,8 +1902,8 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .input-group-rounded .input-group-btn + .form-control,
 .input-group-rounded .input-group-btn:last-child .btn,
 .input-group-rounded .input-group-btn + .select2-search input[type="text"] {
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
 }
 .input-group-hg.input-group-rounded .input-group-btn + .form-control,
 .input-group-hg.input-group-rounded .input-group-btn:last-child .btn,
@@ -2235,14 +2221,12 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .bootstrap-tagsinput {
   background-color: #ffffff;
   border: 2px solid #ebedef;
-  border-radius: 6px;
   margin-bottom: 18px;
   padding: 6px 1px 1px 6px;
   text-align: left;
   font-size: 0;
 }
 .bootstrap-tagsinput .tag {
-  border-radius: 4px;
   background-color: #ebedef;
   color: #7b8996;
   font-size: 13px;
@@ -2359,7 +2343,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border: 2px solid #1abc9c;
   padding: 5px 0;
   background-color: #ffffff;
-  border-radius: 6px;
 }
 .twitter-typeahead .tt-suggestion p {
   padding: 6px 14px;
@@ -2379,7 +2362,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .progress {
   background: #ebedef;
-  border-radius: 32px;
   height: 12px;
   box-shadow: none;
 }
@@ -2402,7 +2384,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .ui-slider {
   background: #ebedef;
-  border-radius: 32px;
   height: 12px;
   box-shadow: none;
   margin-bottom: 20px;
@@ -2411,7 +2392,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .ui-slider-handle {
   background-color: #16a085;
-  border-radius: 50%;
   cursor: pointer;
   height: 18px;
   position: absolute;
@@ -2437,7 +2417,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .ui-slider-segment {
   background-color: #d9dbdd;
-  border-radius: 50%;
   height: 6px;
   width: 6px;
 }
@@ -2531,7 +2510,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   color: #ffffff;
   padding: 0;
   display: inline-block;
-  border-radius: 6px;
   word-spacing: -0.5px;
 }
 @media (min-width: 768px) {
@@ -2545,7 +2523,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
     padding: 0 55px 0 52px;
     overflow: auto;
     white-space: nowrap;
-    border-radius: 6px;
   }
 }
 .pagination li {

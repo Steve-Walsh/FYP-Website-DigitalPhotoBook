@@ -1,10 +1,5 @@
 
-var myApp = angular.module('myApp',['ngRoute']);
-
-
-
-
-
+var myApp = angular.module('myApp',['ngRoute', 'ui.bootstrap.datetimepicker']);
 
 myApp.config(['$routeProvider',
   function($routeProvider) {
@@ -20,18 +15,26 @@ myApp.config(['$routeProvider',
     })
     .when('/createEvent', {
       templateUrl: 'partials/createEvent.html',
-      controller: 'EventsController'
+      controller: 'EventsCreateController'
 
     })
     .when('/myEvents', {
       templateUrl: 'partials/myEvents.html',
       controller: 'MyEventsController'
     })
-    .when('/post/:id',
-    {
-      controller: 'PostsCommentsController',
-      templateUrl: './partials/postComments.html'
+    .when('/eventDetails/:id', {
+      templateUrl: 'partials/eventDetails.html',
+      controller: 'EventDetailsController'
     })
+    .when('/finishedEvents', {
+      templateUrl: 'partials/finishedEvents.html',
+      controller: 'FinishedEventsController'
+    })
+    // .when('/post/:id',
+    // {
+    //   controller: 'PostsCommentsController',
+    //   templateUrl: './partials/postComments.html'
+    // })
     .when('/pictures',{
       templateUrl : 'partials/pictures.html',
       controller : 'PicturesController' 
@@ -53,12 +56,14 @@ myApp.config(['$routeProvider',
       templateUrl : 'partials/users.html',
       controller : 'UsersController'
     })
-    .when('/eventDetails/:id', {
-      templateUrl: 'partials/eventDetails.html',
-      controller: 'EventDetailsController'
-    }).when('/face', {
+
+    .when('/face', {
       templateUrl: 'partials/faceDet.html',
       controller: 'faceDetController'
+    })
+
+    .when('/logout', {
+      controller : 'LogoutController'
     })
     .otherwise({
       redirectTo: '/'
@@ -84,12 +89,17 @@ myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' ,
 
 
   $scope.loggedInUser = UsersService.getLoggedInUser();
-
-
-
+  //$scope.logout = logout()
 
 }])
 
+myApp.controller('LogoutController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, UsersService){
+
+
+  // $scope.loggedInUser = UsersService.getLoggedInUser();
+  UsersService.logout()
+
+}])
 
 
 myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService' , 
@@ -266,31 +276,32 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
   var loggedInUser = UsersService.getLoggedInUser();
 
   $scope.$route = $route;
-
+  var allEvents = []
 
   EventsService.getAllEvents()
   .success(function(events) {
-   $scope.events = events;
+   events.forEach(function(event){
+     if(event.publicEvent){
+      allEvents.push(event)
+    }else{
+      event.attenders.forEach(function(curEvent){
+        console.log(curEvent)
+        curEvent.attenders.forEach(function(person){
+          if(person.id == loggedInUser.id){
+            allEvents.push(event)
+          }})
+      })
+      if(event.adminId == loggedInUser.id){
+        allEvents.push(event)
+      }
+    }
+  })
+
+   $scope.events = allEvents;
  });
 
-  $scope.newEvent = {
-    iconPicked: 'photo-camera.png',
-  };
+  $scope.numLimit = 5;
 
-
-
-
-  $scope.quantity = 5;
-
-  $scope.addEvent = function(){
-    $scope.newEvent.admin = $scope.loggedInUser.name
-    $scope.newEvent.adminId = $scope.loggedInUser._id
-
-    addNewEvent($scope.newEvent);
-    $scope.newEvent = '';
-  }
-
-  $scope.quantity = 5;
 
   $scope.joinEvent = function(event){
     var newAttender = $scope.loggedInUser
@@ -300,6 +311,112 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
     console.log("adding event " + newAttender._id, "     ", event._id)
   }
 }])
+
+
+myApp.controller('FinishedEventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', '$route', function ($scope, $http, $location , EventsService, UsersService, $route) {
+
+  var loggedInUser = UsersService.getLoggedInUser();
+  $scope.$route = $route;
+  var finEvents = []
+
+  EventsService.getAllEvents()
+  .success(function(events) {
+    events.forEach(function(event){
+      if(moment(event.endTime) < moment()){
+        if(event.publicEvent){
+          finEvents.push(event)
+        }else{
+          event.attenders.forEach(function(curEvent){
+            console.log(curEvent)
+            curEvent.attenders.forEach(function(person){
+              if(person.id == loggedInUser.id){
+                finEvents.push(event)
+              }})
+          })
+          if(event.adminId == loggedInUser.id){
+            finEvents.push(event)
+          }
+        }
+      }
+    })
+    $scope.events = finEvents;
+  });
+
+  $scope.numLimit = 5;
+
+
+  // $scope.joinEvent = function(event){
+  //   var newAttender = $scope.loggedInUser
+
+  //   addPersonToEvent(newAttender, event._id)
+
+  //   console.log("adding event " + newAttender._id, "     ", event._id)
+  // }
+}])
+
+
+myApp.controller('EventsCreateController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', '$route', function ($scope, $http, $location , EventsService, UsersService, $route) {
+
+  var loggedInUser = UsersService.getLoggedInUser();
+
+  $scope.$route = $route;
+  $scope.newEvent = {
+    iconPicked: 'photo-camera.png',
+  };
+
+
+  $scope.endDateBeforeRender = endDateBeforeRender
+  $scope.endDateOnSetTime = endDateOnSetTime
+  $scope.startDateBeforeRender = startDateBeforeRender
+  $scope.startDateOnSetTime = startDateOnSetTime
+
+  function startDateOnSetTime () {
+    $scope.$broadcast('start-date-changed');
+  }
+
+  function endDateOnSetTime () {
+    $scope.$broadcast('end-date-changed');
+  }
+
+  function startDateBeforeRender ($dates) {
+    if ($scope.dateRangeEnd) {
+      var activeDate = moment($scope.dateRangeEnd);
+
+      $dates.filter(function (date) {
+        return date.localDateValue() >= activeDate.valueOf()
+      }).forEach(function (date) {
+        date.selectable = false;
+      })
+    }
+  }
+
+  function endDateBeforeRender ($view, $dates) {
+    if ($scope.dateRangeStart) {
+      var activeDate = moment($scope.dateRangeStart).subtract(1, $view).add(1, 'minute');
+
+      $dates.filter(function (date) {
+        return date.localDateValue() <= activeDate.valueOf()
+      }).forEach(function (date) {
+        date.selectable = false;
+      })
+    }
+  }
+
+
+
+  $scope.quantity = 5;
+
+  $scope.addEvent = function(){
+    $scope.newEvent.admin = $scope.loggedInUser.name
+    $scope.newEvent.adminId = $scope.loggedInUser._id
+    $scope.newEvent.released = false;
+    $scope.newEvent.publicEvent = true;
+    addNewEvent($scope.newEvent);
+  }
+
+}])
+
+
 
 myApp.controller('MyEventsController', ['$scope', '$http', '$location' ,'EventsService', 'UsersService', function ($scope, $http, $location , EventsService, UsersService) {
 
@@ -314,26 +431,87 @@ myApp.controller('MyEventsController', ['$scope', '$http', '$location' ,'EventsS
 
 }])
 
-myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'EventsService', 'UsersService', function ($scope, $http, $routeParams , EventsService, UsersService) {
+myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'EventsService', 'UsersService' , '$location', function ($scope, $http, $routeParams , EventsService, UsersService,  $location) {
 
   var loggedInUser = UsersService.getLoggedInUser();
 
   $http.get('/api/events/eventDetails/' + $routeParams.id)
-  .success(function(event) {
-    console.log(event)
-    $scope.event = event.event
-  });
+  .success(function(res) {
+    res.event.member = false;
+    if(res.event.adminId != loggedInUser.id){
+      if(!res.event.released){
+        res.event.pictures = null
+      }
+    }
+    if(moment(res.event.endTime) < moment()){
+      es.event.member = true;
+    }
+    else{
+      res.event.attenders.forEach(function(person){
+        if(person.id == loggedInUser.id){
+          res.event.member = true;
+        }
+      })
+      if(res.event.adminId == loggedInUser.id){
+        res.event.member = true;
+      }
+    }
+
+
+    $scope.event = res.event
+  })
+
+  $scope.releaseImages = function(event){
+    if($scope.loggedInUser._id == event.adminId){
+      //do soemthing
+      releaseImgs(event)
+    }
+  }
+
+  $scope.joinEvent = function(event){
+    //var newAttender = $scope.loggedInUser
+    addPersonToEvent($scope.loggedInUser, event._id)
+  }
+
+   $scope.changePubilic = function(event){
+    //var newAttender = $scope.loggedInUser
+    changePublicType(event)
+  }
 
 }])
 
 
-myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersService){
+myApp.factory('EventsService', ['$http' , 'UsersService', '$location', function($http, UsersService, $location){
 
  addNewEvent = function(newEvent) {
   console.log('in new event')
   $http.post('/api/events/', newEvent).success(function(res)
   {
-   console.log ('worked' )
+   $location.path('/eventDetails/'+res._id)
+ })
+  .error(function(err){
+   console.log('error : ' + err)
+ })
+}
+ releaseImgs = function(event) {
+  console.log('in new event')
+  $http.post('/api/events/releaseImgs', event).success(function(res)
+  {
+    console.log(res)
+ })
+  .error(function(err){
+   console.log('error : ' + err)
+ })
+}
+
+ changePublicType = function(event) {
+  if(event.publicEvent){
+    event.publicEvent = false
+  }else{
+     event.publicEvent = true
+  }
+  $http.post('/api/events/changePublicType', event).success(function(res)
+  {
  })
   .error(function(err){
    console.log('error : ' + err)
@@ -344,31 +522,32 @@ myApp.factory('EventsService', ['$http' , 'UsersService', function($http, UsersS
 
 addPersonToEvent = function(newAttender, eventId){
   var check = false
-  console.log("in add person to event")
 
   $http.get('/api/events/eventDetails/' + eventId)
   .success(function(res) {
-    console.log("event details res")
     if(res.event.adminId == newAttender._id){
       console.log("admin")
       check = true
     }
-    if(res.event.attenders >0){
+    if(res.event.attenders.length >0){
       res.event.attenders.forEach(function(p){
-        if(p._id == newAttender._id){
-          console.log("found user")
+        if(p.id == newAttender._id){
           check = true
+          console.log("users")
         }
       })
-    }})
-  if(check){
-    $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-    {
-     console.log ('added to event app.js' )
-   })
-  .error(function(err){
-   console.log('error : ' + err)
- })}
+    }
+    console.log("check is ", check)
+    if(!check){
+      console.log("check")
+      $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
+      {
+       console.log ('added to event app.js' )
+     })
+      .error(function(err){
+       console.log('error : ' + err)
+     })}
+    })
 }
 
 

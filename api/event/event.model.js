@@ -25,7 +25,9 @@
       info: { type: String, optional: true },
       attenders: [attendersSchema],
       pictures: [pictureSchema],
-      iconPicked: {type: String, require: true}
+      iconPicked: {type: String, required: true},
+      released: {type: Boolean, required: true},
+      publicEvent: {type: Boolean, required: true}
     });
 
     module.exports = mongoose.model('events', EventSchema);

@@ -9,71 +9,104 @@
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Location"  ng-model="newEvent.location"  required="true"</input>
     </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Start Date and Time" ng-model="newEvent.startTime" required="true"></input>
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Finish" ng-model="newEvent.endTime" required="true"></input>
-    </div>
-    <div class="form-group">
-      <textarea type="text" class="form-control" placeholder="Information" ng-model="newEvent.info" required="true"></textarea>
-    </div>
 
-    <div class="form-group">
-      <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.admin"></input>
-    </div>
-
-    <hr>
-
-    <div class="form-group">
-     <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="photo-camera.png">
-      <img src="/data/icons/photo-camera.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="fireworks.png">
-      <img src="/data/icons/fireworks.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="beer.png">
-      <img src="/data/icons/beer.png">
-    </label>
-
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="floating-balloons.png">
-      <img src="/data/icons/floating-balloons.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="gift.png">
-      <img src="/data/icons/gift.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="karaoke.png">
-      <img src="/data/icons/karaoke.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="rings.png">
-      <img src="/data/icons/rings.png">
-    </label>
-
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="dj.png">
-      <img src="/data/icons/dj.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="stage.png">
-      <img src="/data/icons/stage.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="toast.png">
-      <img src="/data/icons/toast.png">
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="newEvent.iconPicked" value="wedding-rings.png">
-      <img src="/data/icons/wedding-rings.png">
-    </label>
+    <div class="dropdown form-group">
+      <label>Start Date</label>
+      <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#"
+      href="">
+      <div class="input-group date">
+        <input type="text" class="form-control" ng-model="newEvent.startTime">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      </div>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <datetimepicker ng-model="newEvent.startTime"
+      data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'end-date-changed', 'minuteStep' : 15}"
+      data-on-set-time="startDateOnSetTime()"
+      data-before-render="startDateBeforeRender($dates)"></datetimepicker>
+    </ul>
   </div>
 
-  <button type="submit" class="btn btn-success">Create Event</button>
+  <div class="dropdown form-group">
+    <label>End Date</label>
+    <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#"
+    href="">
+    <div class="input-group date">
+      <input type="text" class="form-control" ng-model="newEvent.endTime">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+    </div>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <datetimepicker ng-model="newEvent.endTime"
+    data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed', 'minuteStep' : 15}"
+    data-on-set-time="endDateOnSetTime()"
+    data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+  </ul>
+</div>
+<div class="form-group">
+  <textarea type="text" class="form-control" placeholder="Information" ng-model="newEvent.info" required="true"></textarea>
+</div>
+
+<div class="form-group">
+  <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.admin"></input>
+</div>
+<div class="form-group">
+  <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.released"></input>
+</div>
+<div class="form-group">
+  <input type="hidden" class="form-control" placeholder="admin" ng-model="newEvent.publicEvent"></input>
+</div>
+<hr>
+
+<div class="form-group">
+ <label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="photo-camera.png">
+  <img src="/data/icons/photo-camera.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="fireworks.png">
+  <img src="/data/icons/fireworks.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="beer.png">
+  <img src="/data/icons/beer.png">
+</label>
+
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="floating-balloons.png">
+  <img src="/data/icons/floating-balloons.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="gift.png">
+  <img src="/data/icons/gift.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="karaoke.png">
+  <img src="/data/icons/karaoke.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="rings.png">
+  <img src="/data/icons/rings.png">
+</label>
+
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="dj.png">
+  <img src="/data/icons/dj.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="stage.png">
+  <img src="/data/icons/stage.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="toast.png">
+  <img src="/data/icons/toast.png">
+</label>
+<label class="radio-inline">
+  <input type="radio" ng-model="newEvent.iconPicked" value="wedding-rings.png">
+  <img src="/data/icons/wedding-rings.png">
+</label>
+</div>
+
+<button type="submit" class="btn btn-success">Create Event</button>
 </form>
 </div>

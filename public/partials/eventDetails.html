@@ -1,55 +1,64 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="page-header">
     <div class="panel panel-success">
-      <div class="panel-heading">
-        <h1 class="panel-title"> 
-          {{event.title}} - {{event.location}}  by {{event.admin}}
-          {{event.iconPicked}}
-          <img src="/data/icons/{{event.iconPicked}}">
-        </h1>
-      </div>
-      <div class="panel-body">
-       {{event.info}}
 
+      <div class="panel-heading">
+      <div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
+            <a  class="btn btn-danger btn-xs" ng-if="event.publicEvent" ng-click=changePubilic(event)>Make Private</a>
+            <a  class="btn btn-success btn-xs" ng-if="!event.publicEvent" ng-click=changePubilic(event)>Make Public</a>
+        </div>
+        <h1 class="panel-title"> 
+         <h3> <img src="/data/icons/{{event.iconPicked}}">    {{event.title}} in {{event.location}}</h3>
+       </h1></div>
+       <div class="panel-body">
+         {{event.info}}
+
+         <p>Starting on {{event.startTime| date:"dd/MM/yyyy 'at' h:mma"}} till {{event.endTime| date:"dd/MM/yyyy 'at' h:mma"}}</p>
+
+         <button class="btn btn-success pull-right" ng-if="!event.member" ng-click=joinEvent(event)> Join Event </button>
+
+       </div>
      </div>
    </div>
- </div>
 
 
- <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title"> 
-     Attendee's
-   </h1>
- </div>
- <div class="panel-body">
-   <div ng-repeat="person in event.attenders | orderBy:'+name'">
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h1 class="panel-title"> 
-         <Strong> by {{person.name}}</Strong></h1>
-       </div>
+   <div class="panel panel-primary" ng-if="event.picture.length > 0">
+    <div class="panel-heading">
+      <h1 class="panel-title"> 
+       Attendee's
+     </h1>
+   </div>
+   <div class="panel-body">
+     <div ng-repeat="person in event.attenders | orderBy:'+name'">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h1 class="panel-title"> 
+           <Strong> by {{person.name}}</Strong></h1>
+         </div>
 
-       <div class="panel-body"> <span style="margin-left:10px;">
-        {{person._id}}
-      </span><br>
+         <div class="panel-body"> <span style="margin-left:10px;">
+          {{person._id}}
+        </span><br>
+
+      </div>
 
     </div>
 
   </div>
-
-</div>
 </div>
 </div>
 
 
+<!-- <div class="panel panel-primary" ng-if="event.picture.length > 0"> -->
 <div class="panel panel-primary">
+
   <div class="panel-heading">
-    <h1 class="panel-title"> 
-    Pictures
-   </h1>
- </div>
- <div class="panel-body">
+    <div class="btn-group pull-right">
+      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>release images </a>
+    </div>
+    <h4 class="panel-title">Pictures</h4>
+  </div>
+  <div class="panel-body">
    <div ng-repeat="picture in event.pictures | orderBy:'+name'">
     <div class="panel panel-success">
       <div class="panel-heading">
@@ -58,14 +67,14 @@
        </div>
        
        <div class="panel-body"> <span style="margin-left:10px;">
-       <img class="thumb" ng-src="{{picture.location}}" height="200px">
-      </span><br>
+         <img class="thumb" ng-src="{{picture.location}}" height="200px">
+       </span><br>
 
-    </div>
+     </div>
 
-  </div>
-  
-</div>
+   </div>
+
+ </div>
 </div>
 </div>
 

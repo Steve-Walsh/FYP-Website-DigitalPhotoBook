@@ -22,38 +22,9 @@
    </div>
 
 
-<!--    <div class="panel panel-primary" ng-if="event.picture.length > 0">
-    <div class="panel-heading">
-      <h1 class="panel-title"> 
-       Attendee's
-     </h1>
-   </div>
-   <div class="panel-body">
-     <div ng-repeat="person in event.attenders | orderBy:'+name'">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <h1 class="panel-title"> 
-           <Strong> by {{person.name}}</Strong></h1>
-         </div>
 
-         <div class="panel-body"> <span style="margin-left:10px;">
-          {{person._id}}
-        </span><br>
-
-      </div>
-
-    </div>
-
-  </div>
-</div>
-</div> -->
-
-<!-- <div class="panel panel-primary" ng-if="event.attenders.length > 0"> -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-<!--     <div class="btn-group pull-right">
-      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
-    </div> -->
     <h4 class="panel-title">Attendee's</h4>
   </div>
   <div class="panel-body">
@@ -91,7 +62,7 @@
           <td>{{person.email}}</td>
           <td>{{person.numOfPics}}</td>
 
-          <td ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=releaseImages(event)>Delete</a></td>
+          <td ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=removeUser(person)>Delete</a></td>
 
         </tr>
       </tbody>
@@ -101,7 +72,7 @@
 
 
 
-<div class="panel panel-primary" <div class="panel panel-primary" ng-if="event.pictures.length > 0">>
+<div class="panel panel-primary"  ng-if="event.pictures.length > 0">
   <div class="panel-heading">
     <div class="btn-group pull-right">
       <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>

@@ -8,12 +8,12 @@ var jwt = require('jwt-simple');
     }
 
   // Get list of user
-  exports.index = function(req, res) {
-        User.find(function (err, users) {
-        if(err) { return handleError(res, err); }
-        return res.json(200, users);
-      });
-    } ;
+  // exports.index = function(req, res) {
+  //       User.find(function (err, users) {
+  //       if(err) { return handleError(res, err); }
+  //       return res.json(200, users);
+  //     });
+  //   } ;
 
   // Creates a new user in datastore.
   exports.create = function(req, res) { 
@@ -67,18 +67,18 @@ exports.login = function(req, res){
 };
 
 
- // Update an existing user in datastore.
-  exports.update = function(req, res) {
-       User.findById(req.params.id, function (err, user) {
-            user.name = req.body.name
-            user.address = req.body.address
-            user.phone_number = req.body.phone_number
-            user.save(function (err) {
-                if(err) { return handleError(res, err); }
-                return res.send(200, 'Update successful');
-            });
-        });
-     }
+ // // Update an existing user in datastore.
+ //  exports.update = function(req, res) {
+ //       User.findById(req.params.id, function (err, user) {
+ //            user.name = req.body.name
+ //            user.address = req.body.address
+ //            user.phone_number = req.body.phone_number
+ //            user.save(function (err) {
+ //                if(err) { return handleError(res, err); }
+ //                return res.send(200, 'Update successful');
+ //            });
+ //        });
+ //     }
 
   // Deletes a user from datastore.
   exports.destroy = function(req, res) {

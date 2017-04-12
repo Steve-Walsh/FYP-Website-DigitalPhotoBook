@@ -1,4 +1,6 @@
 var Event = require('./event.model');  
+var jwt         = require('jwt-simple');
+var config      = require('./../../config/database');
 
 function handleError(res, err) {
   return res.send(500, err);
@@ -6,14 +8,39 @@ function handleError(res, err) {
 
 // Get list of Events
 exports.index = function(req, res) {
+  var token = req.headers.authorization.substring(11)
+
+  var decoded = jwt.decode(token, config.secret);
+
   Event.find(function (err, Events) {
+    var allEvents = []
+    Events.forEach(function(event){
+     if(event.publicEvent){
+      allEvents.push(event)
+    }else{
+      event.attenders.forEach(function(curEvent){
+        console.log(curEvent)
+        curEvent.attenders.forEach(function(person){
+          if(person.id == decoded.id){
+            allEvents.push(event)
+          }})
+      })
+      if(event.adminId == decoded._id){
+        allEvents.push(event)
+      }
+    }
+  })
+
     if(err) { return handleError(res, err); }
-    return res.json(200, Events);
+    return res.json(200, allEvents);
   });
 } ;
 
     // Creates a new Event in datastore.
     exports.create = function(req, res) {
+      var token = req.headers.authorization.substring(11)
+      var decoded = jwt.decode(token, config.secret);
+
       console.log(req.body)
       var event = {
         title : req.body.title,
@@ -49,6 +76,11 @@ exports.index = function(req, res) {
 
 
 exports.myEvents = function(req, res){
+
+  var token = req.headers.authorization.substring(11)
+
+  var decoded = jwt.decode(token, config.secret);
+
   var myEventsList = []
 
   Event.find(function (err, Events) {
@@ -80,6 +112,9 @@ exports.destroy = function(req, res) {
 
 
   exports.joinEvent = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+
+    var decoded = jwt.decode(token, config.secret);
 
     var newAttender = {
       id: req.body._id,
@@ -116,6 +151,9 @@ exports.destroy = function(req, res) {
 
 
   exports.releaseImgs = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+
+    var decoded = jwt.decode(token, config.secret);
     console.log(req.body._id)
 
     Event.findOneAndUpdate( 
@@ -129,8 +167,8 @@ exports.destroy = function(req, res) {
   };
 
   exports.changePublicType = function(req, res) {
-    console.log(req.body._id)
-
+    var token = req.headers.authorization.substring(11)
+    var decoded = jwt.decode(token, config.secret);
     Event.findOneAndUpdate( 
       { _id: req.body._id },
       { publicEvent : req.body.publicEvent},
@@ -138,6 +176,18 @@ exports.destroy = function(req, res) {
         if(err) { return handleError(res, err); }
         return res.send(200, 'Update successful');
       });
+  };
 
+  exports.removeUser = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+    var decoded = jwt.decode(token, config.secret);
+    console.log(req.body)
+    Event.update( 
+      { _id: req.body.eventId },
+      {$pull: {"attenders": {id : req.body.id}}},
+      function(err) {
+        if(err) { return handleError(res, err); }
+        return res.send(200, 'Update successful');
+      });
   };
 

@@ -120,41 +120,41 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 
 
 
-    UsersService.getUsers()
-    .success(function(users) {
-     $scope.users = users;
-   });
+   //  UsersService.getUsers()
+   //  .success(function(users) {
+   //   $scope.users = users;
+   // });
 
-    $scope.orderProp = '+name';
+   $scope.orderProp = '+name';
 
-    $scope.quantity = 5;
+   $scope.quantity = 5;
 
-    $scope.register = function(newAccount){
-      register($scope.newAccount);
-      $scope.newAccount = '';
-    }
-    var loggedInUser =null;
+   $scope.register = function(newAccount){
+    register($scope.newAccount);
+    $scope.newAccount = '';
+  }
+  var loggedInUser =null;
 
-    $scope.login = function(userDetails){
-      login($scope.userDetails)
-      $location.path('/')
-      $scope.userDetails = '';
-    }
+  $scope.login = function(userDetails){
+    login($scope.userDetails)
+    $location.path('/')
+    $scope.userDetails = '';
+  }
 
-    $scope.remove = function(id) {
-      console.log(id);
-      $http.delete('/api/users/' + id);
-      $location.path('/users')
-      console.log($location.path())
+  $scope.remove = function(id) {
+    console.log(id);
+    $http.delete('/api/users/' + id);
+    $location.path('/users')
+    console.log($location.path())
 
-    };
+  };
 
-    $scope.editUser = function(user) {
-     $http.put('/api/user/' + user._id, user)
-   }
+  $scope.editUser = function(user) {
+   $http.put('/api/user/' + user._id, user)
+ }
 
 
- }])
+}])
 
 
 myApp.factory('UsersService', ['$http', '$window' , '$rootScope', '$location', function($http, $window, $rootScope, $location){
@@ -246,10 +246,9 @@ loggedIn = function(){
 
 
 var api = {
-  getUsers : function() {
-   return $http.get('/api/users')
- },
-
+ //  getUsers : function() {
+ //   return $http.get('/api/users')
+ // },
  loggedIn : function(){
   return loggedInUser;
 },
@@ -473,9 +472,16 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'
     addPersonToEvent($scope.loggedInUser, event._id)
   }
 
-   $scope.changePubilic = function(event){
+  $scope.changePubilic = function(event){
     //var newAttender = $scope.loggedInUser
     changePublicType(event)
+  }
+
+  $scope.removeUser = function(user){
+    //var newAttender = $scope.loggedInUser
+    console.log($routeParams.id)
+    user.eventId = $routeParams.id
+    rmUser(user)
   }
 
 }])
@@ -493,26 +499,39 @@ myApp.factory('EventsService', ['$http' , 'UsersService', '$location', function(
    console.log('error : ' + err)
  })
 }
- releaseImgs = function(event) {
+releaseImgs = function(event) {
   console.log('in new event')
   $http.post('/api/events/releaseImgs', event).success(function(res)
   {
     console.log(res)
- })
+  })
   .error(function(err){
    console.log('error : ' + err)
  })
 }
 
- changePublicType = function(event) {
+changePublicType = function(event) {
   if(event.publicEvent){
     event.publicEvent = false
   }else{
-     event.publicEvent = true
-  }
-  $http.post('/api/events/changePublicType', event).success(function(res)
-  {
+   event.publicEvent = true
+ }
+ $http.post('/api/events/changePublicType', event).success(function(res)
+ {
  })
+ .error(function(err){
+   console.log('error : ' + err)
+ })
+}
+
+rmUser = function(user) {
+  console.log('in remove user')
+  $http.post('/api/events/removeUser', user, {headers: {
+    Authorization: 'Bearer '+ UsersService.getTokenApi()
+  }}).success(function(res)
+  {
+    console.log(res)
+  })
   .error(function(err){
    console.log('error : ' + err)
  })
@@ -556,12 +575,14 @@ var api = {
  getAllEvents : function() {
    return $http.get('/api/events/' , {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
-  }
-})
- },
+  }})
+ }
+,
 
- getMyEvents : function(loggedInUser) {
-  return $http.get('/api/events/myEvents/'+loggedInUser._id)
+getMyEvents : function(loggedInUser) {
+  return $http.get('/api/events/myEvents/'+loggedInUser._id, {headers: {
+    Authorization: 'Bearer '+ UsersService.getTokenApi()
+  }})
 
 }
 }

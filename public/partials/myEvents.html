@@ -4,16 +4,26 @@
    <h1>My Events</h1>
  </div>
  
- <label>Show 
-  <select ng-model="quantity">
-    <div class="form-control input-sm">
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="25">25</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+ <div class="row">
+  <div class="col-xs-2 pull-right">
+
+    <label>Show 
+      <select ng-model="numLimit">
+        <div class="form-control input-sm">
+          <option selected="selected" value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </div>
+      </select> events</label>
     </div>
-  </select> events</label>
+    <div class="col-xs-4">
+     <input type="text" class="form-control" placeholder="Search "  ng-model="searchText">
+    </div>
+  </div>
+
+<br> 
   <table id="posts" class="table table-striped table-bordered" cellspacing="0" width="100%" class="posts">
     <thead>
       <tr>

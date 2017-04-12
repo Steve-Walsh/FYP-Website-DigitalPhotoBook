@@ -8,13 +8,17 @@
       numOfPics: {type: Number, required: true}
     });
 
+    var taggedSchema = new Schema({
+      name: { type: String, required: true },
+    });
+
     var pictureSchema = new Schema({
       name : {type: String, required: true},
       location : {type: String, requried: true},
       owenrUName : {type: String, required: true},
       owner : {type: String, required: true},
-      timeStamp: {type: Date, required: true}
-
+      timeStamp: {type: Date, required: true},
+      tagged: [taggedSchema]
     })
 
     var EventSchema = new Schema({

@@ -61,10 +61,6 @@ myApp.config(['$routeProvider',
       templateUrl: 'partials/faceDet.html',
       controller: 'faceDetController'
     })
-
-    .when('/logout', {
-      controller : 'LogoutController'
-    })
     .otherwise({
       redirectTo: '/'
     })
@@ -85,25 +81,20 @@ run(function($rootScope, $location, UsersService, $route)  {
 });
 })
 
-myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, EventsService, UsersService, PicturesService, $location){
+myApp.controller('MainController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', '$window',  function($scope, EventsService, UsersService, PicturesService, $location,  $window){
 
 
   $scope.loggedInUser = UsersService.getLoggedInUser();
-  //$scope.logout = logout()
-
-}])
-
-myApp.controller('LogoutController', ['$scope' , 'EventsService', 'UsersService' , 'PicturesService', '$location', function($scope, UsersService){
-
-
-  // $scope.loggedInUser = UsersService.getLoggedInUser();
-  UsersService.logout()
+  $scope.logout = function(){
+   UsersService.logoutUser()
+   $window.location.reload();
+ }
 
 }])
 
 
-myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService' , 
-  function($scope, $http, $location , UsersService){
+myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService', '$window' , 
+  function($scope, $http, $location , UsersService, $window){
 
     var loggedInUser = UsersService.getLoggedInUser();
 
@@ -137,8 +128,11 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
 
   $scope.login = function(userDetails){
     login($scope.userDetails)
+    loggedInUser = UsersService.getLoggedInUser()
     $location.path('/')
-    $scope.userDetails = '';
+    setTimeout(function() {
+      window.location.href = '/'
+    }, 250);
   }
 
   $scope.remove = function(id) {
@@ -176,7 +170,7 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', '$location', f
     var token = getToken();
     var payload;
 
-    if(token !=null){
+    if(token !=null && token != ""){
       payload = token.split('.')[1];
       payload = $window.atob(payload);
       payload = JSON.parse(payload);
@@ -228,7 +222,6 @@ login = function(userDetails){
       console.log(res.success)
 
       saveToken(res.data.token)
-      $location.path('/')
 
     }else
     {
@@ -261,7 +254,9 @@ isLoggedInApi : function (){
 
 getLoggedInUser : function (){
   return currentUser();
-}
+},
+logoutUser :function (){ 
+  return logout()}
 }
 
 return api
@@ -577,9 +572,9 @@ var api = {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }})
  }
-,
+ ,
 
-getMyEvents : function(loggedInUser) {
+ getMyEvents : function(loggedInUser) {
   return $http.get('/api/events/myEvents/'+loggedInUser._id, {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }})

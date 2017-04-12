@@ -1,26 +1,29 @@
 <div class="container" >
   <div class="row">
-    <div class="col-md-4 col-md-offset-4" style="text-align: center">
+    <div class="col-md-6 col-md-offset-3" style="text-align: center">
      <div class="panel panel-success">
-            <div class="panel-heading">
-              <div class="panel-title"> <h2>Please sign in </h2>
-            </div>
-          </div>
-
-     <div class="panel-body">
- <form style="margin-top:30px;">
-        
-
- <br> 
-       <input type="text" class="form-control" placeholder="Email" ng-model="userDetails.email" required="true"></input>
-       
-       <br>
-        <input type="password" class="form-control" placeholder="Password" ng-model="userDetails.password" required="true"></input>
-   
+      <div class="panel-heading">
+        <div class="panel-title"> <h2>Login </h2>
         </div>
-       <br> <button class="btn btn-lg btn-success btn-block" ng-click="login()">Sign in</button>
-       <br> <a class="btn btn-lg btn-success btn-block" role="button" href="#/signup">or sign up</a>
-      </form>
+      </div>
 
- 
+      <div class="panel-body">
+       <form  ng-submit="login()" style="margin-top:30px;">
+
+
+         <br> 
+         <input type="text" class="form-control" placeholder="Email" ng-model="userDetails.email" required="true"></input>
+
+         <br>
+         <input type="password" class="form-control" placeholder="Password" ng-model="userDetails.password" required="true"></input>
+
+         <br> <button class="btn btn-lg btn-success btn-block" type="submit ">Sign in</button>
+       </form>
+       <br> <a class="btn btn-lg btn-success btn-block" role="button" href="#/signup">or sign up</a>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+
 

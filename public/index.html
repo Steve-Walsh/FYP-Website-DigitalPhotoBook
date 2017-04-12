@@ -39,7 +39,7 @@
 <body>
 
 
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MainController">
     <div class="navbar-header">
       <a class="navbar-brand" href="#/">Digital Photo Book</a>
     </div>
@@ -54,7 +54,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown">{{loggedInUser.name}} <b class="caret"></b></a>
         <span class="dropdown-arrow"></span>
         <ul class="dropdown-menu">
-          <li><a href="#/logout">Logout</a></li>
+          <li><a ng-click="logout()">Logout</a></li>
         </ul>      </ul>
       </nav><!-- /navbar -->
 

@@ -52,8 +52,6 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 app.post('/api/photo',function(req,res){
 
-
-
   upload(req,res,function(err) {
     if(err) {
       console.log(err)
@@ -73,9 +71,9 @@ app.post('/api/photo',function(req,res){
       owenrUName: decoded.email,
       location: "/data/images/"+imageFileName,
       event:  req.headers.event,
-      timeStamp: timeStamp
+      timeStamp: timeStamp,
+      tagged :[]
     }
-    console.log(picture)
 
     Event.findOneAndUpdate( 
       { _id: req.headers.event },

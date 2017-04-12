@@ -191,3 +191,34 @@ exports.destroy = function(req, res) {
       });
   };
 
+  exports.removePicture = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+    var decoded = jwt.decode(token, config.secret);
+    console.log(req.body)
+    Event.update( 
+      { _id: req.body.eventId },
+      {$pull: {"pictures": {id : req.body.id}}},
+      function(err) {
+        if(err) { return handleError(res, err); }
+        return res.send(200, 'Update successful');
+      });
+  };
+  exports.getPicEvent = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+    var decoded = jwt.decode(token, config.secret);
+    console.log(req.params.id)
+  }
+  Event.find({pictures :{ $elemMatch :{"_id" : "58edfa6f3fb58c3d83e30c50" }}} ,
+    function (err, data) {
+      console.log(data)
+      if(err) { return handleError(res, err); }
+      return res.json(200, data);
+    });
+    // Event.update( 
+    //   { _id: req.body.eventId },
+    //   {$pull: {"pictures": {id : req.body.id}}},
+    //   function(err) {
+    //     if(err) { return handleError(res, err); }
+    //     return res.send(200, 'Update successful');
+    //   });
+  };

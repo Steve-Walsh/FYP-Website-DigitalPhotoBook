@@ -30,16 +30,10 @@ myApp.config(['$routeProvider',
       templateUrl: 'partials/finishedEvents.html',
       controller: 'FinishedEventsController'
     })
-    // .when('/post/:id',
-    // {
-    //   controller: 'PostsCommentsController',
-    //   templateUrl: './partials/postComments.html'
-    // })
     .when('/pictures',{
       templateUrl : 'partials/pictures.html',
       controller : 'PicturesController' 
     })
-
     .when('/picture/:id', {
       templateUrl: 'partials/picture-details.html',
       controller: 'PicutresDetailCtrl'
@@ -59,6 +53,10 @@ myApp.config(['$routeProvider',
 
     .when('/face', {
       templateUrl: 'partials/faceDet.html',
+      controller: 'faceDetController'
+    })
+    .when('/face2', {
+      templateUrl: 'partials/faceDet2.html',
       controller: 'faceDetController'
     })
     .otherwise({
@@ -479,6 +477,13 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'
     rmUser(user)
   }
 
+  $scope.removePic = function(picture){
+    //var newAttender = $scope.loggedInUser
+    console.log($routeParams.id)
+    picture.eventId = $routeParams.id
+    rmPic(picture)
+  }
+
 }])
 
 
@@ -520,8 +525,17 @@ changePublicType = function(event) {
 }
 
 rmUser = function(user) {
-  console.log('in remove user')
   $http.post('/api/events/removeUser', user, {headers: {
+    Authorization: 'Bearer '+ UsersService.getTokenApi()
+  }})
+  .error(function(err){
+   console.log('error : ' + err)
+ })
+}
+
+rmPic = function(picture) {
+  console.log('in remove user')
+  $http.post('/api/events/removePicture', picture, {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }}).success(function(res)
   {
@@ -531,7 +545,6 @@ rmUser = function(user) {
    console.log('error : ' + err)
  })
 }
-
 
 
 addPersonToEvent = function(newAttender, eventId){
@@ -571,14 +584,18 @@ var api = {
    return $http.get('/api/events/' , {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }})
- }
- ,
+ } ,
 
  getMyEvents : function(loggedInUser) {
   return $http.get('/api/events/myEvents/'+loggedInUser._id, {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }})
 
+}, getPicEvent : function(eventId){
+  console.log(eventId)
+  return $http.get('/api/events/getPicEvent/'+ eventId , {headers: {
+    Authorization: 'Bearer '+ UsersService.getTokenApi()
+  }})
 }
 }
 return api
@@ -651,8 +668,13 @@ myApp.controller('PicutresDetailCtrl',
 
 
 myApp.controller('faceDetController', 
-  ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', function($scope, $routeParams, $http , UsersService ,PicturesService) {
+  ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 'EventsService', function($scope, $routeParams, $http , UsersService ,PicturesService, EventsService) {
 
+
+    $scope.event = EventsService.getPicEvent("58ece8d06c6730fde2f78ee2")
+    var numbers = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    var na = ["steve" , "dylan" , "shane"]
+    $scope.names = na.reverse()
 
    // window.onload = function() {
    //    console.log("laoded")

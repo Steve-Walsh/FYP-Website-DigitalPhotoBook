@@ -1,9 +1,9 @@
 
 
-  <script src="../../scripts/tracking-min.js"></script>
-  <script src="../../scripts/face-min.js"></script>
+<script src="../../scripts/tracking-min.js"></script>
+<script src="../../scripts/face-min.js"></script>
 
-  <style>
+<style>
   #photo:hover .rect {
     opacity: .75;
     transition: opacity .75s ease-out;
@@ -49,51 +49,104 @@
     transition: opacity .35s ease-out;
   }
   #img {
-    position: absolute;
     top: 50%;
     left: 50%;
     margin: -173px 0 0 -300px;
+    width:100%;
+    max-width:70%;
   }
-  </style>
+</style>
 
-  <div class="demo-frame">
-    <div class="demo-container">
-      <span id="photo"><img id="img" src="data/images/faces.jpg" /></span>
+<!-- <div class="demo-frame">
+  <div class="demo-container">
+    <span id="photo"><img id="img" src="data/images/faces2.png" /></span>
+  </div>
+</div>
+-->
+<div id=names hidden> {{names}}</div>
+<p></p>
+<div class="container-fluid">
+<br>
+<br>
+<br>
+  <div class="row">
+    <div class="col-md-8">
+      <span id="photo"><img id="img" src="data/images/faces2.png" /></span>
+    </div>
+    <div class="col-md-4">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+           
+          <label for="inputEmail3" class="col-sm-2 control-label">
+            Email
+          </label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail3" />
+          </div>
+        </div>
+        <div class="form-group">
+           
+          <label for="inputPassword3" class="col-sm-2 control-label">
+            Password
+          </label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+               
+              <label>
+                <input type="checkbox" /> Remember me
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+             
+            <button type="submit" class="btn btn-default">
+              Sign in
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
-  <div id=names hidden> {{names}}</div>
 
-  <script>
-    window.onload = function() {
-      var img = document.getElementById('img');
-      var tracker = new tracking.ObjectTracker('face');
-      tracking.track(img, tracker);
-      tracker.on('track', function(event) {
-        event.data.forEach(function(rect) {
-          plotRectangle(rect.x, rect.y, rect.width, rect.height);
-        });
+<script>
+  window.onload = function() {
+    var img = document.getElementById('img');
+    var tracker = new tracking.ObjectTracker('face');
+    tracking.track(img, tracker);
+    tracker.on('track', function(event) {
+      event.data.forEach(function(rect) {
+        plotRectangle(rect.x, rect.y, rect.width, rect.height);
       });
+    });
 
-      var friends = []
-      friends = JSON.parse(document.getElementById('names').textContent);
-      var plotRectangle = function(x, y, w, h) {
-        var rect = document.createElement('div');
-        var arrow = document.createElement('div');
-        var input = document.createElement('input');
-        input.value = friends.pop();
-        rect.onclick = function name() {
-          input.select();
-        };
-        arrow.classList.add('arrow');
-        rect.classList.add('rect');
-        rect.appendChild(input);
-        rect.appendChild(arrow);
-        document.getElementById('photo').appendChild(rect);
-        rect.style.width = w + 'px';
-        rect.style.height = h + 'px';
-        rect.style.left = (img.offsetLeft + x) + 'px';
-        rect.style.top = (img.offsetTop + y) + 'px';
+    var friends = []
+    friends = JSON.parse(document.getElementById('names').textContent);
+    var plotRectangle = function(x, y, w, h) {
+      var rect = document.createElement('div');
+      var arrow = document.createElement('div');
+      var input = document.createElement('input');
+      input.value = friends.pop();
+      rect.onclick = function name() {
+        input.select();
       };
+      arrow.classList.add('arrow');
+      rect.classList.add('rect');
+      rect.appendChild(input);
+      rect.appendChild(arrow);
+      document.getElementById('photo').appendChild(rect);
+      rect.style.width = w + 'px';
+      rect.style.height = h + 'px';
+      rect.style.left = (img.offsetLeft + x) + 'px';
+      rect.style.top = (img.offsetTop + y) + 'px';
     };
-  </script>
+  };
+</script>

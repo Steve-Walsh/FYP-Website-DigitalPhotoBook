@@ -134,10 +134,8 @@ myApp.controller('UsersController', ['$scope','$http','$location', 'UsersService
   }
 
   $scope.remove = function(id) {
-    console.log(id);
     $http.delete('/api/users/' + id);
     $location.path('/users')
-    console.log($location.path())
 
   };
 
@@ -202,7 +200,7 @@ myApp.factory('UsersService', ['$http', '$window' , '$rootScope', '$location', f
 
   register = function(newAccount){
     $http.post('api/users/registerNewUser', newAccount).then(function(res){
-      console.log(res)
+      $location.path('/login')
     })
    // console.log(newAccount)
  }
@@ -217,7 +215,6 @@ login = function(userDetails){
   $http.post('/authenticate', userDetails).then(function(res)
   {
     if(res.success = true){
-      console.log(res.success)
 
       saveToken(res.data.token)
 
@@ -277,7 +274,6 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
       allEvents.push(event)
     }else{
       event.attenders.forEach(function(curEvent){
-        console.log(curEvent)
         curEvent.attenders.forEach(function(person){
           if(person.id == loggedInUser.id){
             allEvents.push(event)
@@ -300,7 +296,6 @@ myApp.controller('EventsController', ['$scope', '$http', '$location' ,'EventsSer
 
     addPersonToEvent(newAttender, event._id)
 
-    console.log("adding event " + newAttender._id, "     ", event._id)
   }
 }])
 
@@ -319,7 +314,6 @@ myApp.controller('FinishedEventsController', ['$scope', '$http', '$location' ,'E
           finEvents.push(event)
         }else{
           event.attenders.forEach(function(curEvent){
-            console.log(curEvent)
             curEvent.attenders.forEach(function(person){
               if(person.id == loggedInUser.id){
                 finEvents.push(event)
@@ -472,14 +466,12 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'
 
   $scope.removeUser = function(user){
     //var newAttender = $scope.loggedInUser
-    console.log($routeParams.id)
     user.eventId = $routeParams.id
     rmUser(user)
   }
 
   $scope.removePic = function(picture){
     //var newAttender = $scope.loggedInUser
-    console.log($routeParams.id)
     picture.eventId = $routeParams.id
     rmPic(picture)
   }
@@ -490,7 +482,6 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams' ,'
 myApp.factory('EventsService', ['$http' , 'UsersService', '$location', function($http, UsersService, $location){
 
  addNewEvent = function(newEvent) {
-  console.log('in new event')
   $http.post('/api/events/', newEvent).success(function(res)
   {
    $location.path('/eventDetails/'+res._id)
@@ -501,11 +492,7 @@ myApp.factory('EventsService', ['$http' , 'UsersService', '$location', function(
 }
 releaseImgs = function(event) {
   console.log('in new event')
-  $http.post('/api/events/releaseImgs', event).success(function(res)
-  {
-    console.log(res)
-  })
-  .error(function(err){
+  $http.post('/api/events/releaseImgs', event).error(function(err){
    console.log('error : ' + err)
  })
 }
@@ -516,10 +503,7 @@ changePublicType = function(event) {
   }else{
    event.publicEvent = true
  }
- $http.post('/api/events/changePublicType', event).success(function(res)
- {
- })
- .error(function(err){
+ $http.post('/api/events/changePublicType', event).error(function(err){
    console.log('error : ' + err)
  })
 }
@@ -537,10 +521,7 @@ rmPic = function(picture) {
   console.log('in remove user')
   $http.post('/api/events/removePicture', picture, {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
-  }}).success(function(res)
-  {
-    console.log(res)
-  })
+  }})
   .error(function(err){
    console.log('error : ' + err)
  })
@@ -553,25 +534,17 @@ addPersonToEvent = function(newAttender, eventId){
   $http.get('/api/events/eventDetails/' + eventId)
   .success(function(res) {
     if(res.event.adminId == newAttender._id){
-      console.log("admin")
       check = true
     }
     if(res.event.attenders.length >0){
       res.event.attenders.forEach(function(p){
         if(p.id == newAttender._id){
           check = true
-          console.log("users")
         }
       })
     }
-    console.log("check is ", check)
     if(!check){
-      console.log("check")
-      $http.post('/api/events/joinEvent/'+eventId, newAttender).success(function(res)
-      {
-       console.log ('added to event app.js' )
-     })
-      .error(function(err){
+      $http.post('/api/events/joinEvent/'+eventId, newAttender).error(function(err){
        console.log('error : ' + err)
      })}
     })
@@ -592,7 +565,6 @@ var api = {
   }})
 
 }, getPicEvent : function(eventId){
-  console.log(eventId)
   return $http.get('/api/events/getPicEvent/'+ eventId , {headers: {
     Authorization: 'Bearer '+ UsersService.getTokenApi()
   }})
@@ -643,29 +615,25 @@ myApp.controller('PicutresDetailCtrl',
   $http.get('/api/pictures/picture/' + $routeParams.id)
   .success(function(picture) {
    $scope.picture = picture[0]
-   console.log(picture.title)
  });
 
-  $scope.addComment = function(){
-    if($scope.loggedInUser != null){
-      $scope.newComment.author = $scope.loggedInUser.name
-    }
+  // $scope.addComment = function(){
+  //   if($scope.loggedInUser != null){
+  //     $scope.newComment.author = $scope.loggedInUser.name
+  //   }
 
-    addPictureComment($scope.picture._id, $scope.newComment)
-    $scope.newComment=''
-    $http.get('/api/pictures/picture/' + $routeParams.id)
-    .success(function(picture) {
-     $scope.picture = picture[0]
-     console.log(picture.title)
-   });
-  }
+  //   addPictureComment($scope.picture._id, $scope.newComment)
+  //   $scope.newComment=''
+  //   $http.get('/api/pictures/picture/' + $routeParams.id)
+  //   .success(function(picture) {
+  //    $scope.picture = picture[0]
+  //  });
+  // }
 }])
 
 
 
 // Face dection
-
-
 
 myApp.controller('faceDetController', 
   ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 'EventsService', function($scope, $routeParams, $http , UsersService ,PicturesService, EventsService) {
@@ -673,30 +641,7 @@ myApp.controller('faceDetController',
 
     $scope.event = EventsService.getPicEvent("58ece8d06c6730fde2f78ee2")
     var numbers = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
-    var na = ["steve" , "dylan" , "shane"]
-    $scope.names = na.reverse()
+    $scope.names = numbers.reverse()
 
-   // window.onload = function() {
-   //    console.log("laoded")
-   //    var img = document.getElementById('img');
-   //    var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
-   //    console.log("tracker", tracker)
-   //    tracker.setStepSize(1.7);
-   //    tracking.track('#img', tracker);
-   //    tracker.on('track', function(event) {
-   //      event.data.forEach(function(rect) {
-   //        window.plot(rect.x, rect.y, rect.width, rect.height);
-   //      });
-   //    });
-   //    window.plot = function(x, y, w, h) {
-   //      var rect = document.createElement('div');
-   //      document.querySelector('.demo-container').appendChild(rect);
-   //      rect.classList.add('rect');
-   //      rect.style.width = w + 'px';
-   //      rect.style.height = h + 'px';
-   //      rect.style.left = (img.offsetLeft + x) + 'px';
-   //      rect.style.top = (img.offsetTop + y) + 'px';
-   //    };
-   //  };
 
  }])

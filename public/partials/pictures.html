@@ -57,7 +57,7 @@
              {{picture.event}}</td>
  
            
-          <td> {{picture.timeStamp}}</td>
+          <td> {{picture.timeStamp | date:"dd/MM/yyyy 'at' h:mma"}}</td>
           <td><img class="thumb" ng-src="{{picture.location}}" height="200px"></td>
 
         </tr>

@@ -84,11 +84,9 @@ exports.destroy = function(req, res) {
     var newAttender = {
       id: req.body._id,
       name: req.body.name, 
-      email: req.body.email
+      email: req.body.email,
+      numOfPics : 0
     };
-    console.log("event is :", req.params.eventId);
-    console.log("new person added to event is :", newAttender);
-
 
     Event.findOneAndUpdate( 
       { _id: req.params.eventId },

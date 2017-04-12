@@ -70,7 +70,7 @@ app.post('/api/photo',function(req,res){
     var picture = {
       name: imageFileName,
       owner: decoded._id,
-      pictureOnwer: decoded._id,
+      owenrUName: decoded.email,
       location: "/data/images/"+imageFileName,
       event:  req.headers.event,
       timeStamp: timeStamp
@@ -85,6 +85,15 @@ app.post('/api/photo',function(req,res){
         if(err) { return handleError(res, err); }
         return;
       });
+
+        Event.findOneAndUpdate( 
+      { _id: req.headers.event , "attenders.id": decoded._id },
+      { $inc: { "attenders.$.numOfPics": 1 }},
+      function(err) {
+        if(err) { return handleError(res, err); }
+        return;
+      });
+
 
     Picture.create(picture, function(err, Picture) {
       if(err) { 

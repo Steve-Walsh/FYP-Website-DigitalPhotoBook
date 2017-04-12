@@ -2,15 +2,17 @@
     var Schema = mongoose.Schema;
     
     var attendersSchema = new Schema({
-        name: { type: String, required: true },
-        email: { type: String, required: true },
-        id: { type: String, required: true }
-      });
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      id: { type: String, required: true },
+      numOfPics: {type: Number, required: true}
+    });
 
     var pictureSchema = new Schema({
       name : {type: String, required: true},
       location : {type: String, requried: true},
-      pictureOnwer : {type: String, required: true},
+      owenrUName : {type: String, required: true},
+      owner : {type: String, required: true},
       timeStamp: {type: Date, required: true}
 
     })

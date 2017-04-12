@@ -3,9 +3,9 @@
     <div class="panel panel-success">
 
       <div class="panel-heading">
-      <div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
-            <a  class="btn btn-danger btn-xs" ng-if="event.publicEvent" ng-click=changePubilic(event)>Make Private</a>
-            <a  class="btn btn-success btn-xs" ng-if="!event.publicEvent" ng-click=changePubilic(event)>Make Public</a>
+        <div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
+          <a  class="btn btn-danger btn-xs" ng-if="event.publicEvent" ng-click=changePubilic(event)>Make Private</a>
+          <a  class="btn btn-success btn-xs" ng-if="!event.publicEvent" ng-click=changePubilic(event)>Make Public</a>
         </div>
         <h1 class="panel-title"> 
          <h3> <img src="/data/icons/{{event.iconPicked}}">    {{event.title}} in {{event.location}}</h3>
@@ -22,7 +22,7 @@
    </div>
 
 
-   <div class="panel panel-primary" ng-if="event.picture.length > 0">
+<!--    <div class="panel panel-primary" ng-if="event.picture.length > 0">
     <div class="panel-heading">
       <h1 class="panel-title"> 
        Attendee's
@@ -46,37 +46,109 @@
 
   </div>
 </div>
+</div> -->
+
+<div class="panel panel-primary" ng-if="event.picture.length > 0">
+  <div class="panel-heading">
+<!--     <div class="btn-group pull-right">
+      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
+    </div> -->
+    <h4 class="panel-title">Attendee's</h4>
+  </div>
+  <div class="panel-body">
+   <div class="row">
+  <div class="col-xs-2 pull-right">
+
+    <label>Show 
+      <select ng-model="peopNumLimit">
+        <div class="form-control input-sm">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </div>
+      </select> events</label>
+    </div>
+    <div class="col-xs-4">
+     <input type="text" class="form-control" placeholder="Search "  ng-model="searchPeop">
+    </div>
+  </div>
+
+    <table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th># of Pic's</th>
+
+          <th ng-if="event.adminId == loggedInUser._id" > Remove Person</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="person in event.attenders  | filter:{title: query} | orderBy:'email' | limitTo:peopNumLimit| filter:searchPeop" data-link="row" class="rowlink">
+
+          <td>{{person.email}}</td>
+          <td>{{person.numOfPics}}</td>
+
+          <td ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=releaseImages(event)>Delete</a></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 
-<!-- <div class="panel panel-primary" ng-if="event.picture.length > 0"> -->
-<div class="panel panel-primary">
 
+<div class="panel panel-primary" ng-if="event.picture.length > 0">
   <div class="panel-heading">
     <div class="btn-group pull-right">
-      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>release images </a>
+      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
     </div>
     <h4 class="panel-title">Pictures</h4>
   </div>
   <div class="panel-body">
-   <div ng-repeat="picture in event.pictures | orderBy:'+name'">
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h1 class="panel-title"> 
-         <Strong> by {{picture.name}}</Strong></h1>
-       </div>
-       
-       <div class="panel-body"> <span style="margin-left:10px;">
-         <img class="thumb" ng-src="{{picture.location}}" height="200px">
-       </span><br>
+   <div class="row">
+  <div class="col-xs-2 pull-right">
 
-     </div>
+    <label>Show 
+      <select ng-model="picNumLimit">
+        <div class="form-control input-sm">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </div>
+      </select> events</label>
+    </div>
+    <div class="col-xs-4">
+     <input type="text" class="form-control" placeholder="Search "  ng-model="searchPics">
+    </div>
+  </div>
 
-   </div>
+    <table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
+      <thead>
+        <tr>
+          <th>Picture</th>
+          <th>Uploaded By</th>
+          <th ng-if="event.adminId == loggedInUser._id" > Remove Picture</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="picture in event.pictures  | filter:{title: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
 
- </div>
+          <td> <a ><img class="thumb" ng-src="{{picture.location}}" height="200px"></a></td>
+          <td>{{picture.ownerUName}}</td>
+          <td ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=releaseImages(event)>Delete</a></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-</div>
+
+
 
  <!--  <div class="panel panel-success">
       <div class="panel-heading">

@@ -1,18 +1,18 @@
-var express     = require('express');
-var app         = express(); 
-var bodyParser  = require('body-parser');
-var morgan      = require('morgan');
-var mongoose    = require('mongoose');
-var passport    = require('passport');
-var config      = require('./config/database'); // get db config file
-var User        = require('./api/user/user.model.js'); // get the mongoose model
-var port        = process.env.PORT || 3000;
-var jwt         = require('jwt-simple');
-var mongoose    = require('mongoose'); 
-var multer      = require('multer');
-var http        = require('http');
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var config = require('./config/database'); // get db config file
+var User = require('./api/user/user.model.js'); // get the mongoose model
+var port = process.env.PORT || 3000;
+var jwt = require('jwt-simple');
+var mongoose = require('mongoose');
+var multer = require('multer');
+var http = require('http');
 
-mongoose.connect(config.database); 
+mongoose.connect(config.database);
 
 // get our request parameters
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,111 +35,113 @@ var imageFileName
 var eventId
 var timeStamp
 
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './public/data/images');
-  },
-  filename: function (req, file, callback) {
-    timeStamp = Date.now()
-    eventId = file.originalname
-    imageFileName = file.fieldname + '-' + timeStamp + ".jpeg"
-    callback(null, imageFileName);
+var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, './public/data/images');
+    },
+    filename: function(req, file, callback) {
+        timeStamp = Date.now()
+        eventId = file.originalname
+        imageFileName = file.fieldname + '-' + timeStamp + ".jpeg"
+        callback(null, imageFileName);
 
-  }
+    }
 });
-var upload = multer({ storage : storage}).single('userPhoto');
+var upload = multer({ storage: storage }).single('userPhoto');
 
 
-app.post('/api/photo',function(req,res){
+app.post('/api/photo', function(req, res) {
 
-  upload(req,res,function(err) {
-    if(err) {
-      console.log(err)
-      return res.end("Error uploading file.");
-    }
-    var Picture = require('./api/picture/picture.model');
-    var Event = require('./api/event/event.model');
-
-
-    var token = req.headers.token.substring(4)
-
-    var decoded = jwt.decode(token, config.secret);
-
-    var picture = {
-      name: imageFileName,
-      owner: decoded._id,
-      owenrUName: decoded.email,
-      location: "/data/images/"+imageFileName,
-      event:  req.headers.event,
-      timeStamp: timeStamp,
-      tagged :[]
-    }
-    Picture.create(picture, function(err, pic) {
+    upload(req, res, function(err) {
         if (err) {
             console.log(err)
-            return handleError(res, err);
+            return res.end("Error uploading file.");
         }
-        // return;
-        console.log(pic)
+        var Picture = require('./api/picture/picture.model');
+        var Event = require('./api/event/event.model');
+        var pic_id
+
+
+        var token = req.headers.token.substring(4)
+
+        var decoded = jwt.decode(token, config.secret);
+
+        var picture = {
+            name: imageFileName,
+            owner: decoded._id,
+            owenrUName: decoded.email,
+            location: "/data/images/" + imageFileName,
+            event: req.headers.event,
+            timeStamp: timeStamp,
+            tagged: []
+        }
+        Picture.create(picture, function(err, pic) {
+            if (err) {
+                console.log(err)
+                return handleError(res, err);
+            }
+            // return;
+            pic_id = pic._id
+        }).then(function() {
+
+
+            Event.findOneAndUpdate({ _id: req.headers.event }, { $push: { pictures: picture } }, { safe: true, upsert: true },
+                function(err) {
+                    if (err) {
+                        return handleError(res, err);
+                    }
+                    return;
+                });
+        });
+
+        Event.findOneAndUpdate({ _id: req.headers.event, "attenders.id": decoded._id }, { $inc: { "attenders.$.numOfPics": 1 } },
+            function(err) {
+                if (err) {
+                    return handleError(res, err);
+                }
+                return;
+            });
+
+
+
+
+
+
+        res.end("File is uploaded");
     });
-
-    // Event.findOneAndUpdate( 
-    //   { _id: req.headers.event },
-    //   { $push: { pictures: picture }},
-    //   { safe: true, upsert: true },
-    //   function(err) {
-    //     if(err) { return handleError(res, err); }
-    //     return;
-    //   });
-
-    //     Event.findOneAndUpdate( 
-    //   { _id: req.headers.event , "attenders.id": decoded._id },
-    //   { $inc: { "attenders.$.numOfPics": 1 }},
-    //   function(err) {
-    //     if(err) { return handleError(res, err); }
-    //     return;
-    //   });
-
-
-
-
-
-    
-    res.end("File is uploaded");
-  });
 });
 
 
 
 // login method
-app.post('/authenticate', function (req, res) {
-  console.log("inside")
-  console.log(req.body);
-  
-  User.findOne({
-    email: req.body.email
-  }, function(err, user) {
-    if (err) throw err;
+app.post('/authenticate', function(req, res) {
+    console.log("inside")
+    console.log(req.body);
 
-    if (!user) {
-      console.log("not user")
-      res.send({success: false, msg: 'Authentication failed. User not found.'});
-    } else {
-      // check if password matches
-      user.comparePassword(req.body.password, function (err, isMatch) {
-        if (isMatch && !err) {
-          // if user is found and password is right create a token
-          var token = jwt.encode(user, config.secret);
-          // return the information including token as JSON
-          console.log(token);
-          res.json({success: true, token: 'JWT ' + token});
+    User.findOne({
+        email: req.body.email
+    }, function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+            console.log("not user")
+            res.send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
-          console.log("false")
-          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+            // check if password matches
+            user.comparePassword(req.body.password, function(err, isMatch) {
+                if (isMatch && !err) {
+                    // if user is found and password is right create a token
+                    var token = jwt.encode(user, config.secret);
+                    // return the information including token as JSON
+                    console.log(token);
+                    res.json({ success: true, token: 'JWT ' + token });
+                } else {
+                    console.log("false")
+                    res.send({ success: false, msg: 'Authentication failed. Wrong password.' });
+                }
+            });
         }
-      });
-    }
-  })
+    })
 });
 require('./routes')(app)
 var server = require('http').createServer(app);
@@ -155,29 +157,29 @@ var io = require('socket.io')(server);
 
 
 // socket io chat
-io.on('connection', function(socket){
-  console.log('A user connected');
+io.on('connection', function(socket) {
+    console.log('A user connected');
 
-  socket.on('room', function(room) {
-    console.log("joined room ", room)
+    socket.on('room', function(room) {
+        console.log("joined room ", room)
         socket.join(room);
     });
 
-  //Whenever someone disconnects this piece of code executed
-  socket.on('disconnect', function () {
-    console.log('A user disconnected');
-  });
+    //Whenever someone disconnects this piece of code executed
+    socket.on('disconnect', function() {
+        console.log('A user disconnected');
+    });
 
-  socket.on('new message', function (data) {
-    console.log("new message", data)
-    // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', data);
-  });
+    socket.on('new message', function(data) {
+        console.log("new message", data)
+            // we tell the client to execute 'new message'
+        socket.broadcast.emit('new message', data);
+    });
 
 });
 
 server.listen(port, function() {
-  console.log('Express server listening on port : '+ port);
+    console.log('Express server listening on port : ' + port);
 });
 
 // io.on('connection', function (socket) {
@@ -237,5 +239,3 @@ server.listen(port, function() {
 //   //   }
 //   // });
 // });
-
-

@@ -1,6 +1,7 @@
 var Event = require('./event.model');  
 var jwt         = require('jwt-simple');
 var config      = require('./../../config/database');
+var Picture = require('./../picture/picture.model');  
 
 function handleError(res, err) {
   return res.send(500, err);
@@ -12,7 +13,7 @@ exports.index = function(req, res) {
 
   var decoded = jwt.decode(token, config.secret);
 
-  Event.find(function (err, Events) {
+  Event.find().populate('pictures').lean().exec(function (err, Events) {
     var allEvents = []
     Events.forEach(function(event){
      if(event.publicEvent){
@@ -83,7 +84,7 @@ exports.myEvents = function(req, res){
 
   var myEventsList = []
 
-  Event.find(function (err, Events) {
+  Event.find().populate('pictures').lean().exec(function (err, Events) {
     if(err) { return handleError(res, err); }
 
     Events.forEach(function(event){
@@ -138,7 +139,7 @@ exports.destroy = function(req, res) {
     console.log(req.params._id)
     Event.findOne({
       _id : req.params._id
-    }, function (err, data) {
+    }).populate('pictures').lean().exec( function (err, data) {
       if (err) throw err;
       if(!data){
         res.send({success : false, msg : "no event by that id"})

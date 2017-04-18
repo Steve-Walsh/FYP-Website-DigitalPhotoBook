@@ -592,19 +592,6 @@ myApp.controller('PicturesController',   ['$scope', '$http' ,'PicturesService', 
 
 
 
-myApp.factory('PicturesService', ['$http', 'UsersService', function($http, UsersService){
-
- var api = {
-   getPictures : function(loggedInUser) {
-
-     return $http.get('/api/pictures', {headers: {
-      Authorization: 'Bearer '+ UsersService.getTokenApi()
-    }})
-   }
- }
- return api
-}])
-
 
 myApp.controller('PicutresDetailCtrl', 
  ['$scope', '$routeParams', '$http', 'UsersService', 'PicturesService', 
@@ -641,7 +628,39 @@ myApp.controller('faceDetController',
 
     $scope.event = EventsService.getPicEvent("58ece8d06c6730fde2f78ee2")
     var numbers = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
-    $scope.names = numbers.reverse()
+    $scope.nameList = numbers.reverse()
+
+
+    // $scope.tagPeople = function(data){
+    //   console.log(data)
+
+    // }
+
+    $scope.data_names = []
+
+    $scope.saveFaces = function(){
+      // console.log($scope.data_names)
+      tagfaces($scope.data_names)
+    }
 
 
  }])
+
+
+
+myApp.factory('PicturesService', ['$http', 'UsersService', function($http, UsersService){
+
+  tagfaces = function(names){
+    console.log(names)
+  }
+
+ var api = {
+   getPictures : function(loggedInUser) {
+
+     return $http.get('/api/pictures', {headers: {
+      Authorization: 'Bearer '+ UsersService.getTokenApi()
+    }})
+   }
+ }
+ return api
+}])

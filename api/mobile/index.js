@@ -7,7 +7,10 @@ router.get('/', controller.index);
 router.post('/login', controller.login);
 router.get('/events', controller.events);
 router.get('/pictures', controller.pictures);
-router.post('/addPicture', controller.addPicture);
+
+
+
+// router.post('/addPicture', controller.addPicture);
 
 // router.get('/picture/:id', controller.show);
 // router.post('/', controller.create);

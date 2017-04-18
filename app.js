@@ -74,31 +74,33 @@ app.post('/api/photo',function(req,res){
       timeStamp: timeStamp,
       tagged :[]
     }
+    Picture.create(picture, function(err, pic) {
+        if (err) {
+            console.log(err)
+            return handleError(res, err);
+        }
+        // return;
+        console.log(pic)
+    });
 
-    Event.findOneAndUpdate( 
-      { _id: req.headers.event },
-      { $push: { pictures: picture }},
-      { safe: true, upsert: true },
-      function(err) {
-        if(err) { return handleError(res, err); }
-        return;
-      });
+    // Event.findOneAndUpdate( 
+    //   { _id: req.headers.event },
+    //   { $push: { pictures: picture }},
+    //   { safe: true, upsert: true },
+    //   function(err) {
+    //     if(err) { return handleError(res, err); }
+    //     return;
+    //   });
 
-        Event.findOneAndUpdate( 
-      { _id: req.headers.event , "attenders.id": decoded._id },
-      { $inc: { "attenders.$.numOfPics": 1 }},
-      function(err) {
-        if(err) { return handleError(res, err); }
-        return;
-      });
+    //     Event.findOneAndUpdate( 
+    //   { _id: req.headers.event , "attenders.id": decoded._id },
+    //   { $inc: { "attenders.$.numOfPics": 1 }},
+    //   function(err) {
+    //     if(err) { return handleError(res, err); }
+    //     return;
+    //   });
 
 
-    Picture.create(picture, function(err, Picture) {
-      if(err) { 
-        console.log(err)
-        return handleError(res, err); }
-        return;
-      });
 
 
 

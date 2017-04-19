@@ -51,7 +51,6 @@ var upload = multer({ storage: storage }).single('userPhoto');
 
 
 app.post('/api/photo', function(req, res) {
-
     upload(req, res, function(err) {
         if (err) {
             console.log(err)
@@ -60,7 +59,6 @@ app.post('/api/photo', function(req, res) {
         var Picture = require('./api/picture/picture.model');
         var Event = require('./api/event/event.model');
         var pic_id
-
 
         var token = req.headers.token.substring(4)
 
@@ -75,6 +73,7 @@ app.post('/api/photo', function(req, res) {
             timeStamp: timeStamp,
             tagged: []
         }
+
         Picture.create(picture, function(err, pic) {
             if (err) {
                 console.log(err)
@@ -82,32 +81,25 @@ app.post('/api/photo', function(req, res) {
             }
             // return;
             pic_id = pic._id
+            console.log(pic._id)
         }).then(function() {
-
-
-            Event.findOneAndUpdate({ _id: req.headers.event }, { $push: { pictures: picture } }, { safe: true, upsert: true },
+            Event.findOneAndUpdate({ _id: req.headers.event }, { $push: { pictures: pic_id } }, { safe: true, upsert: true },
                 function(err) {
                     if (err) {
                         return handleError(res, err);
                     }
                     return;
                 });
-        });
-
-        Event.findOneAndUpdate({ _id: req.headers.event, "attenders.id": decoded._id }, { $inc: { "attenders.$.numOfPics": 1 } },
-            function(err) {
-                if (err) {
-                    return handleError(res, err);
-                }
-                return;
-            });
-
-
-
-
-
-
-        res.end("File is uploaded");
+        }).then(function() {
+            Event.findOneAndUpdate({ _id: req.headers.event, "attenders.id": decoded._id }, { $inc: { "attenders.$.numOfPics": 1 } },
+                function(err) {
+                    if (err) {
+                        return handleError(res, err);
+                    }
+                    return;
+                });
+            res.end("File is uploaded");
+        })
     });
 });
 

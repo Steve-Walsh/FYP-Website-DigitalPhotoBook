@@ -13,7 +13,7 @@ var PictureSchema = new Schema({
 	owenrUName:  { type: String, required: true },
 	event: {type: String, required:true},
 	timeStamp: {type: String},
-	tagged: [taggedSchema]
+	tagged: [{ type: String, required: true }]
 
 });
 

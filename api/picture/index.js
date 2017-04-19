@@ -9,6 +9,8 @@ router.get('/picture/:id', controller.show);
 // router.post('/:id/comments', controller.add_comment);
 // router.post('/:picture_id/comments/:comment_id/upvotes', controller.update_comment_upvotes);
 router.delete('/:id', controller.destroy);
+router.post('/tagfaces', controller.tagfaces);
+router.get('/tags/:id', controller.gettags);
 
 
 module.exports = router;

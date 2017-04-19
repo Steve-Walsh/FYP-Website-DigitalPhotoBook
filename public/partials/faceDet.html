@@ -37,7 +37,6 @@
 input {
     border: 0px;
     bottom: -42px;
-    color: #a64ceb;
     font-size: 15px;
     height: 30px;
     left: 50%;
@@ -82,14 +81,14 @@ input {
                 <div class="panel-body">
                     <ul>
                         <div ng-repeat="item in nameList">
-                            <li ng-if="item.length > 2">{{item}}
-                            </div>
+                            <li> {{item}}
                         </div>
-                    </ul>
                 </div>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div id="nameList" hidden> {{nameList}}</div>
 <script>
@@ -110,6 +109,7 @@ window.onload = function() {
         var rect = document.getElementById('rect' + name);
         var arrow = document.getElementById('arrow' + name);
         var input = document.getElementById('scriptInput' + name);
+        input.value = name
         rect.onclick = function name() {
             input.select();
         };

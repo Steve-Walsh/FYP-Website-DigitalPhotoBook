@@ -53,7 +53,7 @@ input {
     top: 50%;
     left: 50%;
     width: 100%;
-    max-width: 1000px;
+    max-height: 750px;
 }
 </style>
 <p></p>
@@ -61,13 +61,15 @@ input {
     <div class="row">
         <div class="col-md-8">
             <form id="parent" ng-submit="saveFaces()">
-                <span id="photo"><img id="img" src="data/images/faces2.png" /></span>
+                <span id="photo"><img id="img" ng-src="{{picture.location}}" /></span>
                 <div ng-repeat="item in nameList">
                     <div class=rect id="rect{{item}}">
                         <div class=arrow id="arrow{{item}}"></div>
                         <input ng-model="data_names[item]" id="scriptInput{{item}}" value="{{item}}">
                     </div>
                 </div>
+                <br>
+                <hr>
                 <button class="btn btn-lg btn-success btn-block" type="submit ">SAVE!</button>
             </form>
         </div>
@@ -81,7 +83,7 @@ input {
                 <div class="panel-body">
                     <ul>
                         <div ng-repeat="item in nameList">
-                            <li> {{item}}
+                            <li ng-if="item.length > 2"> {{item}}
                         </div>
                 </div>
                 </ul>

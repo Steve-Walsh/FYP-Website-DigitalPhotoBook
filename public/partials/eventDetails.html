@@ -1,164 +1,116 @@
 <div class="col-md-8 col-md-offset-2">
-    <div class="page-header">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
-                    <a class="btn btn-danger btn-xs" ng-if="event.publicEvent" ng-click=changePubilic(event)>Make Private</a>
-                    <a class="btn btn-success btn-xs" ng-if="!event.publicEvent" ng-click=changePubilic(event)>Make Public</a>
-                </div>
-                <h1 class="panel-title"> 
-         <h3> <img src="/data/icons/{{event.iconPicked}}">    {{event.title}} in {{event.location}}</h3>
-       </h1></div>
-            <div class="panel-body">
-                {{event.info}}
-                <p>Starting on {{event.startTime| date:"dd/MM/yyyy 'at' h:mma"}} till {{event.endTime| date:"dd/MM/yyyy 'at' h:mma"}}</p>
-                <button class="btn btn-success pull-right" ng-if="!event.member" ng-click=joinEvent(event)> Join Event </button>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Attendee's</h4>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-2 pull-right">
-                    <label>Show
-                        <select ng-model="peopNumLimit">
-                            <div class="form-control input-sm">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </div>
-                        </select> people</label>
-                </div>
-                <div class="col-xs-4">
-                    <input type="text" class="form-control" placeholder="Search " ng-model="searchPeop">
-                </div>
-            </div>
-            <br>
-            <table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th># of Pic's</th>
-                        <th ng-if="event.adminId == loggedInUser._id"> Remove Person</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="person in event.attenders  | filter:{title: query} | orderBy:'email' | limitTo:peopNumLimit| filter:searchPeop" data-link="row" class="rowlink">
-                        <td>{{person.email}}</td>
-                        <td>{{person.numOfPics}}</td>
-                        <td ng-if="event.adminId == loggedInUser._id"> <a class="btn btn-success btn-xs" ng-click=removeUser(person)>Delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <!-- ng-if="event.pictures.length > 0" -->
-        <div class="panel-heading">
-            <div class="btn-group pull-right">
-                <a class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
-            </div>
-            <h4 class="panel-title">Pictures</h4>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-2 pull-right">
-                    <label>Show </label>
-                        <select ng-model="picNumLimit">
-                            <div class="form-control input-sm">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </div>
-                        </select> 
-                </div>
-                <div class="col-xs-4">
-                    <input type="text" class="form-control" placeholder="Search " ng-model="searchPics">
-                </div>
-            </div>
-            <br>
-            <table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
-                <thead>
-                    <tr>
-                        <th>Picture</th>
-                        <th>Uploaded By</th>
-                        <th>People tagged</th>
-                        <th ng-if="event.adminId == loggedInUser._id"> Remove Picture</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="picture in event.pictures  | filter:{tagged: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
-                        <td>
-                            <a><img class="thumb" ng-src="{{picture.location}}" height="200px" href="#/picture/{{picture._id}}"></a>
-                        </td>
-                        <td>{{picture.owenrUName}}</td>
-                        <td>
-                            <div ng-repeat="person in picture.tagged">{{person.name}} </div>
-                        </td>
-                        <td>{{person}}
-                            <div ng-if="event.adminId == loggedInUser._id"> <a class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete</a> </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="page-header">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
+					<a class="btn btn-danger btn-xs" ng-if="event.publicEvent" ng-click=changePubilic(event)>Make Private</a>
+					<a class="btn btn-success btn-xs" ng-if="!event.publicEvent" ng-click=changePubilic(event)>Make Public</a>
+				</div>
+				<h1 class="panel-title"> 
+					<h3> <img src="/data/icons/{{event.iconPicked}}">    {{event.title}} in {{event.location}}</h3>
+				</h1></div>
+				<div class="panel-body">
+					{{event.info}}
+					<p>Starting on {{event.startTime| date:"dd/MM/yyyy 'at' h:mma"}} till {{event.endTime| date:"dd/MM/yyyy 'at' h:mma"}}</p>
+					<button class="btn btn-success pull-right" ng-if="!event.member" ng-click=joinEvent(event)> Join Event </button>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 class="panel-title">Attendee's</h4>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-2 pull-right">
+						<label>Show
+							<select ng-model="peopNumLimit">
+								<div class="form-control input-sm">
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</div>
+							</select> people</label>
+						</div>
+						<div class="col-xs-4">
+							<input type="text" class="form-control" placeholder="Search " ng-model="searchPeop">
+						</div>
+					</div>
+					<br>
+					<table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th># of Pic's</th>
+								<th ng-if="event.adminId == loggedInUser._id"> Remove Person</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="person in event.attenders  | filter:{title: query} | orderBy:'email' | limitTo:peopNumLimit| filter:searchPeop" data-link="row" class="rowlink">
+								<td>{{person.email}}</td>
+								<td>{{person.numOfPics}}</td>
+								<td ng-if="event.adminId == loggedInUser._id"> <a class="btn btn-success btn-xs" ng-click=removeUser(person)>Delete</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
 
-<div class="panel panel-primary">  <!-- ng-if="event.pictures.length > 0" -->
-  <div class="panel-heading">
-    <div class="btn-group pull-right">
-      <a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
-    </div>
-    <h4 class="panel-title">Pictures</h4>
-  </div>
-  <div class="panel-body">
-   <div class="row">
-    <div class="col-xs-2 pull-right">
+			<div class="panel panel-primary">  <!-- ng-if="event.pictures.length > 0" -->
+				<div class="panel-heading">
+					<div class="btn-group pull-right">
+						<a  class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
+					</div>
+					<h4 class="panel-title">Pictures</h4>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-2 pull-right">
 
-      <label>Show </label>
-        <select ng-model="picNumLimit">
-          <div class="form-control input-sm">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </div>
-        </select>
-      </div>
-      <div class="col-xs-4">
-       <input type="text" class="form-control" placeholder="Search "  ng-model="searchPics">
-     </div>
-   </div>
-   <br>
-   <table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
-    <thead>
-      <tr>
-        <th>Picture</th>
-        <th>Uploaded By</th>
-        <th>People tagged</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="picture in event.pictures  | filter:{tagged: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
+							<label>Show </label>
+							<select ng-model="picNumLimit">
+								<div class="form-control input-sm">
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</div>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<input type="text" class="form-control" placeholder="Search "  ng-model="searchPics">
+						</div>
+					</div>
+					<br>
+					<table id="posts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" class="posts">
+						<thead>
+							<tr>
+								<th>Picture</th>
+								<th>Uploaded By</th>
+								<th>People tagged</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="picture in event.pictures  | filter:{tagged: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
 
-        <td> <a href="#/face/{{picture._id}}"><img class="thumb" ng-src="{{picture.location}}" height="200px" ></a></td>
-        <td>{{picture.owenrUName}} <div ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete</a> </div>
-         <div ng-if="event.adminId != loggedInUser._id"> <a ng-if="picture.owner == loggedInUser._id" class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete</a></div></td>
-        <td> <div  ng-repeat="person in picture.tagged">{{person.name}} </div></td>
+								<td> <a href="#/face/{{picture._id}}"> <img class="thumb" ng-src="{{picture.location}}" height="200px"> 
+								</a> </td>
+								<td>{{picture.owenrUName}} <div ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete Picture</a> </div>
+									<div ng-if="event.adminId != loggedInUser._id"> <a ng-if="picture.owner == loggedInUser._id" class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete Picture</a></div></td>
+									<td> 
+										<ul>
+											<div  ng-repeat="person in picture.tagged track by $index">
+												<li ng-if="person.length >2"><{{person}} </div>
+												</li></td>
 
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 
 

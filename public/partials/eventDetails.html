@@ -150,7 +150,7 @@
     <tbody>
       <tr ng-repeat="picture in event.pictures  | filter:{tagged: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
 
-        <td> <a ><img class="thumb" ng-src="{{picture.location}}" height="200px" href="#/face/{{picture._id}}"></a></td>
+        <td> <a href="#/face/{{picture._id}}"><img class="thumb" ng-src="{{picture.location}}" height="200px" ></a></td>
         <td>{{picture.owenrUName}} <div ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete</a> </div>
          <div ng-if="event.adminId != loggedInUser._id"> <a ng-if="picture.owner == loggedInUser._id" class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete</a></div></td>
         <td> <div  ng-repeat="person in picture.tagged">{{person.name}} </div></td>

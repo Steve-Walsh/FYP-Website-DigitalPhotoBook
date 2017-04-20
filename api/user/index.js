@@ -12,24 +12,3 @@
 
 
   module.exports = router;
-
-  function handleError(res, err) {
-      return res.send(500, err);
-    }
-
-    // Get list of users
-    exports.index = function(req, res) {
-      User.find(function (err, users) {
-        if(err) { return handleError(res, err); }
-        return res.json(200, users);  
-      });
-    } ;
-
-    // Creates a new user in datastore.
-    exports.create = function(req, res) {
-      User.create(req.body, function(err, contact) {
-        if(err) { return handleError(res, err); }
-        return res.json(201, contact);
-      });
-    };
-

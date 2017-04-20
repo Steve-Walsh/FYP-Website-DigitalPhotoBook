@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for website/api/picture/pictures.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">website/api/picture/</a> pictures.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.75% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.75% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/48</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">  var Picture = require('./picture.model');
+  var jwt = require('jwt-simple');
+  var config = require('./../../config/database')
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function handleError(res, err) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(500).json(err);</span>
+  }
+&nbsp;
+  // Get list of pictures
+  exports.getMyPictures = <span class="fstat-no" title="function not covered" >function(req, res) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var token = req.headers.authorization.substring(11)</span>
+<span class="cstat-no" title="statement not covered" >      var decoded = jwt.decode(token, config.secret);</span>
+<span class="cstat-no" title="statement not covered" >      Picture.find({ owner: decoded._id }, <span class="fstat-no" title="function not covered" >function(err, pics) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, err);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return res.status(200).json(pics);</span>
+      });
+  };
+&nbsp;
+  exports.getPicture = <span class="fstat-no" title="function not covered" >function(req, res) {</span>
+<span class="cstat-no" title="statement not covered" >      var token = req.headers.authorization.substring(11)</span>
+<span class="cstat-no" title="statement not covered" >      var decoded = jwt.decode(token, config.secret)</span>
+<span class="cstat-no" title="statement not covered" >      Picture.find({ _id: req.params.id }, <span class="fstat-no" title="function not covered" >function(err, picture) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, err);</span>
+          } else <span class="cstat-no" title="statement not covered" >if (picture.length &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, "no picture found");</span>
+          } else {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >              return res.json(picture);</span>
+          }
+      })
+&nbsp;
+  };
+&nbsp;
+  exports.destroy = <span class="fstat-no" title="function not covered" >function(req, res) {</span>
+<span class="cstat-no" title="statement not covered" >      Picture.remove({ _id: req.params.id }, <span class="fstat-no" title="function not covered" >function(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, err);</span>
+          }
+      })
+  };
+&nbsp;
+  exports.tagfaces = <span class="fstat-no" title="function not covered" >function(req, res) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      var token = req.headers.authorization.substring(11);</span>
+<span class="cstat-no" title="statement not covered" >      var decoded = jwt.decode(token, config.secret);</span>
+<span class="cstat-no" title="statement not covered" >      if (req.body.names == null) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          return handleError(res, "names is empty");</span>
+&nbsp;
+      } else {
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          Picture.findOneAndUpdate({ _id: req.body.picId }, { $set: { tagged: [] } }, { safe: true, upsert: true }, <span class="fstat-no" title="function not covered" >function(err, responce) {</span></span>
+<span class="cstat-no" title="statement not covered" >              if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                  return handleError(res, err);</span>
+              } else {
+<span class="cstat-no" title="statement not covered" >                  Picture.findOneAndUpdate({ _id: req.body.picId }, { $pushAll: { tagged: req.body.names } }, { safe: true, upsert: true }, <span class="fstat-no" title="function not covered" >function(err, responce) {</span></span>
+<span class="cstat-no" title="statement not covered" >                      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                          return handleError(res, err);</span>
+                      } else {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                          return res.status(200).json({ success: true, msg: 'Update successful' });</span>
+                      }
+&nbsp;
+                  })
+              }
+          })
+      }
+&nbsp;
+  }
+&nbsp;
+  exports.getTags = <span class="fstat-no" title="function not covered" >function(req, res) {</span>
+<span class="cstat-no" title="statement not covered" >      var token = req.headers.authorization.substring(11);</span>
+<span class="cstat-no" title="statement not covered" >      var decoded = jwt.decode(token, config.secret);</span>
+<span class="cstat-no" title="statement not covered" >      Picture.findOne({ _id: req.params.id }, <span class="fstat-no" title="function not covered" >function(err, pic) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, err);</span>
+          } else <span class="cstat-no" title="statement not covered" >if (pic == null) {</span>
+<span class="cstat-no" title="statement not covered" >              return handleError(res, "no picture found");</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >              if (pic.tagged.length &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >                  pic.tagged = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]</span>
+              }
+<span class="cstat-no" title="statement not covered" >              return res.status(200).json(pic)</span>
+          }
+      })
+  }
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 21 2017 00:08:39 GMT+0100 (IST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

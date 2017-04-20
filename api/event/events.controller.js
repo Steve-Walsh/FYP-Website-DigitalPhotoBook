@@ -142,7 +142,6 @@ exports.joinEvent = function(req, res) {
 };
 
 exports.show = function(req, res) {
-    // console.log(req.params._id)
     Event.findOne({
         _id: req.params._id
     }).populate('pictures').lean().exec(function(err, data) {
@@ -192,7 +191,6 @@ exports.changePublicType = function(req, res) {
 exports.removeUser = function(req, res) {
     var token = req.headers.authorization.substring(11)
     var decoded = jwt.decode(token, config.secret);
-    console.log(req.body)
     Event.update({ _id: req.body.eventId }, { $pull: { "attenders": { id: req.body.id } } },
         function(err) {
             if (err) {
@@ -205,17 +203,12 @@ exports.removeUser = function(req, res) {
 exports.removePicture = function(req, res) {
     var token = req.headers.authorization.substring(11)
     var decoded = jwt.decode(token, config.secret);
-    console.log("REQ ", req.body)
 
-    Event.findByIdAndUpdate(req.body.eventId ,
-      {$pull: {pictures:  req.body._id}}
-    , { safe: true },
-      function(err, output) {
-        if(err) { 
-          console.log(err)
-          return handleError(res, err); }
-        console.log("output ", output)
-        return res.status(200).json('Update successful');
-      });
-  };
-
+    Event.findByIdAndUpdate(req.body.eventId, { $pull: { pictures: req.body._id } }, { safe: true },
+        function(err, output) {
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.status(200).json({ success: true, msg: 'Update successful' });
+        });
+};

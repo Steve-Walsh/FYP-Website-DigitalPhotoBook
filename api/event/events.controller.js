@@ -3,6 +3,9 @@ var jwt = require('jwt-simple');
 var config = require('./../../config/database');
 var Picture = require('./../picture/picture.model');
 
+var ObjectId = require('mongoose').Types.ObjectId;
+
+
 function handleError(res, err) {
     return res.status(500).json(err);
 }
@@ -203,32 +206,17 @@ exports.removeUser = function(req, res) {
 exports.removePicture = function(req, res) {
     var token = req.headers.authorization.substring(11)
     var decoded = jwt.decode(token, config.secret);
-    console.log(req.body)
-    Event.update({ _id: req.body.eventId }, { $pull: { "pictures": { id: req.body.id } } },
-        function(err) {
-            if (err) {
-                return handleError(res, err);
-            }
-            return res.status(200).json({ success: true, msg: 'Update successful' });
-        });
-};
-exports.getPicEvent = function(req, res) {
-    var token = req.headers.authorization.substring(11)
-    var decoded = jwt.decode(token, config.secret);
-    console.log(req.params.id)
-    Event.find({ pictures: { $elemMatch: { "_id": "58edfa6f3fb58c3d83e30c50" } } },
-        function(err, data) {
-            console.log(data)
-            if (err) {
-                return handleError(res, err);
-            }
-            return res.status(200).json(data);
-        });
-    // Event.update( 
-    //   { _id: req.body.eventId },
-    //   {$pull: {"pictures": {id : req.body.id}}},
-    //   function(err) {
-    //     if(err) { return handleError(res, err); }
-    //     return res.send(200, 'Update successful');
-    //   });
-};
+    console.log("REQ ", req.body)
+
+    Event.findByIdAndUpdate(req.body.eventId ,
+      {$pull: {pictures:  req.body._id}}
+    , { safe: true },
+      function(err, output) {
+        if(err) { 
+          console.log(err)
+          return handleError(res, err); }
+        console.log("output ", output)
+        return res.status(200).json('Update successful');
+      });
+  };
+

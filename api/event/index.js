@@ -14,7 +14,6 @@ router.post('/releaseImgs', controller.releaseImgs);
 router.post('/changePublicType', controller.changePublicType);
 router.post('/removeUser', controller.removeUser);
 router.post('/removePicture', controller.removePicture);
-router.get('/getPicEvent/:id', controller.getPicEvent);
 
 
 

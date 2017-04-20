@@ -174,12 +174,14 @@ myApp.factory('UsersService', ['$http', '$window', '$rootScope', '$location', fu
     isLoggedIn = function() {
         var token = getToken();
         var payload;
-
-        if (token != null && token != "") {
+        if(token === "undefined"){
+            console.log("bad token")
+            return false
+        }
+        else if (token != null && token != "") {
             payload = token.split('.')[1];
             payload = $window.atob(payload);
             payload = JSON.parse(payload);
-
 
             return payload;
         } else {
@@ -220,8 +222,9 @@ myApp.factory('UsersService', ['$http', '$window', '$rootScope', '$location', fu
 
         login = function(userDetails) {
 
-            $http.post('/authenticate', userDetails).then(function(res) {
-                if (res.success = true) {
+            $http.post('/api/users/login', userDetails).then(function(res) {
+                console.log(res.data.token)
+                if (typeof res.data.token != undefined) {
 
                     saveToken(res.data.token)
 
@@ -432,6 +435,7 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
 
     $http.get('/api/events/eventDetails/' + $routeParams.id)
     .success(function(res) {
+        console.log(res.event)
         res.event.member = false;
         if (res.event.adminId != loggedInUser.id) {
             if (!res.event.released) {
@@ -439,7 +443,7 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
             }
         }
         if (moment(res.event.endTime) < moment()) {
-            es.event.member = true;
+            res.event.member = true;
         } else {
             res.event.attenders.forEach(function(person) {
                 if (person.id == loggedInUser.id) {

@@ -185,7 +185,6 @@ exports.changePublicType = function(req, res) {
             if (!event) {
                 return res.status(500).json({ success: false, msg: 'no event' });
             }
-
             return res.status(200).json({ success: true, msg: 'Update successful' });
         });
 };

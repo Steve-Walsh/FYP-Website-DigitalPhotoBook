@@ -51,6 +51,7 @@ var badUser = {
 };
 
 var existingUser = {
+    _id: mongoose.Types.ObjectId("58f91c488aa0c7dd39fdf82c"),
     name: "existingUser",
     password: "password",
     email: "existingUser@email.com"
@@ -73,14 +74,14 @@ var newEvent = {
 
 var existingEvent = {
     _id: mongoose.Types.ObjectId("58f8ff2515d26fd22aced19b"),
-    title: "A test Event",
+    title: "Testing Event",
     location: "Waterford",
     startTime: "2017-04-13T12:15:00.000Z",
     endTime: "2017-09-30T12:15:00.000Z",
     admin: "123",
     adminId: "123",
     info: "a test event",
-    attenders: [],
+    attenders: [{ "numOfPics": 2, "email": "existingUser@email.com", "name": "existingUser", "id": "58f8ff2515d26fd22aced19b", "_id": mongoose.Types.ObjectId("58f91d5de397fcde222cad80") }],
     pictures: [],
     iconPicked: "test.png",
     released: true,
@@ -539,6 +540,64 @@ describe("Event Testing", function() {
                 })
         })
     })
+
+
+    describe("#removePicture()", function() {
+
+
+        it("Should update public to true", function(done) {
+
+            chai.request(app)
+                .post("/api/events/removePicture/")
+                .set('Authorization', 'Bearer ' + token)
+                .send({ _id: "58f8ff2515d26fd22aced19b" })
+                .end(function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    expect(res.body.success).equal(true)
+
+                    // console.log("err is", err)
+                    // console.log("res is", res.body)
+                    done()
+                })
+
+        })
+
+        it("Should error on set public to true. token", function(done) {
+
+            chai.request(app)
+                .post("/api/events/removePicture/")
+                .set('Authorization', 'Bearer ' + null)
+                .send({ _id: "58f8ff2515d26fd22aced19b" })
+                .end(function(err, res) {
+                    expect(err).to.not.be.null;
+                    expect(res).to.have.status(500)
+
+                    done()
+                })
+
+        })
+
+
+        it("Should error on set public to true. event ID", function(done) {
+            chai.request(app)
+                .post("/api/events/removePicture/")
+                .set('Authorization', 'Bearer ' + token)
+                .send({ _id: "58f8ff2515d26fd22aced000" })
+                .end(function(err, res) {
+                    // expect(err).to.be.null;
+                    expect(res).to.have.status(500)
+                    expect(res.body.success).equal(false)
+
+                    // console.log("err is", err)
+                    // console.log("res is", res.body)
+                    done()
+                })
+        })
+    })
+
+
+
 
 
 

@@ -1,6 +1,13 @@
 {
-  "name": "myApp",
-  "version": "0.0.1",
+  "name": "digital-photo-book",
+  "version": "0.1.1",
+  "description": "Web FrontEnd and backend for Digital Photo Book",
+  "author": "Stephen Walsh",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha"
+  },
   "dependencies": {
     "angular-bootstrap-datetimepicker": "^1.1.4",
     "bcrypt": "^1.0.2",
@@ -19,5 +26,22 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "socket.io": "^1.7.3"
-  }
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steve-Walsh/website.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Steve-Walsh/website/issues"
+  },
+  "homepage": "https://github.com/Steve-Walsh/website#readme"
 }

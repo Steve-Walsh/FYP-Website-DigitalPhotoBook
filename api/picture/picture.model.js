@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
+mongoose.Promise = global.Promise;
 
 var taggedSchema = new Schema({
 	name: { type: String, required: true },

@@ -106,35 +106,38 @@ app.post('/api/photo', function(req, res) {
 
 
 // login method
-app.post('/authenticate', function(req, res) {
-    console.log("inside")
-    console.log(req.body);
+// app.post('/authenticate', function(req, res) {
+//     console.log("inside")
+//     console.log(req.body);
 
-    User.findOne({
-        email: req.body.email
-    }, function(err, user) {
-        if (err) throw err;
+//     User.findOne({
+//         email: req.body.email
+//     }, function(err, user) {
+//         if (err) throw err;
 
-        if (!user) {
-            console.log("not user")
-            res.send({ success: false, msg: 'Authentication failed. User not found.' });
-        } else {
-            // check if password matches
-            user.comparePassword(req.body.password, function(err, isMatch) {
-                if (isMatch && !err) {
-                    // if user is found and password is right create a token
-                    var token = jwt.encode(user, config.secret);
-                    // return the information including token as JSON
-                    console.log(token);
-                    res.json({ success: true, token: 'JWT ' + token });
-                } else {
-                    console.log("false")
-                    res.send({ success: false, msg: 'Authentication failed. Wrong password.' });
-                }
-            });
-        }
-    })
-});
+//         if (!user) {
+//             console.log("not user")
+//             res.send({ success: false, msg: 'Authentication failed. User not found.' });
+//         } else {
+//             // check if password matches
+//             user.comparePassword(req.body.password, function(err, isMatch) {
+//                 if (isMatch && !err) {
+//                     // if user is found and password is right create a token
+//                     var token = jwt.encode(user, config.secret);
+//                     // return the information including token as JSON
+//                     console.log(token);
+//                     res.json({ success: true, token: 'JWT ' + token });
+//                 } else {
+//                     console.log("false")
+//                     res.send({ success: false, msg: 'Authentication failed. Wrong password.' });
+//                 }
+//             });
+//         }
+//     })
+// });
+
+
+
 require('./routes')(app)
 var server = require('http').createServer(app);
 

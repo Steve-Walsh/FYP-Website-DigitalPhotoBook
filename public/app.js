@@ -490,7 +490,11 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
 myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($http, UsersService, $location) {
 
     addNewEvent = function(newEvent) {
-        $http.post('/api/events/', newEvent).success(function(res) {
+        $http.post('/api/events/', newEvent, {
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()
+                }
+            }).success(function(res) {
             $location.path('/eventDetails/' + res._id)
         })
         .error(function(err) {

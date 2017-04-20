@@ -3,7 +3,7 @@
 
   var router = express.Router();
 
-  // router.get('/', controller.index);
+  router.get('/', controller.index);
   router.post('/registerNewUser', controller.create);
   // router.put('/:id', controller.update);
   router.delete('/:id', controller.destroy);

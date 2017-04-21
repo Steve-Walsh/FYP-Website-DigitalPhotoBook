@@ -1,5 +1,8 @@
-# Final Year Project Website and Backend - Digital Photo Book 
-[![Build Status](https://travis-ci.org/Steve-Walsh/website.svg?branch=master)](https://travis-ci.org/Steve-Walsh/website)
+# Final Year Project Website and Backend -  Digital Photo Book 
+
+| Build Status  | Dependencies   |
+|---|---|
+|[![Build][travis-image]][travis-url]|[![Deps!][daviddm-image]][daviddm-url]
 
 
  Digital Photo Book is a cloud-enabled, mobile-ready, events service.
@@ -23,5 +26,13 @@ Install the dependencies and devDependencies and start the server.
 ```sh
 $ cd website
 $ npm install
-$ node app.js
+$ npm start
 ```
+MIT © [Stephen Walsh]()
+
+
+[travis-image]: https://travis-ci.org/Steve-Walsh/website.svg?branch=master
+[travis-url]: https://travis-ci.org/Steve-Walsh/website
+[daviddm-image]: https://david-dm.org/Steve-Walsh/website/status.svg
+[daviddm-url]: https://david-dm.org/Steve-Walsh/website
+

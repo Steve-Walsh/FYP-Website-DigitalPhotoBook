@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">37.5% </span>
+        <span class="strong">83.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>9/24</span>
+        <span class='fraction'>20/24</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>5/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/5</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">37.5% </span>
+        <span class="strong">83.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/24</span>
+        <span class='fraction'>20/24</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -101,18 +101,18 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,11 +121,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,19 +143,19 @@ var UserSchema = new Schema({
 &nbsp;
 module.exports = mongoose.model('users', UserSchema);
 &nbsp;
-UserSchema.pre('save', <span class="fstat-no" title="function not covered" >function (next) {</span>
-<span class="cstat-no" title="statement not covered" >    var user = this;</span>
-<span class="cstat-no" title="statement not covered" >    if (this.isModified('password') || this.isNew) {</span>
-<span class="cstat-no" title="statement not covered" >        bcrypt.genSalt(10, <span class="fstat-no" title="function not covered" >function (err, salt) {</span></span>
-<span class="cstat-no" title="statement not covered" >            if (err) {</span>
+UserSchema.pre('save', function (next) {
+    var user = this;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.isModified('password') || <span class="branch-1 cbranch-no" title="branch not covered" >this.isNew)</span> {
+        bcrypt.genSalt(10, function (err, salt) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >                return next(err);</span>
             }
-<span class="cstat-no" title="statement not covered" >            bcrypt.hash(user.password, salt, <span class="fstat-no" title="function not covered" >function (err, hash) {</span></span>
-<span class="cstat-no" title="statement not covered" >                if (err) {</span>
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >                    return next(err);</span>
                 }
-<span class="cstat-no" title="statement not covered" >                user.password = hash;</span>
-<span class="cstat-no" title="statement not covered" >                next();</span>
+                user.password = hash;
+                next();
             });
         });
     } else {
@@ -163,12 +163,12 @@ UserSchema.pre('save', <span class="fstat-no" title="function not covered" >func
     }
 });
  
-UserSchema.methods.comparePassword = <span class="fstat-no" title="function not covered" >function (passw, cb) {</span>
-<span class="cstat-no" title="statement not covered" >    bcrypt.compare(passw, this.password, <span class="fstat-no" title="function not covered" >function (err, isMatch) {</span></span>
-<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+UserSchema.methods.comparePassword = function (passw, cb) {
+    bcrypt.compare(passw, this.password, function (err, isMatch) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >            return cb(err);</span>
         }
-<span class="cstat-no" title="statement not covered" >        cb(null, isMatch);</span>
+        cb(null, isMatch);
     });
 };
  
@@ -178,7 +178,7 @@ module.exports = mongoose.model('User', UserSchema);</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 21 2017 00:08:39 GMT+0100 (IST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 21 2017 11:14:37 GMT+0100 (IST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

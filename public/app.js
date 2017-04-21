@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ['ngRoute', 'ui.bootstrap.datetimepicker']);
 
-myApp.config(['$routeProvider',
+myApp.config(['$routeProvider', 
     function($routeProvider) {
         $routeProvider
         .when('/', {
@@ -54,8 +54,11 @@ myApp.config(['$routeProvider',
             templateUrl: 'partials/faceDet.html',
             controller: 'FaceDetController',
             resolve: {
-                pictureDetails: function($http, $route) {
-                    return $http.get('/api/pictures/tags/' + $route.current.params.id)
+                pictureDetails: function($http, $route, UsersService) {
+                    return $http.get('/api/pictures/tags/' + $route.current.params.id, {
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()}
+            })
                     .then(function(response) {
                         return response.data;
                     })

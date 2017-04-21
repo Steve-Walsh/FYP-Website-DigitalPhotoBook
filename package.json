@@ -6,7 +6,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "ci-test": "istanbul cover tape \"test/*-test.js\" > test.tap && istanbul report clover"
   },
   "dependencies": {
     "angular-bootstrap-datetimepicker": "^1.1.4",
@@ -31,7 +32,8 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "mocha": "^3.2.0",
-    "nyc": "^10.2.0"
+    "nyc": "^10.2.0",
+    "tape" : "^4.6.3"
   },
   "directories": {
     "test": "test"

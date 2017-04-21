@@ -1,8 +1,8 @@
 # Final Year Project Website and Backend -  Digital Photo Book 
 
-| Build Status  | Dependencies   |
-|---|---|
-|[![Build][travis-image]][travis-url]|[![Deps!][daviddm-image]][daviddm-url]
+| Build Status  | Dependencies   | Coverage   |
+|---|---|---|
+|[![Build][travis-image]][travis-url]|[![Deps!][daviddm-image]][daviddm-url]| [![Coverage Status][coverall-image]][coverall-url]
 
 
  Digital Photo Book is a cloud-enabled, mobile-ready, events service.
@@ -35,4 +35,7 @@ MIT © [Stephen Walsh](https://github.com/Steve-Walsh/website/blob/master/LICENS
 [travis-url]: https://travis-ci.org/Steve-Walsh/website
 [daviddm-image]: https://david-dm.org/Steve-Walsh/website/status.svg
 [daviddm-url]: https://david-dm.org/Steve-Walsh/website
+[coverall-image]: https://coveralls.io/repos/github/Steve-Walsh/website/badge.svg?branch=master
+[coverall-url]: https://coveralls.io/github/Steve-Walsh/website?branch=master
+
 

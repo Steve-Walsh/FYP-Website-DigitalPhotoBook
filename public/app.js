@@ -435,7 +435,7 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
 
     $http.get('/api/events/eventDetails/' + $routeParams.id)
     .success(function(res) {
-        console.log(res.event)
+        console.log("res event is ", res.event)
         res.event.member = false;
         if (res.event.adminId != loggedInUser.id) {
             if (!res.event.released) {
@@ -494,12 +494,16 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
 myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($http, UsersService, $location) {
 
     addNewEvent = function(newEvent) {
-        $http.post('/api/events/', newEvent).success(function(res) {
+        $http.post('/api/events/', newEvent, {
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()
+                }
+            }).success(function(res) {
             $location.path('/eventDetails/' + res._id, {
-            headers: {
-                Authorization: 'Bearer ' + UsersService.getTokenApi()
-            }
-        })
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()
+                }
+            })
         })
         .error(function(err) {
             console.log('error : ' + err)

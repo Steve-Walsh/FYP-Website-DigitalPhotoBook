@@ -1,4 +1,5 @@
 # Final Year Project Website and Backend - Digital Photo Book 
+[![Build Status](https://travis-ci.org/Steve-Walsh/website.svg?branch=master)](https://travis-ci.org/Steve-Walsh/website)
 
 
  Digital Photo Book is a cloud-enabled, mobile-ready, events service.

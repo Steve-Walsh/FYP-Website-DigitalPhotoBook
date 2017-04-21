@@ -97,20 +97,26 @@
 						<tbody>
 							<tr ng-repeat="picture in event.pictures  | filter:{tagged: query} | orderBy:'timestamp' | limitTo:picNumLimit| filter:searchPics" data-link="row" class="rowlink">
 
-								<td> <a href="#/face/{{picture._id}}"> <img class="thumb" ng-src="{{picture.location}}" height="200px"> 
-								</a> </td>
+								<td>
+									 <a href="{{picture.location}}" data-lightbox="roadtrip"> <img class="thumb" ng-src="{{picture.location}}" height="200px"></a>
+									<div ng-if="event.adminId == loggedInUser._id"> <a href="#/face/{{picture._id}}" class="btn btn-primary">Tag people</a> </div>
+								</td>
 								<td>{{picture.owenrUName}} <div ng-if="event.adminId == loggedInUser._id"> <a  class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete Picture</a> </div>
-									<div ng-if="event.adminId != loggedInUser._id"> <a ng-if="picture.owner == loggedInUser._id" class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete Picture</a></div></td>
-									<td> 
-										<ul>
-											<div  ng-repeat="person in picture.tagged track by $index">
-												<li ng-if="person.length >2"><{{person}} </div>
-												</li></td>
+									<div ng-if="event.adminId != loggedInUser._id"> <a ng-if="picture.owner == loggedInUser._id" class="btn btn-success btn-xs" ng-click=removePic(picture)>Delete Picture</a></div>
+								</td>
+								<td> 
+									<ul>
+										<div  ng-repeat="person in picture.tagged track by $index">
+											<li ng-if="person.length >2"><{{person}} 
+											</li>
+										</div>
+									</ul>
+								</td>
 
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
 

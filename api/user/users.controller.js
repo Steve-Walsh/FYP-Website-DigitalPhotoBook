@@ -5,7 +5,7 @@
 
 
   function handleError(res, err) {
-      return res.send(500, err);
+      return res.status(500).send(err);
   }
 
   // Get list of user
@@ -31,7 +31,7 @@
           // save the user
           newUser.save(function(err) {
               if (err) {
-                  return res.status(500).send(err);
+                  return handleError(res, err);
               }
               return res.status(200).json({ success: true, msg: 'Successful created new user.' });
           });
@@ -44,7 +44,9 @@
       User.findOne({
           email: req.body.email
       }, function(err, user) {
-          if (err) throw err;
+          if (err){
+            return handleError(res, err);
+          }
 
           if (!user) {
               res.send({ success: false, msg: 'Authentication failed. User not found.' });
@@ -73,12 +75,12 @@
 
 
 
-  // Deletes a user from datastore.
-  exports.destroy = function(req, res) {
-      console.log(req.params.id)
-      User.remove({ _id: req.params.id }, function(err) {
-          if (err) {
-              return handleError(res, err);
-          }
-      })
-  };
+  // // Deletes a user from datastore.
+  // exports.destroy = function(req, res) {
+  //     console.log(req.params.id)
+  //     User.remove({ _id: req.params.id }, function(err) {
+  //         if (err) {
+  //             return handleError(res, err);
+  //         }
+  //     })
+  // };

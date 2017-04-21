@@ -8,7 +8,7 @@ module.exports = function(app) {
 
   app.route('/:url(api|app|assets)/*')
    .get(function(req, res) {
-    res.send(404);
+    res.status(404).send("nope");
   })
 
 };

@@ -51,6 +51,11 @@ var badUser = {
 
 };
 
+var erroUser = {
+    password: "password",
+    email: "test123@email.com"
+};
+
 var existingUser = {
     _id: mongoose.Types.ObjectId("58f91c488aa0c7dd39fdf82c"),
     name: "existingUser",
@@ -107,7 +112,21 @@ var token;
 
 var assert = chai.assert;
 var expect = chai.expect;
+describe('Routes Tests', function() {
+    describe("NotARouteTest", function() {
 
+        it("should fail, not a route", function(done) {
+            chai.request(app)
+                .get("/api/route")
+                .end(function(err, res) {
+                    expect(err).to.not.be.null
+                    expect(res).to.have.status(404)
+                    done()
+                })
+        })
+    })
+
+})
 describe('User Tests', function() {
 
     before(function(done) {
@@ -145,6 +164,18 @@ describe('User Tests', function() {
                 .send(existingUser)
                 .end(function(err, res) {
                     // expect(err).to.not.be.null;
+                    expect(res).to.have.status(500);
+                    done();
+                });
+        })
+
+        it('Should Error on create a user', function(done) {
+            chai.request(app)
+                .post('/api/users/registerNewUser')
+                .send(erroUser)
+                .end(function(err, res) {
+                    console.log(err)
+                        // expect(err).to.not.be.null;
                     expect(res).to.have.status(500);
                     done();
                 });
@@ -196,6 +227,50 @@ describe('User Tests', function() {
                     done();
                 });
         });
+    });
+
+
+
+    describe('#getUsers()', function() {
+
+        it('Should login', function(done) {
+            chai.request(app)
+                .get('/api/users/')
+                .send(addUser)
+                .end(function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200);
+                    done();
+                });
+        });
+
+
+        // it('Should error on login password', function(done) {
+        //     chai.request(app)
+        //         .post('/api/users/login')
+        //         .send(badPass)
+        //         .end(function(err, res) {
+        //             expect(err).to.be.null;
+        //             expect(res).to.have.status(200);
+        //             expect(res.body.success).equal(false);
+        //             expect(res.body.token).to.be.undefined;
+        //             done();
+        //         });
+        // });
+
+
+        // it('Should error on login username', function(done) {
+        //     chai.request(app)
+        //         .post('/api/users/login')
+        //         .send(badUser)
+        //         .end(function(err, res) {
+        //             expect(err).to.be.null;
+        //             expect(res).to.have.status(200);
+        //             expect(res.body.success).equal(false);
+        //             expect(res.body.token).to.be.undefined;
+        //             done();
+        //         });
+        // });
     });
 });
 

@@ -109,13 +109,13 @@ exports.myEvents = function(req, res) {
 
 };
 
-exports.destroy = function(req, res) {
-    Event.remove({ _id: req.params.id }, function(err) {
-        if (err) {
-            return handleError(res, err);
-        }
-    })
-};
+// exports.destroy = function(req, res) {
+//     Event.remove({ _id: req.params.id }, function(err) {
+//         if (err) {
+//             return handleError(res, err);
+//         }
+//     })
+// };
 
 
 

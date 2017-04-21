@@ -35,13 +35,13 @@
 
   };
 
-  exports.destroy = function(req, res) {
-      Picture.remove({ _id: req.params.id }, function(err) {
-          if (err) {
-              return handleError(res, err);
-          }
-      })
-  };
+  // exports.destroy = function(req, res) {
+  //     Picture.remove({ _id: req.params.id }, function(err) {
+  //         if (err) {
+  //             return handleError(res, err);
+  //         }
+  //     })
+  // };
 
   exports.tagfaces = function(req, res) {
 

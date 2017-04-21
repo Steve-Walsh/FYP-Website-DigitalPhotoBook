@@ -105,7 +105,9 @@ var newPicture = {
     "tagged": ["1", "2"]
 }
 
+var testingEvent
 
+var fakeToken = "jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbiI6ImZha2UgdG9rZW4ifQ.fTEBdjLfreRvOafHyBDeO53a-X1d1joCrjxzZfF2xhU"
 
 
 var token;
@@ -117,12 +119,12 @@ describe('Routes Tests', function() {
 
         it("should fail, not a route", function(done) {
             chai.request(app)
-                .get("/api/route")
-                .end(function(err, res) {
-                    expect(err).to.not.be.null
-                    expect(res).to.have.status(404)
-                    done()
-                })
+            .get("/api/route")
+            .end(function(err, res) {
+                expect(err).to.not.be.null
+                expect(res).to.have.status(404)
+                done()
+            })
         })
     })
 
@@ -149,36 +151,25 @@ describe('User Tests', function() {
 
         it('Should Create on create a user', function(done) {
             chai.request(app)
-                .post('/api/users/registerNewUser')
-                .send(addUser)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done();
-                });
+            .post('/api/users/registerNewUser')
+            .send(addUser)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done();
+            });
         })
-
-        // it('Should Error on create a user', function(done) {
-        //     chai.request(app)
-        //         .post('/api/users/registerNewUser')
-        //         .send(existingUser)
-        //         .end(function(err, res) {
-        //             // expect(err).to.not.be.null;
-        //             expect(res).to.have.status(500);
-        //             done();
-        //         });
-        // })
 
         it('Should Error on create a user', function(done) {
             chai.request(app)
-                .post('/api/users/registerNewUser')
-                .send(erroUser)
-                .end(function(err, res) {
-                    console.log(err)
+            .post('/api/users/registerNewUser')
+            .send(erroUser)
+            .end(function(err, res) {
+                console.log(err)
                         // expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done();
-                });
+                        expect(res).to.have.status(500);
+                        done();
+                    });
         })
 
 
@@ -188,44 +179,44 @@ describe('User Tests', function() {
 
         it('Should login', function(done) {
             chai.request(app)
-                .post('/api/users/login')
-                .send(addUser)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    expect(res.body.token).to.not.be.null;
-                    expect(res.body.token).to.not.be.undefined;
-                    token = res.body.token;
-                    done();
-                });
+            .post('/api/users/login')
+            .send(addUser)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                expect(res.body.token).to.not.be.null;
+                expect(res.body.token).to.not.be.undefined;
+                token = res.body.token;
+                done();
+            });
         });
 
 
         it('Should error on login password', function(done) {
             chai.request(app)
-                .post('/api/users/login')
-                .send(badPass)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    expect(res.body.success).equal(false);
-                    expect(res.body.token).to.be.undefined;
-                    done();
-                });
+            .post('/api/users/login')
+            .send(badPass)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                expect(res.body.success).equal(false);
+                expect(res.body.token).to.be.undefined;
+                done();
+            });
         });
 
 
         it('Should error on login username', function(done) {
             chai.request(app)
-                .post('/api/users/login')
-                .send(badUser)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    expect(res.body.success).equal(false);
-                    expect(res.body.token).to.be.undefined;
-                    done();
-                });
+            .post('/api/users/login')
+            .send(badUser)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                expect(res.body.success).equal(false);
+                expect(res.body.token).to.be.undefined;
+                done();
+            });
         });
     });
 
@@ -233,44 +224,16 @@ describe('User Tests', function() {
 
     describe('#getUsers()', function() {
 
-        it('Should login', function(done) {
+        it('Should get users', function(done) {
             chai.request(app)
-                .get('/api/users/')
-                .send(addUser)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done();
-                });
+            .get('/api/users/')
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done();
+            });
         });
 
-
-        // it('Should error on login password', function(done) {
-        //     chai.request(app)
-        //         .post('/api/users/login')
-        //         .send(badPass)
-        //         .end(function(err, res) {
-        //             expect(err).to.be.null;
-        //             expect(res).to.have.status(200);
-        //             expect(res.body.success).equal(false);
-        //             expect(res.body.token).to.be.undefined;
-        //             done();
-        //         });
-        // });
-
-
-        // it('Should error on login username', function(done) {
-        //     chai.request(app)
-        //         .post('/api/users/login')
-        //         .send(badUser)
-        //         .end(function(err, res) {
-        //             expect(err).to.be.null;
-        //             expect(res).to.have.status(200);
-        //             expect(res.body.success).equal(false);
-        //             expect(res.body.token).to.be.undefined;
-        //             done();
-        //         });
-        // });
     });
 });
 
@@ -296,22 +259,22 @@ describe("Event Testing", function() {
 
         it("Should return a list of events", function(done) {
             chai.request(app)
-                .get("/api/events/")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.length).equal(1)
-                    done()
-                })
+            .get("/api/events/")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res.body.length).equal(1)
+                done()
+            })
         })
         it("Should return an error when getting list of events", function(done) {
             chai.request(app)
-                .get("/api/events/")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    done()
-                })
+            .get("/api/events/")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                done()
+            })
         })
 
 
@@ -322,14 +285,14 @@ describe("Event Testing", function() {
 
         it("Should return null", function(done) {
             chai.request(app)
-                .get("/api/events/myEvents/123")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.length).equal(0)
-                    expect(res).to.have.status(200)
-                    done()
-                })
+            .get("/api/events/myEvents/123")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res.body.length).equal(0)
+                expect(res).to.have.status(200)
+                done()
+            })
 
         })
 
@@ -341,66 +304,67 @@ describe("Event Testing", function() {
 
         it("Should add event to database", function(done) {
             chai.request(app)
-                .post("/api/events/")
-                .set('Authorization', 'Bearer ' + token)
-                .send(newEvent)
-                .end(function(err, res) {
-                    expect(res).to.have.status(201)
-                    expect(err).to.be.null;
-                    done()
+            .post("/api/events/")
+            .set('Authorization', 'Bearer ' + token)
+            .send(newEvent)
+            .end(function(err, res) {
+                expect(res).to.have.status(201)
+                expect(err).to.be.null;
+                testingEvent = res.body
+                done()
 
-                })
+            })
         })
 
         it("Should error on create event. Token", function(done) {
             chai.request(app)
-                .post("/api/events/")
-                .set('Authorization', 'Bearer ' + null)
-                .send(newEvent)
-                .end(function(err, res) {
-                    expect(res).to.have.status(500)
-                    expect(err).to.not.be.null;
-                    done()
+            .post("/api/events/")
+            .set('Authorization', 'Bearer ' + null)
+            .send(newEvent)
+            .end(function(err, res) {
+                expect(res).to.have.status(500)
+                expect(err).to.not.be.null;
+                done()
 
-                })
+            })
         })
 
         it("Should error on create event. req.body", function(done) {
             chai.request(app)
-                .post("/api/events/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ title: "not real event" })
-                .end(function(err, res) {
-                    expect(res).to.have.status(500)
-                    expect(err).to.not.be.null;
-                    done()
+            .post("/api/events/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ title: "not real event" })
+            .end(function(err, res) {
+                expect(res).to.have.status(500)
+                expect(err).to.not.be.null;
+                done()
 
-                })
+            })
         })
 
 
         it("Should return a list of events, with newly created one", function(done) {
             chai.request(app)
-                .get("/api/events/")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.length).equal(2)
-                    done()
-                })
+            .get("/api/events/")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res.body.length).equal(2)
+                done()
+            })
         })
 
 
         it("Should return newly created event", function(done) {
             chai.request(app)
-                .get("/api/events/myEvents/123")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.length).equal(1)
-                    expect(res).to.have.status(200)
-                    done()
-                })
+            .get("/api/events/myEvents/123")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res.body.length).equal(1)
+                expect(res).to.have.status(200)
+                done()
+            })
 
         })
 
@@ -413,55 +377,55 @@ describe("Event Testing", function() {
 
         it("should join me to an event.", function(done) {
             chai.request(app)
-                .post("/api/events/joinEvent/58f8ff2515d26fd22aced19b")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200)
-                    expect(res.body.responce).equal("Update successful")
+            .post("/api/events/joinEvent/58f8ff2515d26fd22aced19b")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200)
+                expect(res.body.responce).equal("Update successful")
 
-                    done()
-                })
+                done()
+            })
         });
 
         it("should error on join an event. Token", function(done) {
             chai.request(app)
-                .post("/api/events/joinEvent/58f8ff2515d26fd22aced19b")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
+            .post("/api/events/joinEvent/58f8ff2515d26fd22aced19b")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
                         // expect(res.body.responce).equal("Update successful")
 
-                    done()
-                })
+                        done()
+                    })
         });
 
         it("should error on join an event. event ID", function(done) {
             chai.request(app)
-                .post("/api/events/joinEvent/123")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
+            .post("/api/events/joinEvent/123")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
                         // expect(res.body.responce).equal("Update successful")
 
-                    done()
-                })
+                        done()
+                    })
         });
 
 
 
         it("Should add another event to my list as joined new one", function(done) {
             chai.request(app)
-                .get("/api/events/myEvents/123")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.length).equal(2)
-                    expect(res).to.have.status(200)
-                    done()
-                })
+            .get("/api/events/myEvents/123")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res.body.length).equal(2)
+                expect(res).to.have.status(200)
+                done()
+            })
         });
     });
 
@@ -469,27 +433,27 @@ describe("Event Testing", function() {
 
         it("should return the event", function(done) {
             chai.request(app)
-                .get("/api/events/eventDetails/58f8ff2515d26fd22aced19b")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200)
-                    expect(res.body.success).equal(true)
-                    done()
-                })
+            .get("/api/events/eventDetails/58f8ff2515d26fd22aced19b")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200)
+                expect(res.body.success).equal(true)
+                done()
+            })
 
         })
 
         it("should erro on getting the event", function(done) {
             chai.request(app)
-                .get("/api/events/eventDetails/58f8ff2515d26fd22aced000")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
-                    expect(res.body.success).equal(false)
-                    done()
-                })
+            .get("/api/events/eventDetails/58f8ff2515d26fd22aced000")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
+                expect(res.body.success).equal(false)
+                done()
+            })
 
         })
     })
@@ -501,41 +465,41 @@ describe("Event Testing", function() {
         it("Should update released to true", function(done) {
 
             chai.request(app)
-                .post("/api/events/releaseImgs/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ _id: "58f8ff2515d26fd22aced19b" })
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200)
-                    expect(res.body.success).equal(true)
+            .post("/api/events/releaseImgs/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ _id: "58f8ff2515d26fd22aced19b" })
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200)
+                expect(res.body.success).equal(true)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
         it("Should error on set released to true. token", function(done) {
 
             chai.request(app)
-                .post("/api/events/releaseImgs/")
-                .set('Authorization', 'Bearer ' + null)
-                .send({ _id: "58f8ff2515d26fd22aced19b" })
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
+            .post("/api/events/releaseImgs/")
+            .set('Authorization', 'Bearer ' + null)
+            .send({ _id: "58f8ff2515d26fd22aced19b" })
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
 
         it("Should error on set released to true. event ID", function(done) {
             chai.request(app)
-                .post("/api/events/releaseImgs/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ _id: "58f8ff2515d26fd22aced000" })
-                .end(function(err, res) {
+            .post("/api/events/releaseImgs/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ _id: "58f8ff2515d26fd22aced000" })
+            .end(function(err, res) {
                     // expect(err).to.be.null;
                     expect(res).to.have.status(500)
                     expect(res.body.success).equal(false)
@@ -550,43 +514,41 @@ describe("Event Testing", function() {
 
 
         it("Should update public to true", function(done) {
-
             chai.request(app)
-                .post("/api/events/changePublicType/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ _id: "58f8ff2515d26fd22aced19b" })
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200)
-                    expect(res.body.success).equal(true)
+            .post("/api/events/changePublicType/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ _id: "58f8ff2515d26fd22aced19b" })
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200)
+                expect(res.body.success).equal(true)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
         it("Should error on set public to true. token", function(done) {
-
             chai.request(app)
-                .post("/api/events/changePublicType/")
-                .set('Authorization', 'Bearer ' + null)
-                .send({ _id: "58f8ff2515d26fd22aced19b" })
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
+            .post("/api/events/changePublicType/")
+            .set('Authorization', 'Bearer ' + null)
+            .send({ _id: "58f8ff2515d26fd22aced19b" })
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
 
         it("Should error on set public to true. event ID", function(done) {
             chai.request(app)
-                .post("/api/events/changePublicType/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ _id: "58f8ff2515d26fd22aced000" })
-                .end(function(err, res) {
+            .post("/api/events/changePublicType/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ _id: "58f8ff2515d26fd22aced000" })
+            .end(function(err, res) {
                     // expect(err).to.be.null;
                     expect(res).to.have.status(500)
                     expect(res.body.success).equal(false)
@@ -596,38 +558,86 @@ describe("Event Testing", function() {
         })
     })
 
+    // describe("#removeUser()", function(){
+
+    //     it("Should remove a user from an event", function(done) {
+    //         chai.request(app)
+    //         .post("/api/events/changePublicType/")
+    //         .set('Authorization', 'Bearer ' + token)
+    //         .send({ _id: "58f8ff2515d26fd22aced19b" })
+    //         .end(function(err, res) {
+    //             expect(err).to.be.null;
+    //             expect(res).to.have.status(200)
+    //             expect(res.body.success).equal(true)
+
+    //             done()
+    //         })
+
+    //     })
+
+    //     it("Should error on set public to true. token", function(done) {
+    //         chai.request(app)
+    //         .post("/api/events/changePublicType/")
+    //         .set('Authorization', 'Bearer ' + null)
+    //         .send({ _id: "58f8ff2515d26fd22aced19b" })
+    //         .end(function(err, res) {
+    //             expect(err).to.not.be.null;
+    //             expect(res).to.have.status(500)
+
+    //             done()
+    //         })
+
+    //     })
+
+
+    //     it("Should error on set public to true. event ID", function(done) {
+    //         chai.request(app)
+    //         .post("/api/events/changePublicType/")
+    //         .set('Authorization', 'Bearer ' + token)
+    //         .send({ _id: "58f8ff2515d26fd22aced000" })
+    //         .end(function(err, res) {
+    //                 // expect(err).to.be.null;
+    //                 expect(res).to.have.status(500)
+    //                 expect(res.body.success).equal(false)
+
+    //                 done()
+    //             })
+    //     })
+
+    // })
+
 
     describe("#removePicture()", function() {
 
 
-        it("Should update public to true", function(done) {
+        it("Should remove a picture from an event", function(done) {
 
             chai.request(app)
-                .post("/api/events/removePicture/")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ eventId: "58f8ff2515d26fd22aced19b", _id: "58f62b45e9709e26c3105279" })
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200)
-                    expect(res.body.success).equal(true)
+            .post("/api/events/removePicture/")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ eventId: "58f8ff2515d26fd22aced19b", _id: "58f62b45e9709e26c3105279" })
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200)
+                expect(res.body.success).equal(true)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
         it("Should error on set public to true. token", function(done) {
 
             chai.request(app)
-                .post("/api/events/removePicture/")
-                .set('Authorization', 'Bearer ' + null)
-                .send({ eventId: "58f8ff2515d26fd22aced19b", _id: "58f62b45e9709e26c3105111" })
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500)
+            .post("/api/events/removePicture/")
+            .set('Authorization', 'Bearer ' + null)
+            .send({ eventId: "58f8ff2515d26fd22aced19b", _id: "58f62b45e9709e26c3105111" })
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500)
 
-                    done()
-                })
+                done()
+            })
 
         })
 
@@ -654,24 +664,24 @@ describe("Picture Tests", function() {
 
         it("Should get my pictures ", function(done) {
             chai.request(app)
-                .get("/api/pictures/")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done()
-                })
+            .get("/api/pictures/")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done()
+            })
         })
 
         it("should error on get my pictures. token ", function(done) {
             chai.request(app)
-                .get("/api/pictures/")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done()
-                })
+            .get("/api/pictures/")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done()
+            })
         })
 
     })
@@ -680,35 +690,35 @@ describe("Picture Tests", function() {
 
         it("Should get my pictures ", function(done) {
             chai.request(app)
-                .get("/api/pictures/picture/58f62b45e9709e26c3105279")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done()
-                })
+            .get("/api/pictures/picture/58f62b45e9709e26c3105279")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done()
+            })
         })
 
         it("should error on get my pictures. token ", function(done) {
             chai.request(app)
-                .get("/api/pictures/picture/58f62b45e9709e26c3105279")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done()
-                })
+            .get("/api/pictures/picture/58f62b45e9709e26c3105279")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done()
+            })
         })
 
         it("should error on get my pictures. picture id ", function(done) {
             chai.request(app)
-                .get("/api/pictures/picture/58f62b45e9709e26c3105000")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done()
-                })
+            .get("/api/pictures/picture/58f62b45e9709e26c3105000")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done()
+            })
         })
 
     })
@@ -717,53 +727,53 @@ describe("Picture Tests", function() {
 
         it("it should add new tag faces ", function(done) {
             chai.request(app)
-                .post("/api/pictures/tagfaces")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ picId: "58f62b45e9709e26c3105279", names: ["1", "2", "3"] })
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done()
-                })
+            .post("/api/pictures/tagfaces")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ picId: "58f62b45e9709e26c3105279", names: ["1", "2", "3"] })
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done()
+            })
         })
 
 
 
         it("it shoud error tag faces ", function(done) {
             chai.request(app)
-                .post("/api/pictures/tagfaces")
-                .set('Authorization', 'Bearer ' + token)
-                .send({ picId: "58f62b45e9709e26c31000000", names: ["1", "2", "3"] })
-                .end(function(err, res) {
-                    expect(res).to.have.status(500);
-                    expect(err).to.not.be.null;
-                    done()
-                })
+            .post("/api/pictures/tagfaces")
+            .set('Authorization', 'Bearer ' + token)
+            .send({ picId: "58f62b45e9709e26c31000000", names: ["1", "2", "3"] })
+            .end(function(err, res) {
+                expect(res).to.have.status(500);
+                expect(err).to.not.be.null;
+                done()
+            })
         })
 
         it("it shoud error tag faces ", function(done) {
             chai.request(app)
-                .post("/api/pictures/tagfaces")
-                .set('Authorization', 'Bearer ' + null)
-                .send({ picId: "58f62b45e9709e26c3105279", names: ["1", "2", "3"] })
-                .end(function(err, res) {
-                    expect(res).to.have.status(500);
-                    expect(err).to.not.be.null;
-                    done()
-                })
+            .post("/api/pictures/tagfaces")
+            .set('Authorization', 'Bearer ' + null)
+            .send({ picId: "58f62b45e9709e26c3105279", names: ["1", "2", "3"] })
+            .end(function(err, res) {
+                expect(res).to.have.status(500);
+                expect(err).to.not.be.null;
+                done()
+            })
         })
 
 
         it("it shoud error tag faces ", function(done) {
             chai.request(app)
-                .post("/api/pictures/tagfaces")
-                .set('Authorization', 'Bearer ' + null)
-                .send({ picId: "58f62b45e9709e26c3105279", names: null })
-                .end(function(err, res) {
-                    expect(res).to.have.status(500);
-                    expect(err).to.not.be.null;
-                    done()
-                })
+            .post("/api/pictures/tagfaces")
+            .set('Authorization', 'Bearer ' + null)
+            .send({ picId: "58f62b45e9709e26c3105279", names: null })
+            .end(function(err, res) {
+                expect(res).to.have.status(500);
+                expect(err).to.not.be.null;
+                done()
+            })
         })
     })
 
@@ -771,35 +781,35 @@ describe("Picture Tests", function() {
 
         it("Should get my pictures ", function(done) {
             chai.request(app)
-                .get("/api/pictures/tags/58f62b45e9709e26c3105279")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(200);
-                    done()
-                })
+            .get("/api/pictures/tags/58f62b45e9709e26c3105279")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done()
+            })
         })
 
         it("should error on get my pictures. token ", function(done) {
             chai.request(app)
-                .get("/api/pictures/tags/58f62b45e9709e26c3105279")
-                .set('Authorization', 'Bearer ' + null)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done()
-                })
+            .get("/api/pictures/tags/58f62b45e9709e26c3105279")
+            .set('Authorization', 'Bearer ' + null)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done()
+            })
         })
 
         it("should error on get my pictures. picture id ", function(done) {
             chai.request(app)
-                .get("/api/pictures/tags/58f62b45e9709e26c3105000")
-                .set('Authorization', 'Bearer ' + token)
-                .end(function(err, res) {
-                    expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done()
-                })
+            .get("/api/pictures/tags/58f62b45e9709e26c3105000")
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res) {
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done()
+            })
         })
 
     })

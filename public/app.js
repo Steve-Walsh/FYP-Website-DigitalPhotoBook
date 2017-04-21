@@ -499,7 +499,11 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
                     Authorization: 'Bearer ' + UsersService.getTokenApi()
                 }
             }).success(function(res) {
-            $location.path('/eventDetails/' + res._id)
+            $location.path('/eventDetails/' + res._id, {
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()
+                }
+            })
         })
         .error(function(err) {
             console.log('error : ' + err)
@@ -507,7 +511,11 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
     }
     releaseImgs = function(event) {
         console.log('in new event')
-        $http.post('/api/events/releaseImgs', event).error(function(err) {
+        $http.post('/api/events/releaseImgs', event, {
+            headers: {
+                Authorization: 'Bearer ' + UsersService.getTokenApi()
+            }
+        }).error(function(err) {
             console.log('error : ' + err)
         })
     }
@@ -519,7 +527,11 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
             event.publicEvent = true
         }
 
-        $http.post('/api/events/changePublicType', event).error(function(err) {
+        $http.post('/api/events/changePublicType', event, {
+            headers: {
+                Authorization: 'Bearer ' + UsersService.getTokenApi()
+            }
+        }).error(function(err) {
             console.log('error : ' + err)
         })
     }
@@ -550,7 +562,11 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
     addPersonToEvent = function(newAttender, eventId) {
         var check = false
 
-        $http.get('/api/events/eventDetails/' + eventId)
+        $http.get('/api/events/eventDetails/' + eventId, {
+            headers: {
+                Authorization: 'Bearer ' + UsersService.getTokenApi()
+            }
+        })
         .success(function(res) {
             if (res.event.adminId == newAttender._id) {
                 check = true
@@ -563,7 +579,11 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
                 })
             }
             if (!check) {
-                $http.post('/api/events/joinEvent/' + eventId, newAttender).error(function(err) {
+                $http.post('/api/events/joinEvent/' + eventId, newAttender, {
+            headers: {
+                Authorization: 'Bearer ' + UsersService.getTokenApi()
+            }
+        }).error(function(err) {
                     console.log('error : ' + err)
                 })
             }

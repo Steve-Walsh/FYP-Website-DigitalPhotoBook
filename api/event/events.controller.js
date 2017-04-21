@@ -121,7 +121,6 @@ exports.destroy = function(req, res) {
 
 exports.joinEvent = function(req, res) {
     var token = req.headers.authorization.substring(11)
-
     var decoded = jwt.decode(token, config.secret);
 
     var newAttender = {

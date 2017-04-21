@@ -1,8 +1,8 @@
-var express = require('express');
-var controller = require('./mobile.controller');
+// var express = require('express');
+// var controller = require('./mobile.controller');
 
-var router = express.Router();
+// var router = express.Router();
 
-router.get('/pictures', controller.pictures);
+// router.get('/pictures', controller.pictures);
 
-module.exports = router;
+// module.exports = router;

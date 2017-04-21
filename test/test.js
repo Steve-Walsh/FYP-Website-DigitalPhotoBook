@@ -165,11 +165,10 @@ describe('User Tests', function() {
             .post('/api/users/registerNewUser')
             .send(erroUser)
             .end(function(err, res) {
-                console.log(err)
-                        // expect(err).to.not.be.null;
-                        expect(res).to.have.status(500);
-                        done();
-                    });
+                expect(err).to.not.be.null;
+                expect(res).to.have.status(500);
+                done();
+             });
         })
 
 

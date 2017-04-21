@@ -165,11 +165,10 @@ describe('User Tests', function() {
 			.post('/api/users/registerNewUser')
 			.send(erroUser)
 			.end(function(err, res) {
-				console.log(err)
-                        // expect(err).to.not.be.null;
-                        expect(res).to.have.status(500);
-                        done();
-                    });
+				expect(err).to.not.be.null;
+				expect(res).to.have.status(500);
+				done();
+			});
 		})
 
 
@@ -233,21 +232,23 @@ describe('User Tests', function() {
 		});
 	});
 
+});
 
 
-	describe('#getUsers()', function() {
 
-		it('Should get users', function(done) {
-			chai.request(app)
-			.get('/api/users/')
-			.end(function(err, res) {
-				expect(err).to.be.null;
-				expect(res).to.have.status(200);
-				done();
-			});
+describe('#getUsers()', function() {
+
+	it('Should get users', function(done) {
+		chai.request(app)
+		.get('/api/users/')
+		.end(function(err, res) {
+			expect(err).to.be.null;
+			expect(res).to.have.status(200);
+			done();
 		});
-
 	});
+
+});
 });
 
 

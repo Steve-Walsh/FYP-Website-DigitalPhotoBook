@@ -28,7 +28,7 @@ $ cd website
 $ npm install
 $ npm start
 ```
-MIT © [Stephen Walsh]()
+MIT © [Stephen Walsh](https://github.com/Steve-Walsh/website/blob/master/LICENSE)
 
 
 [travis-image]: https://travis-ci.org/Steve-Walsh/website.svg?branch=master

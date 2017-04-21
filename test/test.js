@@ -158,16 +158,16 @@ describe('User Tests', function() {
                 });
         })
 
-        it('Should Error on create a user', function(done) {
-            chai.request(app)
-                .post('/api/users/registerNewUser')
-                .send(existingUser)
-                .end(function(err, res) {
-                    // expect(err).to.not.be.null;
-                    expect(res).to.have.status(500);
-                    done();
-                });
-        })
+        // it('Should Error on create a user', function(done) {
+        //     chai.request(app)
+        //         .post('/api/users/registerNewUser')
+        //         .send(existingUser)
+        //         .end(function(err, res) {
+        //             // expect(err).to.not.be.null;
+        //             expect(res).to.have.status(500);
+        //             done();
+        //         });
+        // })
 
         it('Should Error on create a user', function(done) {
             chai.request(app)

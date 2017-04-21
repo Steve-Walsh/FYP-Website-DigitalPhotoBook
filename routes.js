@@ -1,7 +1,6 @@
 module.exports = function(app) {
 
   app.use('/api/users', require('./api/user/index'));
-  app.use('/api/mobiles', require('./api/mobile/index'));
   app.use('/api/events', require('./api/event/index'));
   app.use('/api/pictures', require('./api/picture/index'));
   

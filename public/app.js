@@ -435,7 +435,7 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
 
     $http.get('/api/events/eventDetails/' + $routeParams.id)
     .success(function(res) {
-        console.log(res.event)
+        console.log("res event is ", res.event)
         res.event.member = false;
         if (res.event.adminId != loggedInUser.id) {
             if (!res.event.released) {

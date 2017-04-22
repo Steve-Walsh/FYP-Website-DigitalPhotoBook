@@ -704,6 +704,9 @@ myApp.controller('FaceDetController', ['$scope', '$routeParams', '$http', 'Users
         }
         tagfaces(tag)
 
+        location.path('/eventDetails/'+pictureDetails.eventId)
+
+
     }
 
 

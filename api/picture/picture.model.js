@@ -13,6 +13,7 @@ var PictureSchema = new Schema({
 	owner: { type: String, required: true },
 	owenrUName:  { type: String, required: true },
 	event: {type: String, required:true},
+	eventName: { type: String, required: true },
 	timeStamp: {type: String},
 	tagged: [{ type: String, required: true }]
 

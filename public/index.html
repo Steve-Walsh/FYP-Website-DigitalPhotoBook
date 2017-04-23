@@ -1,79 +1,64 @@
 <!doctype html>
 <html lang="en" ng-app="myApp">
+
 <head>
-  <title>DPB</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="../scripts/angular.min.js"></script>
-  <script src="../scripts/angular-route.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-
-  <!-- Optional theme -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
-
-  <script src="../scripts/bootstrap.min.js"></script>
-  <link href="../styles/bootstrap.css" rel="stylesheet">
-  <link href="../styles/custom.css" rel="stylesheet">
-  <link href="../styles/flat-ui.css" rel="stylesheet">
-  <script src="../scripts/flat-ui.js"></script>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <script src="app.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <link rel="stylesheet" href="../styles/datetimepicker.css"/>
-  <!-- Moment -->
-  <script type="text/javascript" src="../scripts/moment-with-locales.min.js"></script>
-  <script type="text/javascript" src="../scripts/moment.min.js"></script>
-
-  <!-- Date time picker -->
-  <script type="text/javascript" src="../scripts/datetimepicker.js"></script>
-  <script type="text/javascript" src="../scripts/datetimepicker.templates.js"></script>
-
-  <!-- Light box  -->
-  <link href="../styles/lightbox.css" rel="stylesheet">
-  <script src="../scripts/lightbox.js"></script>
-
-
-<!--   <script>
+    <title>DPB</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="../scripts/angular.min.js"></script>
+    <script src="../scripts/angular-route.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <link href="../styles/bootstrap.css" rel="stylesheet">
+    <link href="../styles/custom.css" rel="stylesheet">
+    <link href="../styles/flat-ui.css" rel="stylesheet">
+    <script src="../scripts/flat-ui.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="../styles/datetimepicker.css" />
+    <!-- Moment -->
+    <script type="text/javascript" src="../scripts/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="../scripts/moment.min.js"></script>
+    <!-- Date time picker -->
+    <script type="text/javascript" src="../scripts/datetimepicker.js"></script>
+    <script type="text/javascript" src="../scripts/datetimepicker.templates.js"></script>
+    <link href="../styles/lightbox.css" rel="stylesheet">
+    <script src="../scripts/lightbox.js"></script>
+    <!--   <script>
     var socket = io();
   </script> -->
 </head>
 
 <body>
-
-
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MainController">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#/">Digital Photo Book</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right collapse navbar-collapse" action="#" role="search">
-      <li><a href="#/events" ng-class="{active: $route.current.activetab == 'events'}">All Events</a></li>
-      <li><a href="#/finishedEvents">Finished Events</a></li>
-      <li ng-if="loggedInUser.name != null"><a href="#/myEvents">My Events</a></li>
-      <li ng-if="loggedInUser.name != null"><a href="#/pictures">My Pictures</a></li>
-      <li ng-if="loggedInUser.name != null"><a href="#/createEvent">Create Event</a></li>
-
-      <li class="dropdown" ng-if="loggedInUser.name != null">
-        <a class="dropdown-toggle" data-toggle="dropdown">{{loggedInUser.name}} <b class="caret"></b></a>
-        <span class="dropdown-arrow"></span>
-        <ul class="dropdown-menu">
-          <li><a ng-click="logout()">Logout</a></li>
-        </ul>      
-      </ul>
-    </nav><!-- /navbar -->
-
-
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MainController">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/">Digital Photo Book</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse" action="#" role="search" ng-if="loggedInUser.name != null" s>
+            <li><a href="#/events" ng-class="{active: $route.current.activetab == 'events'}">All Events</a></li>
+            <li><a href="#/finishedEvents">Finished Events</a></li>
+            <li ng-if="loggedInUser.name != null"><a href="#/myEvents">My Events</a></li>
+            <li ng-if="loggedInUser.name != null"><a href="#/pictures">My Pictures</a></li>
+            <li ng-if="loggedInUser.name != null"><a href="#/createEvent">Create Event</a></li>
+            <li class="dropdown" ng-if="loggedInUser.name != null">
+                <a class="dropdown-toggle" data-toggle="dropdown">{{loggedInUser.name}} <b class="caret"></b></a>
+                <span class="dropdown-arrow"></span>
+                <ul class="dropdown-menu">
+                    <li><a ng-click="logout()">Logout</a></li>
+                </ul>
+        </ul>
+    </nav>
+    <!-- /navbar -->
     <div class="container" style="margin-top: 55px;">
-      <div class="row">
-        <div ng-view ></div>
-      </div>
+        <div class="row">
+            <div ng-view></div>
+        </div>
     </div>
+</body>
 
-  </body>
-  </html>
-
+</html>

@@ -64,42 +64,60 @@ app.post('/api/photo', function(req, res) {
 
         var decoded = jwt.decode(token, config.secret);
 
-        var picture = {
-            name: imageFileName,
-            owner: decoded._id,
-            owenrUName: decoded.email,
-            location: "/data/images/" + imageFileName,
-            event: req.headers.event,
-            timeStamp: timeStamp,
-            tagged: []
-        }
 
-        Picture.create(picture, function(err, pic) {
+
+        Event.findOne({ _id: req.headers.event }, function(err, resEvent) {
             if (err) {
-                console.log(err)
                 return handleError(res, err);
             }
-            // return;
-            pic_id = pic._id
-            console.log(pic._id)
+            event = resEvent;
+
         }).then(function() {
-            Event.findOneAndUpdate({ _id: req.headers.event }, { $push: { pictures: pic_id } }, { safe: true, upsert: true },
-                function(err) {
+            if (event == null) {
+                return handleError(res, "event is null");
+            } else {
+
+                var picture = {
+                    name: imageFileName,
+                    owner: decoded._id,
+                    owenrUName: decoded.email,
+                    location: "/data/images/" + imageFileName,
+                    event: req.headers.event,
+                    timeStamp: timeStamp,
+                    tagged: [],
+                    eventName : event.title
+                }
+                console.log(picture)
+
+                Picture.create(picture, function(err, pic) {
                     if (err) {
+                        console.log(err)
                         return handleError(res, err);
                     }
-                    return;
-                });
-        }).then(function() {
-            Event.findOneAndUpdate({ _id: req.headers.event, "attenders.id": decoded._id }, { $inc: { "attenders.$.numOfPics": 1 } },
-                function(err) {
-                    if (err) {
-                        return handleError(res, err);
-                    }
-                    return;
-                });
-            res.end("File is uploaded");
-        })
+                    console.log(pic)
+                    // return;
+                    pic_id = pic._id
+                    console.log(pic._id)
+                }).then(function() {
+                    Event.findOneAndUpdate({ _id: req.headers.event }, { $push: { pictures: pic_id } }, { safe: true, upsert: true },
+                        function(err) {
+                            if (err) {
+                                return handleError(res, err);
+                            }
+                            return;
+                        });
+                }).then(function() {
+                    Event.findOneAndUpdate({ _id: req.headers.event, "attenders.id": decoded._id }, { $inc: { "attenders.$.numOfPics": 1 } },
+                        function(err) {
+                            if (err) {
+                                return handleError(res, err);
+                            }
+                            return;
+                        });
+                    res.status(200).send("File is uploaded");
+                })
+            }
+        });
     });
 });
 

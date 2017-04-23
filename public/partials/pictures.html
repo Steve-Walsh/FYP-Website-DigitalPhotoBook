@@ -28,47 +28,51 @@
 </form>
 </div> -->
 <div class="" style=" margin-top: 55px;">
-  <div class="page-header">
-     <h1>Top Images</h1>
-  </div>
-  
-  <label>Show 
-    <select ng-model="quantity">
-    <div class="form-control input-sm">
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="25">25</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+    <div class="page-header">
+        <h1>Top Images</h1>
     </div>
-    </select> entries</label>
+    <div class="row">
+        <div class="col-xs-2 pull-right">
+            <label>Show </label>
+            <select ng-model="picNumLimit">
+                <div class="form-control input-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </div>
+            </select>
+        </div>
+        <div class="col-xs-4">
+            <input type="text" class="form-control" placeholder="Search " ng-model="searchPics">
+        </div>
+    </div>
+    <br>
     <table id="pictures" class="table table-striped table-bordered" cellspacing="0" width="100%" class="pictures">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Date</th>
-          <th>Picture</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="picture in pictures | filter:{title: query} | orderBy:orderProp | limitTo:quantity" >
-
-          <td > 
-             {{picture.event}}</td>
- 
-           
-          <td> {{picture.timeStamp | date:"dd/MM/yyyy 'at' h:mma"}}</td>
-          <td><img class="thumb" ng-src="{{picture.location}}" height="200px"></td>
-
-        </tr>
-      </tbody>
+        <thead style=" background-color: #81c8ba;">
+            <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Picture</th>
+                <th>Tagged People</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="picture in pictures | filter:searchPics | orderBy:orderProp | limitTo:quantity">
+                <td> <a href="#/eventDetails/{{picture.event}}">{{picture.eventName}}</a></td>
+                <td> {{picture.timeStamp | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                <td>
+                    <a href="{{picture.location}}" data-lightbox="roadtrip"> <img class="thumb" ng-src="{{picture.location}}" height="200px"></a>
+                    <td>
+                        <ul>
+                            <div ng-repeat="person in picture.tagged track by $index">
+                                <li ng-if="person.length >2">
+                                    {{person}}</li>
+                            </div>
+                        </ul>
+                    </td>
+            </tr>
+        </tbody>
     </table>
-
-
-
-
-
-
-
-    </div>
-   </div>
+</div>
+</div>

@@ -81,11 +81,11 @@ input {
                     </div>
                 </div>
                 <div class="panel-body">
+                <div ng-if="!taggedCheck"> No faces have been tagged yet. Click on a face and then type the name into the box to tag them</div>
                     <ul>
-                        <div ng-repeat="item in nameList">
+                        <div ng-repeat="item in data_names">
                             <li ng-if="item.length > 2"> {{item}}
                         </div>
-                </div>
                 </ul>
             </div>
         </div>

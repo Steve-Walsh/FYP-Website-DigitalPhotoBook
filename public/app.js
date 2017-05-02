@@ -463,9 +463,15 @@ myApp.controller('EventDetailsController', ['$scope', '$http', '$routeParams', '
         })
 
     $scope.releaseImages = function(event) {
-        if (loggedInUser._id == event.adminId) {
-            //do soemthing
+        if (loggedInUser.id == event.adminId) {
             releaseImgs(event)
+            $window.location.reload();
+        }
+    }
+    $scope.hideImages = function(event) {
+        if (loggedInUser.id == event.adminId) {
+            hideImgs(event)
+            $window.location.reload();
         }
     }
 
@@ -524,8 +530,18 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
             })
     }
     releaseImgs = function(event) {
-        console.log('in new event')
         $http.post('/api/events/releaseImgs', event, {
+            headers: {
+                Authorization: 'Bearer ' + UsersService.getTokenApi()
+            }
+        }).error(function(err) {
+            console.log('error : ' + err)
+        })
+    }
+
+    hideImgs = function(event) {
+        console.log('in hide images')
+        $http.post('/api/events/hideImgs', event, {
             headers: {
                 Authorization: 'Bearer ' + UsersService.getTokenApi()
             }
@@ -604,15 +620,15 @@ myApp.factory('EventsService', ['$http', 'UsersService', '$location', function($
             })
     }
 
-    leaveAnEvent = function(user, eventId){
+    leaveAnEvent = function(user, eventId) {
         $http.post('/api/events/removeUser', user, {
-            headers: {
-                Authorization: 'Bearer ' + UsersService.getTokenApi()
-            }
-        })
-        .error(function (err) {
-            console.log('error : ' + err)
-        })
+                headers: {
+                    Authorization: 'Bearer ' + UsersService.getTokenApi()
+                }
+            })
+            .error(function(err) {
+                console.log('error : ' + err)
+            })
     }
 
 

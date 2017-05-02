@@ -157,9 +157,25 @@ exports.show = function(req, res) {
 
 exports.releaseImgs = function(req, res) {
     var token = req.headers.authorization.substring(11)
-    var decoded = jwt.decode(token, config.secret);
+    var decoded = jwt.decode(token, config.secret)
 
     Event.findOneAndUpdate({ _id: req.body._id }, { released: true },
+        function(err, event) {
+            if (err) {
+                return handleError(res, err);
+            }
+            if (!event) {
+                return res.status(500).json({ success: false, msg: 'no event' });
+            }
+            return res.status(200).json({ success: true, msg: 'Update successful' });
+        });
+
+};
+exports.hideImgs = function(req, res) {
+    var token = req.headers.authorization.substring(11)
+    var decoded = jwt.decode(token, config.secret);
+    console.log("called hide")
+    Event.findOneAndUpdate({ _id: req.body._id }, { released: false },
         function(err, event) {
             if (err) {
                 return handleError(res, err);

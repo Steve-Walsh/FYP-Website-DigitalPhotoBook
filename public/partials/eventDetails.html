@@ -63,12 +63,13 @@
     <div class="panel panel-primary">
         <!-- ng-if="event.pictures.length > 0" -->
         <div class="panel-heading">
-            <div class="btn-group pull-right">
-                <a class="btn btn-success btn-xs" ng-if="event.adminId == loggedInUser._id" ng-click=releaseImages(event)>Release Images </a>
+            <div class="btn-group pull-right" ng-if="event.adminId == loggedInUser._id">
+                <a class="btn btn-success btn-xs" ng-if="!event.released" ng-click=releaseImages(event)>Release Images </a>
+                <a class="btn btn-danger btn-xs"  ng-if="event.released" ng-click=hideImages(event)>Hide Images </a>
             </div>
             <h4 class="panel-title">Pictures</h4>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" ng-if="event.released">
             <div class="row">
                 <div class="col-xs-2 pull-right">
                     <label>Show </label>
@@ -117,5 +118,10 @@
                     </tr>
                 </tbody>
             </table>
+        </div> 
+        <div class="panel-body" ng-if="!event.released">
+
+            <br>
+            <h4> Pictures haven't been released yet.<br> Check again at a later date</h4>
         </div>
     </div>

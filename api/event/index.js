@@ -11,6 +11,7 @@ router.post('/joinEvent/:eventId', controller.joinEvent);
 // router.delete('/:id', controller.destroy);
 router.get('/eventDetails/:_id', controller.show);
 router.post('/releaseImgs', controller.releaseImgs);
+router.post('/hideImgs', controller.hideImgs);
 router.post('/changePublicType', controller.changePublicType);
 router.post('/removeUser', controller.removeUser);
 router.post('/removePicture', controller.removePicture);
